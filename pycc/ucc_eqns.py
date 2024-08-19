@@ -3,22 +3,26 @@ import pycc.tamps as tamps
 
 def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
     if calcType == "UCCD3":
+        D1T1 = T1 ## should be 0
         D2T2 = ucc3_t2resid(Fock,W,T2,o,v)
-#        return D2T2
 
     if calcType == "UCCSD4" or calcType == "UCCD4":
         D1T1 = uccsd4_t1resid(Fock,W,T1,T2,o,v)
         D2T2 = uccsd4_t2resid(Fock,W,T1,T2,o,v)
-#        return D1T1, D2T2
         
     if calcType == "UCCSD5" or calcType == "UCCD5":
         D1T1 = uccsd4_t1resid(Fock,W,T1,T2,o,v)
         D1T1 += uccsd5_t1resid_linearTerms(W,T1,o,v)
         D1T1 += uccsd5_t1resid_quadTerm(W,T2,o,v)
 
-
         D2T2 =  uccsd4_t2resid(Fock,W,T1,T2,o,v)
         D2T2 += uccsd5_t2resid_T1couplings(W,T1,T2,o,v)
+        print('done w t2')
+        print(flush=True)
+        D2T2 += 0.25*uccsd5_t2resid_t2dagwnC_t2sqr(W,T2,o,v) 
+        print('done w t2')
+        print(flush=True)
+        D2T2 += 0.25*uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v)
 
 
     nocc=nvir=None
@@ -53,13 +57,7 @@ def uccsd4_t2resid(Fock,W,T1,T2,o,v):
 
     # T2dagWnT2, Q2[[W,tau2],tau2], or 0.5*[[T2dag,W],T2]
     roovv += 0.5*uccsd_T2dagWnT2(W,T2,o,v)
-#    nocc=nvir=None
-#    roovv=tamps.antisym_T2(roovv,nocc,nvir)
     return roovv
-
-
-
-
 
 
 def uccsd_wnT2sqr(W,T2,o,v):
@@ -83,7 +81,7 @@ def uccsd_T2dagWnT2(W,T2,o,v):
 
 
 def uccsd5_t1resid_linearTerms(W,T1,o,v):
-
+    T1dag= T1.transpose(1,0)
     # Q1(WnT1)|0>
     rov = -1.000000000 * np.einsum("jb,ibja->ia",T1,W[o,v,o,v],optimize="optimal")
     # Q1(T1^W)|0>
@@ -113,12 +111,99 @@ def uccsd5_t2resid_T1couplings(W,T1,T2,o,v):
     roovv += 1.000000000 * np.einsum("ic,jkad,cdkb->ijab",T1,T2,W[v,v,o,v],optimize="optimal")
     roovv += 0.500000000 * np.einsum("kc,ilab,jckl->ijab",T1,T2,W[o,v,o,o],optimize="optimal")
     roovv += 0.500000000 * np.einsum("kc,ijad,cdkb->ijab",T1,T2,W[v,v,o,v],optimize="optimal")
+    roovv += uccsd5_t1dagwnCt2(W,T1,T2,o,v)
+    return roovv
 
+def uccsd5_t1dagwnCt2(W,T1,T2,o,v):
+    T1dag = T1.transpose(1,0)
     # T1^WnT2
-    roovv += -0.500000000 * np.einsum("ck,ilab,jklc->ijab",T1dag,T2,W[o,o,o,v],optimize="optimal")
+    roovv = -0.500000000 * np.einsum("ck,ilab,jklc->ijab",T1dag,T2,W[o,o,o,v],optimize="optimal")
     roovv += -0.250000000 * np.einsum("ck,klab,ijlc->ijab",T1dag,T2,W[o,o,o,v],optimize="optimal")
     roovv += 1.000000000 * np.einsum("ck,ilac,jklb->ijab",T1dag,T2,W[o,o,o,v],optimize="optimal")
     roovv += -0.500000000 * np.einsum("ck,ijad,kdbc->ijab",T1dag,T2,W[o,v,v,v],optimize="optimal")
     roovv += 1.000000000 * np.einsum("ck,ikad,jdbc->ijab",T1dag,T2,W[o,v,v,v],optimize="optimal")
     roovv += -0.250000000 * np.einsum("ck,ijcd,kdab->ijab",T1dag,T2,W[o,v,v,v],optimize="optimal")
+    return roovv
+
+def uccsd5_t2resid_t2dagwnC_t2sqr(W,T2,o,v):
+    T2dag=T2.transpose(2,3,0,1)
+
+    roovv = -0.250000000 * np.einsum("ikab,jlcd,efkl,cdef->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += 1.000000000 * np.einsum("ikab,jlcd,cekm,mdle->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -1.000000000 * np.einsum("ikab,jlcd,celm,mdke->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -0.250000000 * np.einsum("ikab,jlcd,cdmn,mnkl->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += -1.000000000 * np.einsum("ikab,lmcd,cekl,jdme->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -0.250000000 * np.einsum("ikab,lmcd,cdkn,jnlm->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += -0.500000000 * np.einsum("ikab,lmcd,celm,jdke->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 0.500000000 * np.einsum("ikab,lmcd,cdln,jnkm->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += 0.062500000 * np.einsum("klab,ijcd,efkl,cdef->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += -0.500000000 * np.einsum("klab,ijcd,cekm,mdle->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 0.062500000 * np.einsum("klab,ijcd,cdmn,mnkl->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += -0.500000000 * np.einsum("klab,imcd,cekl,jdme->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 1.000000000 * np.einsum("klab,imcd,cekm,jdle->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -0.500000000 * np.einsum("klab,imcd,cdkn,jnlm->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += -0.250000000 * np.einsum("klab,imcd,cdmn,jnkl->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += -0.250000000 * np.einsum("ijac,klbd,efkl,cdef->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += -1.000000000 * np.einsum("ijac,klbd,dekm,mcle->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -0.250000000 * np.einsum("ijac,klbd,cdmn,mnkl->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += 0.500000000 * np.einsum("ijac,klde,dfkl,cebf->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += -1.000000000 * np.einsum("ijac,klde,cdkm,melb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -0.500000000 * np.einsum("ijac,klde,dekm,mclb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 0.500000000 * np.einsum("ikac,jlbd,efkl,cdef->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += 2.000000000 * np.einsum("ikac,jlbd,dekm,mcle->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -2.000000000 * np.einsum("ikac,jlbd,delm,mcke->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 0.500000000 * np.einsum("ikac,jlbd,cdmn,mnkl->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += -2.000000000 * np.einsum("ikac,lmbd,dekl,jcme->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -1.000000000 * np.einsum("ikac,lmbd,delm,jcke->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -2.000000000 * np.einsum("ikac,lmbd,cdln,jnkm->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += -2.000000000 * np.einsum("ikac,jlde,dfkl,cebf->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += 2.000000000 * np.einsum("ikac,jlde,cdkm,melb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 1.000000000 * np.einsum("ikac,jlde,dekm,mclb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -2.000000000 * np.einsum("ikac,jlde,cdlm,mekb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -1.000000000 * np.einsum("ikac,jlde,delm,mckb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -1.000000000 * np.einsum("klac,ijbd,dekm,mcle->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -1.000000000 * np.einsum("klac,imbd,dekl,jcme->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 2.000000000 * np.einsum("klac,imbd,dekm,jcle->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += 1.000000000 * np.einsum("klac,imbd,cdmn,jnkl->ijab",T2,T2,T2dag,W[o,o,o,o])
+    roovv += 0.500000000 * np.einsum("klac,ijde,dfkl,cebf->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += -1.000000000 * np.einsum("klac,ijde,cdkm,melb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -0.500000000 * np.einsum("klac,ijde,dekm,mclb->ijab",T2,T2,T2dag,W[o,v,o,v])
+    roovv += -0.250000000 * np.einsum("ijcd,klae,efkl,cdbf->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += 1.000000000 * np.einsum("ikcd,jlae,efkl,cdbf->ijab",T2,T2,T2dag,W[v,v,v,v])
+    roovv += -0.250000000 * np.einsum("klcd,ijae,efkl,cdbf->ijab",T2,T2,T2dag,W[v,v,v,v])
+    return roovv
+
+
+def uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v):
+    T2dag=T2.transpose(2,3,0,1)
+    roovv = -1.000000000 * np.einsum("ikab,jlcd,celm,mdke->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -0.250000000 * np.einsum("ikab,jlcd,cdmn,mnkl->ijab",T2,T2,T2dag,W[o,o,o,o],optimize="optimal")
+    roovv += -0.500000000 * np.einsum("ikab,lmcd,celm,jdke->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("ikab,lmcd,cdln,jnkm->ijab",T2,T2,T2dag,W[o,o,o,o],optimize="optimal")
+    roovv += -0.500000000 * np.einsum("klab,ijcd,cekm,mdle->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += 1.000000000 * np.einsum("klab,imcd,cekm,jdle->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -0.500000000 * np.einsum("klab,imcd,cdkn,jnlm->ijab",T2,T2,T2dag,W[o,o,o,o],optimize="optimal")
+    roovv += -0.250000000 * np.einsum("klab,mncd,cdkm,ijln->ijab",T2,T2,T2dag,W[o,o,o,o],optimize="optimal")
+    roovv += -0.250000000 * np.einsum("ijac,klbd,efkl,cdef->ijab",T2,T2,T2dag,W[v,v,v,v],optimize="optimal")
+    roovv += -1.000000000 * np.einsum("ijac,klbd,dekm,mcle->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("ijac,klde,dfkl,cebf->ijab",T2,T2,T2dag,W[v,v,v,v],optimize="optimal")
+    roovv += -0.500000000 * np.einsum("ijac,klde,dekm,mclb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("ikac,jlbd,efkl,cdef->ijab",T2,T2,T2dag,W[v,v,v,v],optimize="optimal")
+    roovv += 2.000000000 * np.einsum("ikac,jlbd,dekm,mcle->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("ikac,jlbd,cdmn,mnkl->ijab",T2,T2,T2dag,W[o,o,o,o],optimize="optimal")
+    roovv += -2.000000000 * np.einsum("ikac,lmbd,dekl,jcme->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -2.000000000 * np.einsum("ikac,lmbd,cdln,jnkm->ijab",T2,T2,T2dag,W[o,o,o,o],optimize="optimal")
+    roovv += -2.000000000 * np.einsum("ikac,jlde,dfkl,cebf->ijab",T2,T2,T2dag,W[v,v,v,v],optimize="optimal")
+    roovv += 1.000000000 * np.einsum("ikac,jlde,dekm,mclb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -2.000000000 * np.einsum("ikac,jlde,cdlm,mekb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -1.000000000 * np.einsum("ikac,lmde,dekl,jcmb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -1.000000000 * np.einsum("ikac,lmde,cdlm,jekb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -1.000000000 * np.einsum("klac,imbd,dekl,jcme->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("klac,mnbd,cdkm,ijln->ijab",T2,T2,T2dag,W[o,o,o,o],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("klac,ijde,dfkl,cebf->ijab",T2,T2,T2dag,W[v,v,v,v],optimize="optimal")
+    roovv += -1.000000000 * np.einsum("klac,ijde,cdkm,melb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -0.500000000 * np.einsum("klac,imde,dekl,jcmb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += 2.000000000 * np.einsum("klac,imde,cdkm,jelb->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
+    roovv += -0.250000000 * np.einsum("ijcd,klef,cekl,dfab->ijab",T2,T2,T2dag,W[v,v,v,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("ikcd,jlef,cekl,dfab->ijab",T2,T2,T2dag,W[v,v,v,v],optimize="optimal")
     return roovv

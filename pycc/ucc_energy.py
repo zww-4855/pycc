@@ -14,7 +14,7 @@ def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
     if "UCCSD5" in calcType or "UCCD5" in calcType:
         D2 = driveCCobj.denomInfo["D2aa"]
         energy = uccsd4_energy(W,T2,o,v,D2)
-
+        energy += uccsd5_energy(W,T1,T2,o,v)
         # Get remaining UCCSD5/UCCD5 terms
 
     return energy
@@ -51,4 +51,17 @@ def uccsd4_energy(W,T2,o,v,D2):
     r += 0.166666667 * np.einsum("ijab,bckl,adij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
     print('newr/oldr', r,(6.0/4.0)*r,oldr,(3.0/4.0)*r)
     return energyA-oldr #+energyB
+
+def uccsd5_energy(W,T1,T2,o,v):
+    T2dag = T2.transpose(2,3,0,1)
+    # - <0|(T1^T2^W)CT2|0>
+    D2T2 = ucc_eqns.uccsd5_t1dagwnCt2(W,T1,T2,o,v)
+    D2T2 = tamps.antisym_T2(D2T2,None,None)
+    ucc5_energy = - 0.250000000 * np.einsum("ijab,abij->",D2T2,T2dag,optimize="optimal")
+
+    # - 0.25* <0|(T2^)^2 (WT2^2)C|0>
+    D2T2 = ucc_eqns.uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v)
+    D2T2 = tamps.antisym_T2(D2T2,None,None)
+    ucc5_energy += - (0.25)* 0.250000000 * np.einsum("ijab,abij->",D2T2,T2dag,optimize="optimal")
+    return ucc5_energy
 

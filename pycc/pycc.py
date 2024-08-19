@@ -12,7 +12,7 @@ class SetupCC():
         self.nuc_e=pyscf_mf.energy_nuc()
         
         # Initialize basics of CC calculation
-        self.max_iter=cc_info.get("max_iter",20)
+        self.max_iter=cc_info.get("max_iter",100)
         self.dump_tamps=cc_info.get('dump_tamps',False)
         self.dropcore=cc_info.get('dropcore',0)
         self.stopping_eps=cc_info.get("stopping_eps",10**-8)
