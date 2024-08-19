@@ -13,8 +13,10 @@ dependencies:
   - pytest
   - pytest-cov
   - codecov
+  - pyscf
 
     # Pip-only installs
-  #- pip:
+  - pip:
+     - pyscf
   #  - codecov
 
