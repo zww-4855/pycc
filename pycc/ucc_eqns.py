@@ -55,7 +55,7 @@ def uccsd4_t2resid(Fock,W,T1,T2,o,v):
     tmp_wnT2sqr=0.5*uccsd_wnT2sqr(W,T2,o,v)
     roovv += tmp_wnT2sqr
 
-    # T2dagWnT2, Q2[[W,tau2],tau2], or 0.5*[[T2dag,W],T2]
+    # T2dagWnT2, 0.5*Q2[[W,tau2],tau2], or 0.5*[[T2dag,W],T2]
     roovv += 0.5*uccsd_T2dagWnT2(W,T2,o,v)
     return roovv
 

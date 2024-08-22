@@ -24,8 +24,8 @@ def ccenergy_driver(driveCCobj,cc_info):
         return ccsd_energy
     
     elif "UCC" in cc_info["slowSOcalc"]:
-        t1 = driveCCobj.tamps.get("t1aa",None)
         t2 = driveCCobj.tamps["t2aa"]
+        t1 = driveCCobj.tamps.get("t1aa",np.zeros((np.shape(t2)[0],np.shape(t2)[2])))
         energy = ucc_energy.ucc_energyDriver(cc_info["slowSOcalc"],W,t1,t2,o,v,driveCCobj)
         return energy
 
