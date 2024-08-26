@@ -237,7 +237,9 @@ class DriveCC(SetupCC):
             for key in correctionDict.keys():
                 print(key,"{: 20.12f}".format(correctionDict[key]))
 
-
+        if self.dump_tamps: 
+            with open('t2amps.pickle', 'wb') as f:
+                pickle.dump(self.tamps["t2aa"], f)
 
 """Provide the primary functions."""
 
