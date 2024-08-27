@@ -3,6 +3,8 @@ import pycc.set_denoms as set_denoms
 import pycc.tamps as tamps
 import pycc.cc_energy as cc_energy
 import pycc.cc_eqns as cc_eqns
+import pycc.rdm1 as rdm1
+import pycc.props as props
 import pickle
 
 class SetupCC():
@@ -25,6 +27,7 @@ class SetupCC():
         self.denomInfo={}
         self.integralInfo={}
         self.eps=None
+        self.nmo = np.shape(pyscf_mf.mo_coeff)[0]
 
         if "slowSOcalc" in cc_info: # If a slow, spin-orb-based CC calc
             self.cc_calcs=cc_info.get("slowSOcalc",'CCD')
@@ -157,8 +160,7 @@ class DriveCC(SetupCC):
         print(self.cc_calcs)
         self.correlationE={} #options: totalCorrCorrection, and options for (T), (Qf), etc
         self.tamps={}     #TO DO:: Load T2 if not None
-        
-
+        self.rdm1={}
 
         # setup t amplitudes TODO:: ADD in query/setup for tamps of spin-intgr eqns
         if "slowSOcalc" in cc_info:
@@ -241,6 +243,14 @@ class DriveCC(SetupCC):
             with open('t2amps.pickle', 'wb') as f:
                 pickle.dump(self.tamps["t2aa"], f)
 
+
+    def drive_rdm(self,pyscf_mol,pyscf_mf):
+        spin_rdm1 = rdm1.build_Spinrdm1(self)
+        alpha_rdm,beta_rdm = rdm1.spin_to_spatial_rdm1(self,spin_rdm1)
+        # get first-order props
+        self.rdm1.update({"alpha":alpha_rdm,"beta":beta_rdm})   
+        props.dipole_moment(pyscf_mol,pyscf_mf,alpha_rdm+beta_rdm)
+  
 """Provide the primary functions."""
 
 
