@@ -4,7 +4,7 @@ import pyscf
 from numpy import linalg as LA
 import numpy as np
 
-@pytest.mark.parametrize("Basis,Method1,Method2,Method3,Method4,Method5",[('DZ',
+@pytest.mark.parametrize("Basis,Method1,Method2,Method3,Method4,Method5",[('STO-6G',
     {'atomString':'H 0. 0. 0.0; F 0.917 0. 0.0','run':{"slowSOcalc":"UCCD3","stopping_eps":10**-10}},
     {'atomString':'H 0. 0. 0.0; F 0.917 0. 0.0','run':{"slowSOcalc":"UCCD4","stopping_eps":10**-10}},
     {'atomString':'H 0. 0. 0.0; F 0.917 0. 0.0','run':{"slowSOcalc":"UCCD5","stopping_eps":10**-10}},
