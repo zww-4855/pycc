@@ -11,13 +11,11 @@ import numpy as np
     {'atomString':'H 0. 0. 0.0; F 0.917 0. 0.0','run':{"slowSOcalc":"UCCSD4","stopping_eps":10**-10}},
     {'atomString':'H 0. 0. 0.0; F 0.917 0. 0.0','run':{"slowSOcalc":"UCCSD5","stopping_eps":10**-10}},
     ),])
-
-
 def test_ccdTypesCheck(Basis,Method1,Method2,Method3,Method4,Method5):
     Methods=[Method1,Method2,Method3,Method4,Method5]
 
     run_times=5
-    for i in range(5):
+    for i in range(len(Methods)):
         method_DM=[] # store the DM from subsequent runs
         for j in range(run_times): # verify consistency between separate runs
             method=Methods[i]
@@ -52,9 +50,6 @@ def test_ccdTypesCheck(Basis,Method1,Method2,Method3,Method4,Method5):
             spinDM = obj.rdm1["spin_rdm"]
             print('spin dm:\n',spinDM[:7,:7])
             print(np.shape(spinDM)[0])
-            for i in range(np.shape(spinDM)[0]):
-                for j in range(i,np.shape(spinDM)[0]):
-                    print(spinDM[i,j],spinDM[j,i])
             assert np.allclose(totalDM.T,totalDM,rtol=10E-6,atol=10E-6)
 #            assert np.allclose(totalDM.T,totalDM, rtol=10E-8,atol=10E-10)
             method_DM.append(totalDM)
