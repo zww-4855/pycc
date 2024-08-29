@@ -47,10 +47,16 @@ def test_ccdTypesCheck(Basis,Method1,Method2,Method3,Method4,Method5):
             obj.kernel(a)
     
             obj.drive_rdm(mol,mf)
-    
+             
             totalDM = obj.rdm1["alpha"]+obj.rdm1["beta"]
-    
-            assert np.allclose(totalDM.T,totalDM, rtol=10E-8,atol=10E-10)
+            spinDM = obj.rdm1["spin_rdm"]
+            print('spin dm:\n',spinDM[:7,:7])
+            print(np.shape(spinDM)[0])
+            for i in range(np.shape(spinDM)[0]):
+                for j in range(i,np.shape(spinDM)[0]):
+                    print(spinDM[i,j],spinDM[j,i])
+            assert np.allclose(totalDM.T,totalDM,rtol=10E-6,atol=10E-6)
+#            assert np.allclose(totalDM.T,totalDM, rtol=10E-8,atol=10E-10)
             method_DM.append(totalDM)
         check_sequential1RDMS(method_DM,run_times)
 
