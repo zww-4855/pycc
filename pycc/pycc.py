@@ -248,8 +248,8 @@ class DriveCC(SetupCC):
         spin_rdm1 = rdm1.build_Spinrdm1(self)
         alpha_rdm,beta_rdm = rdm1.spin_to_spatial_rdm1(self,spin_rdm1)
         # get first-order props
-        self.rdm1.update({"alpha":alpha_rdm,"beta":beta_rdm})   
-        props.dipole_moment(pyscf_mol,pyscf_mf,alpha_rdm+beta_rdm)
+        self.rdm1.update({"spin_rdm":spin_rdm1,"alpha":alpha_rdm,"beta":beta_rdm})   
+        props.dipole_moment(pyscf_mol,pyscf_mf,alpha_rdm+beta_rdm,spin_rdm1)
   
 """Provide the primary functions."""
 
