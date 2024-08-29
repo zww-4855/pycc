@@ -22,7 +22,7 @@ spin-orbital pccd amplitude equations
 import numpy as np
 from numpy import einsum
 import pandas as pd
-
+import pickle
 def build_Spinrdm1(driveCCobj):
     T2=driveCCobj.tamps["t2aa"]
     no=np.shape(T2)[0]
@@ -36,6 +36,11 @@ def build_Spinrdm1(driveCCobj):
     o = driveCCobj.occSliceInfo["occ_aa"]
     v = driveCCobj.occSliceInfo["virt_aa"]
 
+    rdm = ccsd_d1(T1dag,T2dag,T1,T2,np.eye(2*nmo),o,v)
+    print('combined DM spin orb:\n',pd.DataFrame(rdm[:7,:7]).round(10))
+    assert np.allclose(rdm,rdm.T)
+    with open('spin_rdm.pickle', 'wb') as f:
+        pickle.dump(rdm, f)
     return ccsd_d1(T1dag,T2dag,T1,T2,np.eye(2*nmo),o,v)
 
 def spin_to_spatial_rdm1(self,spin_rdm):
@@ -146,37 +151,6 @@ def ccsd_d1(t1, t2, l1, l2, kd, o, v):
     #	  0.5000 l2(i,j,e,a)*t2(f,a,i,j)
     #	 ['+0.500000', 'l2(i,j,e,a)', 't2(f,a,i,j)']
     opdm[v, v] += 0.5 * einsum('ijea,faij->ef', l2, t2)
-
-    #    D1(e,m):
-
-    #	  1.0000 l1(m,e)
-    #	 ['+1.000000', 'l1(m,e)']
-    opdm[v, o] += 1.0 * einsum('me->em', l1)
-
-    #    D1(m,e):
-
-    #	  1.0000 t1(e,m)
-    #	 ['+1.000000', 't1(e,m)']
-    opdm[o, v] += 1.0 * einsum('em->me', t1)
-
-    #	 -1.0000 l1(i,a)*t2(e,a,i,m)
-    #	 ['-1.000000', 'l1(i,a)', 't2(e,a,i,m)']
-    opdm[o, v] += -1.0 * einsum('ia,eaim->me', l1, t2)
-
-    #	 -1.0000 l1(i,a)*t1(e,i)*t1(a,m)
-    #	 ['-1.000000', 'l1(i,a)', 't1(e,i)', 't1(a,m)']
-    opdm[o, v] += -1.0 * einsum('ia,ei,am->me', l1, t1, t1,
-                                optimize=['einsum_path', (0, 1), (0, 1)])
-
-    #	 -0.5000 l2(i,j,b,a)*t1(e,j)*t2(b,a,i,m)
-    #	 ['-0.500000', 'l2(i,j,b,a)', 't1(e,j)', 't2(b,a,i,m)']
-    opdm[o, v] += -0.5 * einsum('ijba,ej,baim->me', l2, t1, t2,
-                                optimize=['einsum_path', (0, 2), (0, 1)])
-
-    #	 -0.5000 l2(i,j,b,a)*t1(b,m)*t2(e,a,i,j)
-    #	 ['-0.500000', 'l2(i,j,b,a)', 't1(b,m)', 't2(e,a,i,j)']
-    opdm[o, v] += -0.5 * einsum('ijba,bm,eaij->me', l2, t1, t2,
-                                optimize=['einsum_path', (0, 2), (0, 1)])
 
     return opdm
 
