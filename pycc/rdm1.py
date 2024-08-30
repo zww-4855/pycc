@@ -50,7 +50,11 @@ def spin_to_spatial_rdm1(self,spin_rdm):
     print('spatial dim:',spatial_dim)
     rdm_alphaSpatial=np.zeros((spatial_dim,spatial_dim))
     rdm_betaSpatial=np.zeros((spatial_dim,spatial_dim))
-    # get oo portion
+    rdm_alphabetaSpatial=np.zeros((spatial_dim,spatial_dim))
+    rdm_betaalphaSpatial=np.zeros((spatial_dim,spatial_dim))
+
+
+    # get alpha-alpha portion
     count_i=0
     for i in range(0,spin_dim,2):
         count_j=0
@@ -61,21 +65,27 @@ def spin_to_spatial_rdm1(self,spin_rdm):
         count_i+=1
 
     # store alpha/beta portion of contraction on alpha DM
+#    count_i=0
+#    for i in range(0,spin_dim,2):
+#        count_j=0
+#        for j in range(1,spin_dim,2):
+#            if np.abs(spin_rdm[i,j])>10**-15:
+#                print(i,j,int(i/2),int(j/2))
+#                rdm_alphaSpatial[int(i/2),int(j/2)]=spin_rdm[i,j]
+#                rdm_alphaSpatial[int(j/2),int(i/2)]=spin_rdm[j,i]
+#            count_j+=1
+#        count_i+=1
+
+     # get alpha-beta portion
     count_i=0
     for i in range(0,spin_dim,2):
         count_j=0
         for j in range(1,spin_dim,2):
-            if np.abs(spin_rdm[i,j])>10**-15:
-                print(i,j,int(i/2),int(j/2))
-                rdm_alphaSpatial[int(i/2),int(j/2)]=spin_rdm[i,j]
-                rdm_alphaSpatial[int(j/2),int(i/2)]=spin_rdm[j,i]
+            rdm_alphabetaSpatial[count_i,count_j]=spin_rdm[i,j]
+            rdm_betaalphaSpatial[count_j,count_i]=spin_rdm[j,i]
             count_j+=1
         count_i+=1
 
-
-
-#    print(rdm_alphaSpatial[0,6],rdm_alphaSpatial[6,0])
-#    sys.exit()
     # get beta portion
     count_i=0
     for i in range(1,spin_dim,2):
@@ -86,13 +96,13 @@ def spin_to_spatial_rdm1(self,spin_rdm):
             count_j+=1
         count_i+=1
 
-    # store alpha/beta portion of contraction on beta DM
-    for i in range(1,spin_dim,2):
-        for j in range(0,spin_dim,2):
-            if np.abs(spin_rdm[i,j])>10**-15:
-                print(i,j,int(i/2),int(j/2))
-                rdm_betaSpatial[int(i/2),int(j/2)]=spin_rdm[i,j]
-                rdm_betaSpatial[int(j/2),int(i/2)]=spin_rdm[j,i]
+#    # store alpha/beta portion of contraction on beta DM
+#    for i in range(1,spin_dim,2):
+#        for j in range(0,spin_dim,2):
+#            if np.abs(spin_rdm[i,j])>10**-15:
+#                print(i,j,int(i/2),int(j/2))
+#                rdm_betaSpatial[int(i/2),int(j/2)]=spin_rdm[i,j]
+#                rdm_betaSpatial[int(j/2),int(i/2)]=spin_rdm[j,i]
 
 
     opdm_alpha=pd.DataFrame(rdm_alphaSpatial[:7,:7])
@@ -111,6 +121,10 @@ def spin_to_spatial_rdm1(self,spin_rdm):
             new+= abs(rdm_alphaSpatial[i,j] - rdm_betaSpatial[i,j])
 
     print('diff b/t alpha and beta: ', new)
+
+    #total_spatialDM=rdm_alphaSpatial+rdm_betaSpatial+rdm_alphabetaSpatial+rdm_betaalphaSpatial
+    rdm_alphaSpatial+=rdm_alphabetaSpatial
+    rdm_betaSpatial+=rdm_betaalphaSpatial
     return rdm_alphaSpatial, rdm_betaSpatial #opdm_alpha,opdm_beta
 
     
