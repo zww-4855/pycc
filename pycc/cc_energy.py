@@ -178,7 +178,14 @@ def sixthOrderQf_wnT2cubed(W,T2,o,v,D2):
     teste =0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2)
     print('pdagq WnT2^3 6th order energy:',teste)
 
-    # Test wicked_toT2 part:
+
+    import pycc.mbpt6 as mbpt6
+    tmpT2=W[o,o,v,v]*D2
+    D2T2mbpt = 0.5*mbpt6.residQf2_aaaa(W[o,o,v,v],tmpT2,tmpT2.transpose(2,3,0,1),o,v)
+    mbpte =0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2mbpt)
+    print('MBPT(6) energy for wnT2^2:',mbpte)
+
+# Test wicked_toT2 part:
 #    D2T2=0.5*qf.wnT2cubed_toT2(W,T2,o,v)
 #    D2T2=D2T2.transpose(2,3,0,1)
 #    teste=(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,D2T2)
@@ -193,6 +200,12 @@ def sixthOrderQf_wnT2cubed(W,T2,o,v,D2):
 #    print('WnT2^3 contribution to (Qf):',sixthO_wnT2cubed)
 #    print(flush=True)
 
+    D4T4 = qf.wnT2cubed_toT4(W,tmpT2,o,v)
+    D4T4 = D4T4.transpose(4,5,6,7,0,1,2,3)
+    resid_aaaa = (1.0/16.0)*np.einsum('klcd,abcdijkl->abij',tmpT2,D4T4)
+    resid_aaaa = tamps.antisym_T2(resid_aaaa,None,None)
+    sixthO_wnT2cubed=0.5*(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,resid_aaaa)
+    print('WnT2^3 contribution to (Qf): MBPT',sixthO_wnT2cubed)
 
     return teste
 

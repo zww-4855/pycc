@@ -1,6 +1,8 @@
 import numpy as np
 import pycc.ucc_eqns as ucc_eqns
 import pycc.tamps as tamps
+import pycc.faster_ucc5eqns as faster_ucc5eqns
+
 def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
     energy = 0.0
     if calcType == "UCCD3":
@@ -60,7 +62,11 @@ def uccsd5_energy(W,T1,T2,o,v):
     ucc5_energy = - 0.250000000 * np.einsum("ijab,abij->",D2T2,T2dag,optimize="optimal")
 
     # - 0.25* <0|(T2^)^2 (WT2^2)C|0>
-    D2T2 = ucc_eqns.uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v)
+    #D2T2 = ucc_eqns.uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v)
+    D2T2 = faster_ucc5eqns.t2dag_WnT2sqr_oooo(T2,W[o,o,o,o])
+    D2T2 += faster_ucc5eqns.t2dag_WnT2sqr_ovov(T2,W[o,v,o,v])
+    D2T2 += faster_ucc5eqns.t2dag_WnT2sqr_vvvv(T2,W[v,v,v,v])
+
     D2T2 = tamps.antisym_T2(D2T2,None,None)
     ucc5_energy += - (0.25)* 0.250000000 * np.einsum("ijab,abij->",D2T2,T2dag,optimize="optimal")
     return ucc5_energy

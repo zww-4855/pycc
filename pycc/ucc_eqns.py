@@ -1,5 +1,8 @@
 import numpy as np
 import pycc.tamps as tamps
+import pycc.faster_ucc5eqns as faster_ucc5eqns
+#from memory_profiler import memory_usage
+#from memory_profiler import profile
 
 def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
     if calcType == "UCCD3":
@@ -12,24 +15,49 @@ def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
         
     if calcType == "UCCSD5" or calcType == "UCCD5":
         D1T1 = uccsd4_t1resid(Fock,W,T1,T2,o,v)
+        print('done w D1T1')
+        print(flush=True)
         D1T1 += uccsd5_t1resid_linearTerms(W,T1,o,v)
+        print('done w t1')
+        print(flush=True)
         D1T1 += uccsd5_t1resid_quadTerm(W,T2,o,v)
-
+        
+        
+        print('done w t1')
+        print(flush=True)
         D2T2 =  uccsd4_t2resid(Fock,W,T1,T2,o,v)
         D2T2 += uccsd5_t2resid_T1couplings(W,T1,T2,o,v)
         print('done w t2')
         print(flush=True)
-        D2T2 += 0.25*uccsd5_t2resid_t2dagwnC_t2sqr(W,T2,o,v) 
+        D2T2 += 0.25*faster_ucc5eqns.t2dagWnC_T2sqr_ovov(T2,W[o,v,o,v])
+        D2T2 += 0.25*faster_ucc5eqns.t2dag_WnT2sqr_ovov(T2,W[o,v,o,v])
+
+        D2T2 += 0.25*faster_ucc5eqns.t2dagWnC_T2sqr_oooo(T2,W[o,o,o,o])
+        D2T2 += 0.25*faster_ucc5eqns.t2dag_WnT2sqr_oooo(T2,W[o,o,o,o])
+
+        D2T2 += 0.25*faster_ucc5eqns.t2dagWnC_T2sqr_vvvv(T2,W[v,v,v,v])
+        D2T2 += 0.25*faster_ucc5eqns.t2dag_WnT2sqr_vvvv(T2,W[v,v,v,v])
+
         print('done w t2')
         print(flush=True)
-        D2T2 += 0.25*uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v)
+#        mem_usage = memory_usage((uccsd5_t2resid_T1couplings,(W,T1,T2,o,v)))
+#        print('Memory usage (in chunks of .1 seconds): %s' % mem_usage)
+#        print('Maximum memory usage: %s' % max(mem_usage))
 
+
+############################################################
+        #D2T2 += 0.25*uccsd5_t2resid_t2dagwnC_t2sqr(W,T2,o,v) 
+        #print('done w t2')
+        #print(flush=True)
+        #D2T2 += 0.25*uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v)
+###########################################################
 
     nocc=nvir=None
     D2T2=tamps.antisym_T2(D2T2,nocc,nvir)
     return D1T1,D2T2
 
 def ucc3_t2resid(Fock,W,T2,o,v):
+    print('shape of T2:',np.shape(T2))
     roovv = 0.500000000 * np.einsum("ik,jkab->ijab",Fock[o,o],T2,optimize="optimal")
     roovv += -0.500000000 * np.einsum("ca,ijbc->ijab",Fock[v,v],T2,optimize="optimal")
     roovv += 0.125000000 * np.einsum("klab,ijkl->ijab",T2,W[o,o,o,o],optimize="optimal")
@@ -45,6 +73,7 @@ def uccsd4_t1resid(Fock,W,T1,T2,o,v):
     rov += -0.500000000 * np.einsum("ijbc,bcja->ia",T2,W[v,v,o,v],optimize="optimal")
     return rov
 
+#@profile
 def uccsd4_t2resid(Fock,W,T1,T2,o,v):
     # terms linear in T
     roovv = -0.500000000 * np.einsum("ka,ijkb->ijab",T1,W[o,o,o,v],optimize="optimal")
@@ -114,6 +143,8 @@ def uccsd5_t2resid_T1couplings(W,T1,T2,o,v):
     roovv += uccsd5_t1dagwnCt2(W,T1,T2,o,v)
     return roovv
 
+
+
 def uccsd5_t1dagwnCt2(W,T1,T2,o,v):
     T1dag = T1.transpose(1,0)
     # T1^WnT2
@@ -125,9 +156,10 @@ def uccsd5_t1dagwnCt2(W,T1,T2,o,v):
     roovv += -0.250000000 * np.einsum("ck,ijcd,kdab->ijab",T1dag,T2,W[o,v,v,v],optimize="optimal")
     return roovv
 
+#@profile
 def uccsd5_t2resid_t2dagwnC_t2sqr(W,T2,o,v):
     T2dag=T2.transpose(2,3,0,1)
-
+    print('shape of T2:',np.shape(T2))
     roovv = -0.250000000 * np.einsum("ikab,jlcd,efkl,cdef->ijab",T2,T2,T2dag,W[v,v,v,v])
     roovv += 1.000000000 * np.einsum("ikab,jlcd,cekm,mdle->ijab",T2,T2,T2dag,W[o,v,o,v])
     roovv += -1.000000000 * np.einsum("ikab,jlcd,celm,mdke->ijab",T2,T2,T2dag,W[o,v,o,v])
@@ -173,7 +205,7 @@ def uccsd5_t2resid_t2dagwnC_t2sqr(W,T2,o,v):
     roovv += -0.250000000 * np.einsum("klcd,ijae,efkl,cdbf->ijab",T2,T2,T2dag,W[v,v,v,v])
     return roovv
 
-
+#@profile
 def uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v):
     T2dag=T2.transpose(2,3,0,1)
     roovv = -1.000000000 * np.einsum("ikab,jlcd,celm,mdke->ijab",T2,T2,T2dag,W[o,v,o,v],optimize="optimal")
