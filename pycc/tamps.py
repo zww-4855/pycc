@@ -1,6 +1,21 @@
 import numpy as np
 import pickle
 
+
+def set_tampsFAST(cc_calc,noa,nob,nva,nvb,t2aa,t2bb,t2ab):
+    tamps={}
+    if "S" in cc_calc:
+        t1aa=np.zeros((noa,nva))
+        t1bb=np.zeros((nob,nvb))
+        tamps.update({"t1aa":t1aa,"t1bb":t1bb})
+
+    if "D" in cc_calc:
+        tamps.update({"t2aa":t2aa,"t2bb":t2bb,"t2ab":t2ab})
+
+    return tamps
+
+
+
 def set_tampsSLOW(cc_calc,no,nv,initT2,t2ampFile=None):
     tamps={}
     if "S" in cc_calc:
