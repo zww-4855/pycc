@@ -8,9 +8,22 @@ Welcome to pycc's documentation!
 
 .. toctree::
    :maxdepth: 2
+   :numbered:
+   :caption: Overview:
+
+   into_pycc
+   install_pycc
+   cite_pycc
+   contact_info
+
+.. toctree::
+   :maxdepth: 2
+   :numbered:
    :caption: Contents:
 
    getting_started
+   calc_setup
+   method_options
    api
 
 
