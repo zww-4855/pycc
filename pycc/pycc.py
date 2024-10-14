@@ -5,6 +5,7 @@ import pycc.cc_energy as cc_energy
 import pycc.cc_eqns as cc_eqns
 import pycc.rdm1 as rdm1
 import pycc.props as props
+import pycc.misc as misc
 import pickle
 
 class SetupCC():
@@ -54,7 +55,7 @@ class SetupCC():
             self.get_spinIntegrated_integrals(pyscf_mf,pyscf_mol)
             self.get_denomsFast(pyscf_mf,cc_info["fastSIcalc"])
 
-        ## TO DO:: ADD OPTION FOR SPIN-INTEGRATED CC EQNS, AND INTERFACE TO XACC
+        ## TO DO:: ADD OPTION FOR (SPIN-INTEGRATED ? ) CC EQNS USING INTERMEDIATES, AND INTERFACE TO XACC
 
 
     def get_denomsFast(self,pyscf_mf,cc_calc):
@@ -73,6 +74,10 @@ class SetupCC():
         if "D" in cc_calc:
             D2aa,D2bb,D2ab=set_denoms.D2denomFast(epsaa,epsbb,occ_aa,occ_bb,virt_aa,virt_bb,n)
             self.denomInfo.update({"D2aa":D2aa,"D2bb":D2bb,"D2ab":D2ab})
+
+        if "pCCD" in cc_calc or "pLCCD" in cc_calc:
+            D2aa = D2bb = 0.0*D2aa
+            D2ab = misc.zeroT2_offDiagonal(D2ab)
 
     def get_denomsSlow(self,pyscf_mf,cc_calc):
         virt_aa=self.occSliceInfo["virt_aa"]

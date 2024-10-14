@@ -4,7 +4,7 @@ import pycc.ccdq_eqns as ccdq_eqns
 import pycc.ccsdt_eqns as ccsdt_eqns
 import pycc.ucc_eqns as ucc_eqns
 import pycc.spin_integratedUCCeqns as SIucc_eqns
-
+import pycc.misc as misc
 
 def cceqns_driver(driveCCobj,cc_info):
 
@@ -41,6 +41,11 @@ def cceqns_driver(driveCCobj,cc_info):
         resid_t2aa += np.reciprocal(driveCCobj.denomInfo["D2aa"])*T2_aa
         resid_t2bb += np.reciprocal(driveCCobj.denomInfo["D2bb"])*T2_bb
         resid_t2ab += np.reciprocal(driveCCobj.denomInfo["D2ab"])*T2_ab
+
+        if "pCCD" in driveCCobj.cc_type or "pLCCD" in driveCCobj.cc_type: # zero the off-diagonal if pCCD/pLCCD calc
+            resid_t2aa = resid_t2bb = 0.0*resid_t2aa
+            resid_t2ab = misc.zeroT2_offDiagonal(resid_t2ab)
+
         driveCCobj.tamps.update({'t2aa':resid_t2aa*D2aa,"t2bb":resid_t2bb*D2bb,"t2ab":resid_t2ab*D2ab})
 
     if "slowSOcalc" in cc_info: # spin-orb eqns
