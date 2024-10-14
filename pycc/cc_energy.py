@@ -59,6 +59,8 @@ def spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb):
     energy += 1.000000000 * np.einsum("aAiI,iIaA->",W_abab[va,vb,oa,ob],T2_ab,optimize="optimal")
     energy += 0.250000000 * np.einsum("ABIJ,IJAB->",W_bbbb[vb,vb,ob,ob],T2_bb,optimize="optimal")
     print('energy:',energy)
+    print('E components:',0.250000000 * np.einsum("abij,ijab->",W_aaaa[va,va,oa,oa],T2_aa,optimize="optimal"), 0.250000000 * np.einsum("ABIJ,IJAB->",W_bbbb[vb,vb,ob,ob],T2_bb,optimize="optimal"),1.000000000 * np.einsum("aAiI,iIaA->",W_abab[va,vb,oa,ob],T2_ab,optimize="optimal"))
+
     return energy
 
 def spinorbitalCCSDE(T2,W,F,o,v,T1=None):

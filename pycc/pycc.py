@@ -6,6 +6,7 @@ import pycc.cc_eqns as cc_eqns
 import pycc.rdm1 as rdm1
 import pycc.props as props
 import pycc.misc as misc
+import pycc.build_pCC_corrections as build_pCC_corrections
 import pickle
 
 class SetupCC():
@@ -76,6 +77,11 @@ class SetupCC():
             self.denomInfo.update({"D2aa":D2aa,"D2bb":D2bb,"D2ab":D2ab})
 
         if "pCCD" in cc_calc or "pLCCD" in cc_calc:
+            from copy import deepcopy
+            D2aa_bk = deepcopy(D2aa)
+            D2bb_bk = deepcopy(D2bb)
+            D2ab_bk = deepcopy(D2ab)
+            self.denomInfo.update({"D2aabkup":D2aa_bk,"D2bbbkup":D2bb_bk,"D2abbkup":D2ab_bk})
             D2aa = D2bb = 0.0*D2aa
             D2ab = misc.zeroT2_offDiagonal(D2ab)
 
@@ -291,6 +297,7 @@ class DriveCC(SetupCC):
         self.correlationE={} #options: totalCorrCorrection, and options for (T), (Qf), etc
         self.tamps={}     #TO DO:: Load T2 if not None
         self.rdm1={}
+        self.pcc_amps={}
 
         # setup t amplitudes TODO:: ADD in query/setup for tamps of spin-intgr eqns
         if "slowSOcalc" in cc_info:
@@ -388,7 +395,9 @@ class DriveCC(SetupCC):
         if self.dump_tamps: 
             with open('t2amps.pickle', 'wb') as f:
                 pickle.dump(self.tamps["t2aa"], f)
-
+ 
+        if "p" in self.cc_type:
+            build_pCC_corrections.drive_pcc_energyCorrections(self)
 
     def drive_rdm(self,pyscf_mol,pyscf_mf):
         spin_rdm1 = rdm1.build_Spinrdm1(self)
