@@ -7,28 +7,59 @@ import sys
 import pycc.modify_T2resid_T4Qf2Slow as pdag_xcc6
 import pycc.ucc_energy as ucc_energy
 def ccenergy_driver(driveCCobj,cc_info):
-    o=driveCCobj.occSliceInfo["occ_aa"]
-    v=driveCCobj.occSliceInfo["virt_aa"]
-    
-    W=driveCCobj.integralInfo["tei"]
-    Fock=driveCCobj.integralInfo["oei"]
-    if "UCC" not in cc_info["slowSOcalc"]: #"slowSOcalc" in cc_info: #spin-orb energy
-        t2=driveCCobj.tamps["t2aa"]
-        if "t1aa" in driveCCobj.tamps:
-            t1=driveCCobj.tamps["t1aa"]
-        else:
-            t1=None
-        
-        ccsd_energy=spinorbitalCCSDE(t2,W,Fock,o,v,t1)
-        print('ccsd e',ccsd_energy) 
-        return ccsd_energy
-    
-    elif "UCC" in cc_info["slowSOcalc"]:
-        t2 = driveCCobj.tamps["t2aa"]
-        t1 = driveCCobj.tamps.get("t1aa",np.zeros((np.shape(t2)[0],np.shape(t2)[2])))
-        energy = ucc_energy.ucc_energyDriver(cc_info["slowSOcalc"],W,t1,t2,o,v,driveCCobj)
-        return energy
+    if "fastSIcalc" in cc_info: # run the spin-integrated code
+            nocc_aa = driveCCobj.occInfo["nocc_aa"]
+            nocc_bb = driveCCobj.occInfo["nocc_bb"]
+            nvirt_aa = driveCCobj.occInfo["nvirt_aa"]
+            nvirt_bb = driveCCobj.occInfo["nvirt_bb"]
 
+            oa = driveCCobj.occSliceInfo["occ_aa"]
+            ob = driveCCobj.occSliceInfo["occ_bb"]
+            va = driveCCobj.occSliceInfo["virt_aa"]
+            vb = driveCCobj.occSliceInfo["virt_bb"]
+
+            W_aaaa = driveCCobj.integralInfo["tei_aaaa"]
+            W_bbbb = driveCCobj.integralInfo["tei_bbbb"]
+            W_abab = driveCCobj.integralInfo["tei_abab"]
+
+            Fock_aa = driveCCobj.integralInfo["oei_aa"]
+            Fock_bb = driveCCobj.integralInfo["oei_bb"]
+
+            T2_aa = driveCCobj.tamps["t2aa"]
+            T2_bb = driveCCobj.tamps["t2bb"]
+            T2_ab = driveCCobj.tamps["t2ab"]
+            return spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb)
+            
+
+    else: # run the spin-orbital code
+        o=driveCCobj.occSliceInfo["occ_aa"]
+        v=driveCCobj.occSliceInfo["virt_aa"]
+        
+        W=driveCCobj.integralInfo["tei"]
+        Fock=driveCCobj.integralInfo["oei"]
+        if "UCC" not in cc_info["slowSOcalc"]: #"slowSOcalc" in cc_info: #spin-orb energy
+            t2=driveCCobj.tamps["t2aa"]
+            if "t1aa" in driveCCobj.tamps:
+                t1=driveCCobj.tamps["t1aa"]
+            else:
+                t1=None
+            
+            ccsd_energy=spinorbitalCCSDE(t2,W,Fock,o,v,t1)
+            print('ccsd e',ccsd_energy) 
+            return ccsd_energy
+        
+        elif "UCC" in cc_info["slowSOcalc"]:
+            t2 = driveCCobj.tamps["t2aa"]
+            t1 = driveCCobj.tamps.get("t1aa",np.zeros((np.shape(t2)[0],np.shape(t2)[2])))
+            energy = ucc_energy.ucc_energyDriver(cc_info["slowSOcalc"],W,t1,t2,o,v,driveCCobj)
+            return energy
+
+def spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb):
+    energy = 0.250000000 * np.einsum("abij,ijab->",W_aaaa[va,va,oa,oa],T2_aa,optimize="optimal")
+    energy += 1.000000000 * np.einsum("aAiI,iIaA->",W_abab[va,vb,oa,ob],T2_ab,optimize="optimal")
+    energy += 0.250000000 * np.einsum("ABIJ,IJAB->",W_bbbb[vb,vb,ob,ob],T2_bb,optimize="optimal")
+    print('energy:',energy)
+    return energy
 
 def spinorbitalCCSDE(T2,W,F,o,v,T1=None):
     #         1.0000 f(i,i)
@@ -179,11 +210,11 @@ def sixthOrderQf_wnT2cubed(W,T2,o,v,D2):
     print('pdagq WnT2^3 6th order energy:',teste)
 
 
-    import pycc.mbpt6 as mbpt6
-    tmpT2=W[o,o,v,v]*D2
-    D2T2mbpt = 0.5*mbpt6.residQf2_aaaa(W[o,o,v,v],tmpT2,tmpT2.transpose(2,3,0,1),o,v)
-    mbpte =0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2mbpt)
-    print('MBPT(6) energy for wnT2^2:',mbpte)
+#    import pycc.mbpt6 as mbpt6
+#    tmpT2=W[o,o,v,v]*D2
+#    D2T2mbpt = 0.5*mbpt6.residQf2_aaaa(W[o,o,v,v],tmpT2,tmpT2.transpose(2,3,0,1),o,v)
+#    mbpte =0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2mbpt)
+#    print('MBPT(6) energy for wnT2^2:',mbpte)
 
 # Test wicked_toT2 part:
 #    D2T2=0.5*qf.wnT2cubed_toT2(W,T2,o,v)
@@ -200,12 +231,12 @@ def sixthOrderQf_wnT2cubed(W,T2,o,v,D2):
 #    print('WnT2^3 contribution to (Qf):',sixthO_wnT2cubed)
 #    print(flush=True)
 
-    D4T4 = qf.wnT2cubed_toT4(W,tmpT2,o,v)
-    D4T4 = D4T4.transpose(4,5,6,7,0,1,2,3)
-    resid_aaaa = (1.0/16.0)*np.einsum('klcd,abcdijkl->abij',tmpT2,D4T4)
-    resid_aaaa = tamps.antisym_T2(resid_aaaa,None,None)
-    sixthO_wnT2cubed=0.5*(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,resid_aaaa)
-    print('WnT2^3 contribution to (Qf): MBPT',sixthO_wnT2cubed)
+#    D4T4 = qf.wnT2cubed_toT4(W,tmpT2,o,v)
+#    D4T4 = D4T4.transpose(4,5,6,7,0,1,2,3)
+#    resid_aaaa = (1.0/16.0)*np.einsum('klcd,abcdijkl->abij',tmpT2,D4T4)
+#    resid_aaaa = tamps.antisym_T2(resid_aaaa,None,None)
+#    sixthO_wnT2cubed=0.5*(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,resid_aaaa)
+#    print('WnT2^3 contribution to (Qf): MBPT',sixthO_wnT2cubed)
 
     return teste
 

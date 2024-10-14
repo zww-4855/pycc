@@ -3,17 +3,55 @@ import pycc.tamps as tamps
 import pycc.ccdq_eqns as ccdq_eqns
 import pycc.ccsdt_eqns as ccsdt_eqns
 import pycc.ucc_eqns as ucc_eqns
+import pycc.spin_integratedUCCeqns as SIucc_eqns
+
 
 def cceqns_driver(driveCCobj,cc_info):
-    o=driveCCobj.occSliceInfo["occ_aa"]
-    v=driveCCobj.occSliceInfo["virt_aa"]
 
-    nocc=driveCCobj.occInfo["nocc_aa"]
-    nvirt=driveCCobj.occInfo["nvirt_aa"]
+    if "fastSIcalc" in cc_info: # spin-integrated code
+        nocc_aa = driveCCobj.occInfo["nocc_aa"]
+        nocc_bb = driveCCobj.occInfo["nocc_bb"]
+        nvirt_aa = driveCCobj.occInfo["nvirt_aa"]
+        nvirt_bb = driveCCobj.occInfo["nvirt_bb"]
 
-    W=driveCCobj.integralInfo["tei"]
-    Fock=driveCCobj.integralInfo["oei"]
+        oa = driveCCobj.occSliceInfo["occ_aa"]
+        ob = driveCCobj.occSliceInfo["occ_bb"]
+        va = driveCCobj.occSliceInfo["virt_aa"]
+        vb = driveCCobj.occSliceInfo["virt_bb"]
+
+
+        W_aaaa = driveCCobj.integralInfo["tei_aaaa"]
+        W_bbbb = driveCCobj.integralInfo["tei_bbbb"]
+        W_abab = driveCCobj.integralInfo["tei_abab"]
+
+        Fock_aa = driveCCobj.integralInfo["oei_aa"]
+        Fock_bb = driveCCobj.integralInfo["oei_bb"]
+
+        D2aa = driveCCobj.denomInfo["D2aa"]
+        D2bb = driveCCobj.denomInfo["D2bb"]
+        D2ab = driveCCobj.denomInfo["D2ab"]
+        T2_aa = driveCCobj.tamps["t2aa"]
+        T2_bb = driveCCobj.tamps["t2bb"]
+        T2_ab = driveCCobj.tamps["t2ab"]
+       
+        resid_t2aa = SIucc_eqns.UCC3_t2resid_aa(W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb,Fock_aa)
+        resid_t2bb = SIucc_eqns.UCC3_t2resid_bb(W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb,Fock_bb)
+        resid_t2ab = SIucc_eqns.UCC3_t2resid_ab(W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb,Fock_aa,Fock_bb) 
+     
+        resid_t2aa += np.reciprocal(driveCCobj.denomInfo["D2aa"])*T2_aa
+        resid_t2bb += np.reciprocal(driveCCobj.denomInfo["D2bb"])*T2_bb
+        resid_t2ab += np.reciprocal(driveCCobj.denomInfo["D2ab"])*T2_ab
+        driveCCobj.tamps.update({'t2aa':resid_t2aa*D2aa,"t2bb":resid_t2bb*D2bb,"t2ab":resid_t2ab*D2ab})
+
     if "slowSOcalc" in cc_info: # spin-orb eqns
+        o=driveCCobj.occSliceInfo["occ_aa"]
+        v=driveCCobj.occSliceInfo["virt_aa"]
+    
+        nocc=driveCCobj.occInfo["nocc_aa"]
+        nvirt=driveCCobj.occInfo["nvirt_aa"]
+    
+        W=driveCCobj.integralInfo["tei"]
+        Fock=driveCCobj.integralInfo["oei"]
 
         if "CCSDT" in cc_info["slowSOcalc"]: # Generate CCSDT resid eqns
             print('Entering CCSDT eqns')
