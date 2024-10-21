@@ -7,8 +7,8 @@ import pycc.zassenhaus_ucc as zassenhaus_ucc
 
 def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
     if calcType == "ZUCCSD2": # Zassenhaus method, exact for 2 electrons
-        D1T1 = zassenhaus_ucc.T1resid_eqn(F,W,T1,T2,o,v) 
-        D2T2 = zassenhaus_ucc.T2resid_eqn(F,W,T1,T2,o,v) 
+        D1T1 = zassenhaus_ucc.T1resid_eqn(Fock,W,T1,T2,o,v) 
+        D2T2 = zassenhaus_ucc.T2resid_eqn(Fock,W,T1,T2,o,v) 
 
     if calcType == "UCCD3":
         D1T1 = T1 ## should be 0
@@ -45,6 +45,11 @@ def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
 
         print('done w t2')
         print(flush=True)
+
+    nocc=nvir=None
+    D2T2=tamps.antisym_T2(D2T2,nocc,nvir)
+    return D1T1,D2T2
+
 #        mem_usage = memory_usage((uccsd5_t2resid_T1couplings,(W,T1,T2,o,v)))
 #        print('Memory usage (in chunks of .1 seconds): %s' % mem_usage)
 #        print('Maximum memory usage: %s' % max(mem_usage))
@@ -57,9 +62,6 @@ def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
         #D2T2 += 0.25*uccsd5_t2resid_t2dag_wnt2sqrC(W,T2,o,v)
 ###########################################################
 
-    nocc=nvir=None
-    D2T2=tamps.antisym_T2(D2T2,nocc,nvir)
-    return D1T1,D2T2
 
 def ucc3_t2resid(Fock,W,T2,o,v):
     print('shape of T2:',np.shape(T2))

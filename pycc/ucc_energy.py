@@ -21,12 +21,12 @@ def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
         energy += uccsd5_energy(W,T1,T2,o,v)
         # Get remaining UCCSD5/UCCD5 terms
     if "ZUCCSD2" in calcType:
+        print('Inside ZUCCSD2')
         D2 = driveCCobj.denomInfo["D2aa"]
-        energy = uccsd4_energy(W,T2,o,v,D2)
         F = driveCCobj.integralInfo["oei"]
-
-        ccsd_energy  = cc_energy.spinorbitalCCSDE(T2,W,F,o,v,T1)
-        ccsd_energy += zassenhaus_ucc.subtractOff_T1sqr(W,T1,T2,o,v)
+        energy  = cc_energy.spinorbitalCCSDE(T2,W,F,o,v,T1)
+        print('ccsd portion of E:', energy)
+        energy += zassenhaus_ucc.subtractOff_T1sqr(W,T1,T2,o,v)
         #zassenhaus_ucc.test_3A(F,W,T1,T2,o,v)
     return energy
 
