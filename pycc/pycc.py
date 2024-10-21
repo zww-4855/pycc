@@ -238,6 +238,14 @@ class SetupCC():
               np.einsum('pqrs, sS -> pqrS', gao, C, optimize=True), C, optimize=True), C, optimize=True), C, optimize=True)
 
         fock=np.diag(eps)
+
+#        F = np.block([
+#                 [      pyscf_mf.get_fock()           ,   np.zeros_like(pyscf_mf.get_fock()) ],
+#                 [np.zeros_like(pyscf_mf.get_fock())  ,          pyscf_mf.get_fock()         ]
+#                ])
+#        fock= C.T@(F@C)
+        #print('fock',fock)
+        #sys.exit()
         self.integralInfo={"oei":fock,"tei":gmo}
 
 

@@ -1,10 +1,15 @@
 import numpy as np
 import pycc.tamps as tamps
 import pycc.faster_ucc5eqns as faster_ucc5eqns
+import pycc.zassenhaus_ucc as zassenhaus_ucc
 #from memory_profiler import memory_usage
 #from memory_profiler import profile
 
 def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
+    if calcType == "ZUCCSD2": # Zassenhaus method, exact for 2 electrons
+        D1T1 = zassenhaus_ucc.T1resid_eqn(F,W,T1,T2,o,v) 
+        D2T2 = zassenhaus_ucc.T2resid_eqn(F,W,T1,T2,o,v) 
+
     if calcType == "UCCD3":
         D1T1 = T1 ## should be 0
         D2T2 = ucc3_t2resid(Fock,W,T2,o,v)

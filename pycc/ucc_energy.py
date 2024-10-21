@@ -2,6 +2,8 @@ import numpy as np
 import pycc.ucc_eqns as ucc_eqns
 import pycc.tamps as tamps
 import pycc.faster_ucc5eqns as faster_ucc5eqns
+import pycc.zassenhaus_ucc as zassenhaus_ucc
+import pycc.cc_energy as cc_energy
 
 def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
     energy = 0.0
@@ -18,7 +20,14 @@ def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
         energy = uccsd4_energy(W,T2,o,v,D2)
         energy += uccsd5_energy(W,T1,T2,o,v)
         # Get remaining UCCSD5/UCCD5 terms
+    if "ZUCCSD2" in calcType:
+        D2 = driveCCobj.denomInfo["D2aa"]
+        energy = uccsd4_energy(W,T2,o,v,D2)
+        F = driveCCobj.integralInfo["oei"]
 
+        ccsd_energy  = cc_energy.spinorbitalCCSDE(T2,W,F,o,v,T1)
+        ccsd_energy += zassenhaus_ucc.subtractOff_T1sqr(W,T1,T2,o,v)
+        #zassenhaus_ucc.test_3A(F,W,T1,T2,o,v)
     return energy
 
 
