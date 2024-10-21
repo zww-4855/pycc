@@ -24,7 +24,7 @@
                        Version 2.1
 
                      login9.ufhpc                                      
-                     Mon Oct 21 18:02:08 EDT 2024                      
+                     Mon Oct 21 18:01:32 EDT 2024                      
                      integer*8 version is running
 
 ********************************************************************************
@@ -34,7 +34,7 @@ nih test
 HE 0. 0.0 0.                                                                    
                                                                                 
 *CFOUR(UNITS=ANGSTROM,COORDINATES=CARTESIAN                                     
-CALC=LCCD,BASIS=SPECIAL                                                         
+CALC=CCSD,BASIS=SPECIAL                                                         
 CC_PROG=NCC,MEMORY=4,MEM_UNIT=GB)                                               
                                                                                 
 HE:STO-6G                                                                       
@@ -66,7 +66,7 @@ HE:STO-6G
        BRUECKNER            IBRKNR         OFF         [  0]    ***   
        BUFFERSIZE           IBUFFS              4096            ***   
        CACHE_RECS           ICHREC             10               ***   
-       CALCLEVEL            ICLLVL         LCCD        [  5]    ***   
+       CALCLEVEL            ICLLVL         CCSD        [ 10]    ***   
        CAS_GECCO            ICMRCC         OFF         [  0]    ***   
        CAS_GUESS            ICGUES         CANONICAL   [  0]    ***   
        CAS_INPUT            ICSINP         ORBITALS    [  0]    ***   
@@ -305,12 +305,12 @@ Line Symbol    AtNr   At. Mass
   ECPDATA file not present.   Using default ECPDATA. 
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/set_ecpdata
---executable set_ecpdata finished with status     0 in        0.03 seconds (walltime).
+--executable set_ecpdata finished with status     0 in        0.02 seconds (walltime).
  cholesky/tol? F   1.0000000000000005E-004
   There are    1 basis functions.
  @GEOPT-W, Archive file not created for single-point calculation.
- @CHECKOUT-I, Total execution time (CPU/WALL):         0.15/       0.49 seconds.
---executable xjoda finished with status     0 in        0.65 seconds (walltime).
+ @CHECKOUT-I, Total execution time (CPU/WALL):         0.18/       0.50 seconds.
+--executable xjoda finished with status     0 in        0.59 seconds (walltime).
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xnmol
 OMP_NUM_THREADS not specified; defaulting to 1
@@ -352,12 +352,12 @@ One-electron integrals took 0.002 seconds
   @TWOEL-I,          1 INTEGRALS OF SYMMETRY TYPE  I I I I
   @TWOEL-I, TOTAL NUMBER OF 2-E INTEGRALS 1
 
-Two-electron integrals took 0.011 seconds
+Two-electron integrals took 0.009 seconds
 
 Nuclear Repulsion Energy: 0.0
 
 Nuclear repulsion energy: 0.0
---executable xnmol finished with status     0 in        0.59 seconds (walltime).
+--executable xnmol finished with status     0 in        0.23 seconds (walltime).
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xnscf
 OMP_NUM_THREADS not specified; defaulting to 1
@@ -417,7 +417,7 @@ Orbital eigenvalues (alpha, 1H = 27.2113834 eV)
        ----   --------------------   --------------------   -------   ---------
     1     1          -0.8950222055         -24.3547923851     A g      A g  (1)
 
---executable xnscf finished with status     0 in        0.18 seconds (walltime).
+--executable xnscf finished with status     0 in        0.11 seconds (walltime).
   in runvcc 
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xvprop
@@ -436,7 +436,7 @@ Orbital eigenvalues (alpha, 1H = 27.2113834 eV)
     Field gradient           0.0000000     0.0000000     0.0000000
     Potential                0.0000000     0.0000000     0.0000000
     --------------------------------------------------------------
- @CHECKOUT-I, Total execution time (CPU/WALL):         0.01/       0.03 seconds.
+ @CHECKOUT-I, Total execution time (CPU/WALL):         0.01/       0.02 seconds.
 --executable xvprop finished with status     0 in        0.06 seconds (walltime).
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xncc
@@ -482,12 +482,12 @@ Processing IJKL:
     Occupied:   1:1   ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
     Virtual:  ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
 
-Integral transformation took 0.015 seconds at 0.000 Gflops/sec
+Integral transformation took 0.016 seconds at 0.000 Gflops/sec
 
-sym_1234:          0.000020 s          1 x    0.000000 gflops/sec
-weight:            0.000039 s          1 x    0.000000 gflops/sec
-layer1_axpby:      0.000043 s          3 x    0.000165 gflops/sec
-sym_12:            0.000085 s          1 x    0.000000 gflops/sec
+sym_1234:          0.000006 s          1 x    0.000000 gflops/sec
+weight:            0.000012 s          1 x    0.000000 gflops/sec
+layer1_axpby:      0.000012 s          3 x    0.000570 gflops/sec
+sym_12:            0.000052 s          1 x    0.000000 gflops/sec
 
 MP2 correlation energy: 0.0
 
@@ -495,38 +495,48 @@ Non-iterative calculation of MP2 took 0.000 cpu seconds and 0.000 walltime secon
 
 Total MP2 energy: -2.846292188947868
 
-layer1_axpby:       0.000003 s          2 x    0.000616 gflops/sec
-weight:             0.000025 s          2 x    0.000000 gflops/sec
-layer1_dot:         0.000042 s          2 x    0.000000 gflops/sec
-layer1_spinad:      0.000103 s          2 x    0.000000 gflops/sec
+layer1_axpby:       0.000002 s          2 x    0.000836 gflops/sec
+weight:             0.000009 s          2 x    0.000000 gflops/sec
+layer1_dot:         0.000027 s          2 x    0.000000 gflops/sec
+layer1_spinad:      0.000072 s          2 x    0.000000 gflops/sec
 
 Using DIIS to accelerate the convergence of T1 and T2
-Beginning iterative solution of LCCD equations:
+Beginning iterative solution of CCSD equations:
 
 Using standard CC algorithm
 
-It. Correlation Energy T2 Residual CPU Time (s) Walltime (s)
--------------------------------------------------------------
-  1   0.000000000000000 0.00000e+00        0.001        0.001
+It. Correlation Energy T1 Residual T2 Residual CPU Time (s) Walltime (s)
+-------------------------------------------------------------------------
+  1   0.000000000000000 0.00000e+00 0.00000e+00        0.002        0.002
 
-LCCD iterations converged in 1 cycles and 0.001 seconds (0.001 s/it.) at 0.000 Gflops/sec
+CCSD iterations converged in 1 cycles and 0.002 seconds (0.002 s/it.) at 0.000 Gflops/sec
 
-LCCD correlation energy: 0.0
+CCSD correlation energy: 0.0
 
-layer1_fill:         0.000000 s          1 x    0.000000 gflops/sec
-layer1_dot:          0.000000 s          2 x    0.000000 gflops/sec
-weight:              0.000003 s          1 x    0.000000 gflops/sec
-layer1_axpby:        0.000005 s          5 x    0.001768 gflops/sec
-realloc:             0.000007 s          1 x    0.000000 gflops/sec
-layer1_sym:          0.000078 s          2 x    0.000000 gflops/sec
-layer1_spinad:       0.000145 s          5 x    0.000000 gflops/sec
-c2_into_z2_rhf:      0.000160 s          1 x    0.000019 gflops/sec
-lccd_rhf:            0.000243 s          1 x    0.000012 gflops/sec
+layer1_fill:           0.000000 s          1 x    0.000000 gflops/sec
+layer1_dot:            0.000000 s          2 x    0.000000 gflops/sec
+weight:                0.000004 s          2 x    0.000000 gflops/sec
+realloc:               0.000008 s          1 x    0.000000 gflops/sec
+layer1_axpby:          0.000011 s         18 x    0.002730 gflops/sec
+c_into_wmnie_rhf:      0.000020 s          2 x    0.000000 gflops/sec
+c1_into_z2_rhf:        0.000021 s          1 x    0.000000 gflops/sec
+c1_into_z1_rhf:        0.000025 s          1 x    0.000119 gflops/sec
+c_into_wmnij_rhf:      0.000061 s          1 x    0.000049 gflops/sec
+c_into_wmbij_rhf:      0.000082 s          1 x    0.000085 gflops/sec
+c_into_fem_rhf:        0.000085 s          1 x    0.000012 gflops/sec
+layer1_sym:            0.000095 s          3 x    0.000021 gflops/sec
+c2_into_z1_rhf:        0.000138 s          2 x    0.000000 gflops/sec
+c_into_fea_rhf:        0.000142 s          1 x    0.000007 gflops/sec
+c2_into_z2_rhf:        0.000152 s          2 x    0.000020 gflops/sec
+c_into_fmi_rhf:        0.000166 s          1 x    0.000006 gflops/sec
+c_into_wmaei_rhf:      0.000262 s          2 x    0.000008 gflops/sec
+layer1_spinad:         0.000791 s         31 x    0.000000 gflops/sec
+ccsd_rhf:              0.001310 s          1 x    0.000016 gflops/sec
 
-LCCD correlation energy: 0.0
+CCSD correlation energy: 0.0
 
-Total LCCD energy: -2.846292188947868
+Total CCSD energy: -2.846292188947868
 
---executable xncc finished with status     0 in        0.29 seconds (walltime).
+--executable xncc finished with status     0 in        0.15 seconds (walltime).
   The final electronic energy is        -2.846292188947868 a.u. 
-  This computation required                            1.83 seconds (walltime).
+  This computation required                            1.22 seconds (walltime).

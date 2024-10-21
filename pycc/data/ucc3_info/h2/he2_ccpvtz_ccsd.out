@@ -24,7 +24,7 @@
                        Version 2.1
 
                      login9.ufhpc                                      
-                     Mon Oct 21 18:02:08 EDT 2024                      
+                     Mon Oct 21 18:15:35 EDT 2024                      
                      integer*8 version is running
 
 ********************************************************************************
@@ -32,12 +32,14 @@
 ********************************************************************************
 nih test                                                                        
 HE 0. 0.0 0.                                                                    
+HE 1000. 0. 0.                                                                  
                                                                                 
 *CFOUR(UNITS=ANGSTROM,COORDINATES=CARTESIAN                                     
-CALC=LCCD,BASIS=SPECIAL                                                         
+CALC=CCSD,BASIS=SPECIAL                                                         
 CC_PROG=NCC,MEMORY=4,MEM_UNIT=GB)                                               
                                                                                 
-HE:STO-6G                                                                       
+HE:CC-PVTZ                                                                      
+HE:CC-PVTZ                                                                      
                                                                                 
 ********************************************************************************
     -------------------------------------------------------------------
@@ -66,7 +68,7 @@ HE:STO-6G
        BRUECKNER            IBRKNR         OFF         [  0]    ***   
        BUFFERSIZE           IBUFFS              4096            ***   
        CACHE_RECS           ICHREC             10               ***   
-       CALCLEVEL            ICLLVL         LCCD        [  5]    ***   
+       CALCLEVEL            ICLLVL         CCSD        [ 10]    ***   
        CAS_GECCO            ICMRCC         OFF         [  0]    ***   
        CAS_GUESS            ICGUES         CANONICAL   [  0]    ***   
        CAS_INPUT            ICSINP         ORBITALS    [  0]    ***   
@@ -287,30 +289,57 @@ HE:STO-6G
        ZSCALE_EXP           IZEXPS         OFF         [  0]    ***   
     -------------------------------------------------------------------
  cholesky/tol? F   1.0000000000000005E-004
-  @GETXYZ-I,     1 atoms read from ZMAT.
+  @GETXYZ-I,     2 atoms read from ZMAT.
 Line Symbol    AtNr   At. Mass
   1  HE         2     4.00260
+  2  HE         2     4.00260
 Line Symbol    AtNr   At. Mass
   1  HE         2     4.00260
+  2  HE         2     4.00260
                     1                    4                    0
    Rotational constants (in cm-1): 
-
+  ********************             0.0000084233             0.0000084233
    Rotational constants (in MHz): 
-
+  ********************             0.2525252281             0.2525252281
 ********************************************************************************
-   The full molecular point group is I h .
+   The full molecular point group is C24h.
    The largest Abelian subgroup of the full molecular point group is D2h .
    The computational point group is D2h .
 ********************************************************************************
+
+
+ ----------------------------------------------------------------
+         Coordinates used in calculation (QCOMP) 
+ ----------------------------------------------------------------
+ Z-matrix   Atomic            Coordinates (in bohr)
+  Symbol    Number           X              Y              Z
+ ----------------------------------------------------------------
+     HE        2        -0.00000000     0.00000000   944.86326033
+     HE        2         0.00000000     0.00000000  -944.86326033
+ ----------------------------------------------------------------
+
+   Interatomic distance matrix (Angstroms) 
+
+                 HE            HE   
+                [ 1]        [ 2]
+  HE   [ 1]     0.00000
+  HE   [ 2]  1000.00020     0.00000
+   ***PROGRAM ERROR***, Inertia tensor not diagonal in ROTCON.
+   Rotational constants (order x, y, z, in cm-1): 
+          0.0000000000             0.0000084233             0.0000084233
+  ********************
+   Rotational constants (order x, y, z, in MHz): 
+          0.0000000000             0.2525252281             0.2525252281
+  ********************
   ECPDATA file not present.   Using default ECPDATA. 
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/set_ecpdata
 --executable set_ecpdata finished with status     0 in        0.03 seconds (walltime).
  cholesky/tol? F   1.0000000000000005E-004
-  There are    1 basis functions.
+  There are   28 basis functions.
  @GEOPT-W, Archive file not created for single-point calculation.
- @CHECKOUT-I, Total execution time (CPU/WALL):         0.15/       0.49 seconds.
---executable xjoda finished with status     0 in        0.65 seconds (walltime).
+ @CHECKOUT-I, Total execution time (CPU/WALL):         0.13/       0.41 seconds.
+--executable xjoda finished with status     0 in        0.51 seconds (walltime).
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xnmol
 OMP_NUM_THREADS not specified; defaulting to 1
@@ -324,15 +353,20 @@ INTGRL        1    0    1    0    0    0    0    0    0
 nih test
     1    3 X  Y   Z   0.10E-08              0    0
    9999.00      3.00
-          2.00000000    1    1    1
-HE#1   0.000000000000000   0.000000000000000   0.000000000000000
-    6    1
-   65.984567999999996        9.1635999999999992E-003
-   12.098198000000000        4.9361500000000003E-002
-   3.3846400000000001       0.16853830000000000     
-   1.1627149999999999       0.37056280000000003     
-  0.45151599999999997       0.41649150000000001     
-  0.18595900000000001       0.13033410000000001     
+          2.00000000    1    3    1    1    1
+HE#1  -0.000000000000058   0.000000000000000 944.863260333827839
+    6    3
+   234.00000000000000        2.5869999999999999E-003   0.0000000000000000        0.0000000000000000     
+   35.159999999999997        1.9532999999999998E-002   0.0000000000000000        0.0000000000000000     
+   7.9889999999999999        9.0997999999999996E-002   0.0000000000000000        0.0000000000000000     
+   2.2120000000000002       0.27205000000000001        0.0000000000000000        0.0000000000000000     
+  0.66690000000000005       0.47806500000000002        1.0000000000000000        0.0000000000000000     
+  0.20890000000000000       0.30773699999999998        0.0000000000000000        1.0000000000000000     
+    2    2
+   3.0440000000000000        1.0000000000000000        0.0000000000000000     
+  0.75800000000000001        0.0000000000000000        1.0000000000000000     
+    1    1
+   1.9650000000000001        1.0000000000000000     
 FINISH
                                                                                 
 ********************************************************************************
@@ -347,39 +381,42 @@ REFLECTION IN THE XY-PLANE
 
 INTEGRALS LESS THAN 1e-14 ARE NEGLECTED.
 
-One-electron integrals took 0.002 seconds
+One-electron integrals took 0.003 seconds
 
-  @TWOEL-I,          1 INTEGRALS OF SYMMETRY TYPE  I I I I
-  @TWOEL-I, TOTAL NUMBER OF 2-E INTEGRALS 1
+  @TWOEL-I,        618 INTEGRALS OF SYMMETRY TYPE  I I I I
+  @TWOEL-I,       2852 INTEGRALS OF SYMMETRY TYPE  I J I J
+  @TWOEL-I,       2073 INTEGRALS OF SYMMETRY TYPE  I I J J
+  @TWOEL-I,       3998 INTEGRALS OF SYMMETRY TYPE  I J K L
+  @TWOEL-I, TOTAL NUMBER OF 2-E INTEGRALS 9541
 
-Two-electron integrals took 0.011 seconds
+Two-electron integrals took 0.129 seconds
 
-Nuclear Repulsion Energy: 0.0
+Nuclear Repulsion Energy: 0.0021167084
 
-Nuclear repulsion energy: 0.0
---executable xnmol finished with status     0 in        0.59 seconds (walltime).
+Nuclear repulsion energy: 0.0021167084
+--executable xnmol finished with status     0 in        0.30 seconds (walltime).
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xnscf
 OMP_NUM_THREADS not specified; defaulting to 1
 Running with 1 threads/proc
 
-There are 1 functions in the AO basis
+There are 28 functions in the AO basis
 
 There are 8 irreducible representations:
-    Irrep 1 has 1 functions
-    Irrep 2 has 0 functions
-    Irrep 3 has 0 functions
-    Irrep 4 has 0 functions
-    Irrep 5 has 0 functions
-    Irrep 6 has 0 functions
-    Irrep 7 has 0 functions
-    Irrep 8 has 0 functions
+    Irrep 1 has 7 functions
+    Irrep 2 has 3 functions
+    Irrep 3 has 3 functions
+    Irrep 4 has 1 functions
+    Irrep 5 has 7 functions
+    Irrep 6 has 3 functions
+    Irrep 7 has 3 functions
+    Irrep 8 has 1 functions
 
 Parameters for SCF calculation:
 
         SCF reference function: RHF
   Maximum number of iterations: 150
-     Full symmetry point group: I h 
+     Full symmetry point group: C24h
      Computational point group: D2h 
         Initial density matrix: MOREAD
      SCF convergence tolerance: 10**(-7)
@@ -389,35 +426,80 @@ Parameters for SCF calculation:
 
 Smallest overlap matrix eigenvalues:
     Symmetry       Eigenvalue
-           1  1.0000000000e+00
+           1  5.8575955757e-02
+           2  8.5852337981e-01
+           3  8.5852337981e-01
+           4  2.0000000000e+00
+           5  5.8575955757e-02
+           6  8.5852337981e-01
+           7  8.5852337981e-01
+           8  2.0000000000e+00
 
 Occupancies from core Hamiltonian:
-    Alpha: [1,0,0,0,0,0,0,0]
-     Beta: [1,0,0,0,0,0,0,0]
+    Alpha: [1,0,0,0,1,0,0,0]
+     Beta: [1,0,0,0,1,0,0,0]
 
 Initial guess orbitals from core Hamiltonian.
 
 --------------------------------------------------------------------
 Iteration         Total Energy            Largest Density Difference
 --------------------------------------------------------------------
-Current occupation vector: [1,0,0,0,0,0,0,0]
-     1               -2.846292188947868      0.000000000000000e+00
+Current occupation vector: [1,0,0,0,1,0,0,0]
+     1               -5.504192645683901      6.459609357728779e-01
+Current occupation vector: [1,0,0,0,1,0,0,0]
+     2               -5.719551321357948      3.335272530021660e-02
+Current occupation vector: [1,0,0,0,1,0,0,0]
+     3               -5.722241214836955      5.428608894307653e-03
+Current occupation vector: [1,0,0,0,1,0,0,0]
+     4               -5.722306684396099      5.225971683201821e-05
+Current occupation vector: [1,0,0,0,1,0,0,0]
+     5               -5.722306689568796      1.993012456180665e-07
+Current occupation vector: [1,0,0,0,1,0,0,0]
+     6               -5.722306689568838      2.593000014705638e-08
 
 SCF has converged.
 
-Total electron number: 2.0
+Total electron number: 4.000000000000005
 
-Final occupancies: [1,0,0,0,0,0,0,0]
+Final occupancies: [1,0,0,0,1,0,0,0]
 
-E(SCF) = -2.846292188947868
+E(SCF) = -5.722306689568845
 
 Orbital eigenvalues (alpha, 1H = 27.2113834 eV)
 
        MO #        E(hartree)               E(eV)           FULLSYM    COMPSYM
        ----   --------------------   --------------------   -------   ---------
-    1     1          -0.8950222055         -24.3547923851     A g      A g  (1)
+    1    15          -0.9176250770         -24.9698477875     E        B1u  (5)
+    2     1          -0.9176250770         -24.9698477875     E        A g  (1)
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    3     2           0.6366428040          17.3239314290     E        A g  (1)
+    4    16           0.6366428040          17.3239314290     E        B1u  (5)
+    5    11           1.5005136906          40.8310533316     E        B2u  (3)
+    6    22           1.5005136906          40.8310533316     E        B2g  (6)
+    7    17           1.5005136906          40.8310533316     E        B1u  (5)
+    8     8           1.5005136906          40.8310533316     E        B3u  (2)
+    9    25           1.5005136906          40.8310533316     E        B3g  (7)
+   10     3           1.5005136906          40.8310533316     E        A g  (1)
+   11    18           4.6085632112         125.4053804634     E        B1u  (5)
+   12     4           4.6085632112         125.4053804634     E        A g  (1)
+   13     5           6.3576044274         172.9992115782     E        A g  (1)
+   14    19           6.3576044274         172.9992115782     E        B1u  (5)
+   15    20           6.3576044274         172.9992115782     E        B1u  (5)
+   16     6           6.3576044274         172.9992115782     E        A g  (1)
+   17     9           6.3576044274         172.9992115782     E        B3u  (2)
+   18    12           6.3576044274         172.9992115782     E        B2u  (3)
+   19    14           6.3576044274         172.9992115782     E        B1g  (4)
+   20    23           6.3576044274         172.9992115782     E        B2g  (6)
+   21    26           6.3576044274         172.9992115782     E        B3g  (7)
+   22    28           6.3576044274         172.9992115782     E        A u  (8)
+   23    21           7.8483591550         213.5647100273     E        B1u  (5)
+   24     7           7.8483591550         213.5647100273     E        A g  (1)
+   25    13           7.8483591550         213.5647100273     E        B2u  (3)
+   26    27           7.8483591550         213.5647100273     E        B3g  (7)
+   27    10           7.8483591550         213.5647100273     E        B3u  (2)
+   28    24           7.8483591550         213.5647100273     E        B2g  (6)
 
---executable xnscf finished with status     0 in        0.18 seconds (walltime).
+--executable xnscf finished with status     0 in        0.25 seconds (walltime).
   in runvcc 
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xvprop
@@ -432,12 +514,15 @@ Orbital eigenvalues (alpha, 1H = 27.2113834 eV)
     Octopole moment             ----          ----          ----  
     Relativisitic corr.         ----          ----          ----  
     Second moment            0.0000000     0.0000000     0.0000000
-    Electron density         0.0000000     0.0000000     0.0000000
-    Field gradient           0.0000000     0.0000000     0.0000000
-    Potential                0.0000000     0.0000000     0.0000000
+    Electron density        -0.0000000     0.0000000   944.8632603
+    Electron density        -0.0000000     0.0000000  -944.8632603
+    Field gradient          -0.0000000     0.0000000   944.8632603
+    Field gradient          -0.0000000     0.0000000  -944.8632603
+    Potential               -0.0000000     0.0000000   944.8632603
+    Potential               -0.0000000     0.0000000  -944.8632603
     --------------------------------------------------------------
- @CHECKOUT-I, Total execution time (CPU/WALL):         0.01/       0.03 seconds.
---executable xvprop finished with status     0 in        0.06 seconds (walltime).
+ @CHECKOUT-I, Total execution time (CPU/WALL):         0.02/       0.05 seconds.
+--executable xvprop finished with status     0 in        0.09 seconds (walltime).
  --invoking executable--
 /blue/bartlett/z.windom/TBLIS/xncc
 OMP_NUM_THREADS not specified; defaulting to 1
@@ -450,83 +535,164 @@ Alpha Molecular Orbitals:
 Occupied:
 
   Irrep 1:
-       1 (   1)     -0.895022
+       1 (   2)     -0.917625
+
+  Irrep 5:
+       2 (   1)     -0.917625
 
 Virtual:
+
+  Irrep 1:
+       3 (   3)      0.636643
+       4 (  10)      1.500514
+       5 (  12)      4.608563
+       6 (  13)      6.357604
+       7 (  16)      6.357604
+       8 (  24)      7.848359
+
+  Irrep 2:
+       9 (   8)      1.500514
+      10 (  17)      6.357604
+      11 (  27)      7.848359
+
+  Irrep 3:
+      12 (   5)      1.500514
+      13 (  18)      6.357604
+      14 (  25)      7.848359
+
+  Irrep 4:
+      15 (  19)      6.357604
+
+  Irrep 5:
+      16 (   4)      0.636643
+      17 (   7)      1.500514
+      18 (  11)      4.608563
+      19 (  14)      6.357604
+      20 (  15)      6.357604
+      21 (  23)      7.848359
+
+  Irrep 6:
+      22 (   6)      1.500514
+      23 (  20)      6.357604
+      24 (  28)      7.848359
+
+  Irrep 7:
+      25 (   9)      1.500514
+      26 (  21)      6.357604
+      27 (  26)      7.848359
+
+  Irrep 8:
+      28 (  22)      6.357604
 
 Full RHF integral transformation
 
 Occupations by irrep:
 Frozen core:    [0,0,0,0,0,0,0,0]
-Occupied:       [1,0,0,0,0,0,0,0]
-Virtual:        [0,0,0,0,0,0,0,0]
+Occupied:       [1,0,0,0,1,0,0,0]
+Virtual:        [6,3,3,1,6,3,3,1]
 Frozen virtual: [0,0,0,0,0,0,0,0]
 
 Processing IIII:
   Pass 1, transforming orbitals:
-    Occupied:   1:1   ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
-    Virtual:  ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
+    Occupied:   1:1   ---:--- ---:--- ---:---   1:1   ---:--- ---:--- ---:---
+    Virtual:    1:6     1:3     1:3     1:1     1:6     1:3     1:3     1:1  
 
 Processing IIJJ:
   Pass 1, transforming orbitals:
-    Occupied:   1:1   ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
-    Virtual:  ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
+    Occupied:   1:1   ---:--- ---:--- ---:---   1:1   ---:--- ---:--- ---:---
+    Virtual:    1:6     1:3     1:3     1:1     1:6     1:3     1:3     1:1  
 
 Processing IJIJ:
   Pass 1, transforming orbitals:
-    Occupied:   1:1   ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
-    Virtual:  ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
+    Occupied:   1:1   ---:--- ---:--- ---:---   1:1   ---:--- ---:--- ---:---
+    Virtual:    1:6     1:3     1:3     1:1     1:6     1:3     1:3     1:1  
 
 Processing IJKL:
   Pass 1, transforming orbitals:
-    Occupied:   1:1   ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
-    Virtual:  ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:--- ---:---
+    Occupied:   1:1   ---:--- ---:--- ---:---   1:1   ---:--- ---:--- ---:---
+    Virtual:    1:6     1:3     1:3     1:1     1:6     1:3     1:3     1:1  
 
-Integral transformation took 0.015 seconds at 0.000 Gflops/sec
+Integral transformation took 0.031 seconds at 0.069 Gflops/sec
 
-sym_1234:          0.000020 s          1 x    0.000000 gflops/sec
-weight:            0.000039 s          1 x    0.000000 gflops/sec
-layer1_axpby:      0.000043 s          3 x    0.000165 gflops/sec
-sym_12:            0.000085 s          1 x    0.000000 gflops/sec
+sym_1234:          0.000047 s          1 x    0.000000 gflops/sec
+layer1_axpby:      0.000057 s          3 x    0.054269 gflops/sec
+weight:            0.000109 s          1 x    0.000000 gflops/sec
+sym_12:            0.000146 s          1 x    0.000000 gflops/sec
 
-MP2 correlation energy: 0.0
+MP2 correlation energy: -0.06627512348579866
 
-Non-iterative calculation of MP2 took 0.000 cpu seconds and 0.000 walltime seconds at 0.000 Gflops/sec
+Non-iterative calculation of MP2 took 0.000 cpu seconds and 0.000 walltime seconds at 0.011 Gflops/sec
 
-Total MP2 energy: -2.846292188947868
+Total MP2 energy: -5.788581813054644
 
-layer1_axpby:       0.000003 s          2 x    0.000616 gflops/sec
-weight:             0.000025 s          2 x    0.000000 gflops/sec
-layer1_dot:         0.000042 s          2 x    0.000000 gflops/sec
-layer1_spinad:      0.000103 s          2 x    0.000000 gflops/sec
+layer1_axpby:       0.000002 s          2 x    0.210922 gflops/sec
+layer1_dot:         0.000017 s          2 x    0.000000 gflops/sec
+weight:             0.000068 s          2 x    0.000000 gflops/sec
+layer1_spinad:      0.000116 s          2 x    0.025471 gflops/sec
 
 Using DIIS to accelerate the convergence of T1 and T2
-Beginning iterative solution of LCCD equations:
+Beginning iterative solution of CCSD equations:
 
 Using standard CC algorithm
 
-It. Correlation Energy T2 Residual CPU Time (s) Walltime (s)
--------------------------------------------------------------
-  1   0.000000000000000 0.00000e+00        0.001        0.001
+It. Correlation Energy T1 Residual T2 Residual CPU Time (s) Walltime (s)
+-------------------------------------------------------------------------
+  1  -0.066275123485799 1.06320e-03 4.04112e-03        0.003        0.005
+  2  -0.075825427355424 6.10249e-04 1.00901e-03        0.002        0.002
+  3  -0.078130767816802 2.74043e-04 1.08057e-04        0.002        0.002
+  4  -0.078164206874955 6.27579e-06 4.58762e-06        0.002        0.003
+  5  -0.078157981701829 5.37792e-07 4.07051e-07        0.002        0.002
 
-LCCD iterations converged in 1 cycles and 0.001 seconds (0.001 s/it.) at 0.000 Gflops/sec
+   A    I                     A    I                     A    I                  
+-------------------------- -------------------------- -------------------------- 
+  11    1  0.0014572641865   24    2  0.0000000000000   16    2  0.0000000000000 
+  12    2  0.0014572641865   23    1  0.0000000000000   14    1  0.0000000000000 
+   3    2 -0.0009917521649   10    2  0.0000000000000   15    1 -0.0000000000000 
+   4    1 -0.0009917521649    7    1  0.0000000000000   13    2  0.0000000000000 
 
-LCCD correlation energy: 0.0
+   A    B    I    J                     A    B    I    J                  
+------------------------------------ ------------------------------------ 
+   3    4    1    2 -0.0242809023832   10   10    2    2 -0.0163731193093 
+   4    3    2    1 -0.0242809023832    7   10    1    2 -0.0163731193093 
+   3    3    1    1 -0.0242809023832   10    7    2    1 -0.0163731193093 
+   4    4    2    2 -0.0242809023832    7    7    1    1 -0.0163731193093 
+   4    4    1    1 -0.0242809023832    8    8    2    2 -0.0163731193035 
+   4    3    1    2 -0.0242809023832    5    5    2    2 -0.0163731193035 
+   3    4    2    1 -0.0242809023832    9    5    1    2 -0.0163731193035 
+   3    3    2    2 -0.0242809023832 
 
-layer1_fill:         0.000000 s          1 x    0.000000 gflops/sec
-layer1_dot:          0.000000 s          2 x    0.000000 gflops/sec
-weight:              0.000003 s          1 x    0.000000 gflops/sec
-layer1_axpby:        0.000005 s          5 x    0.001768 gflops/sec
-realloc:             0.000007 s          1 x    0.000000 gflops/sec
-layer1_sym:          0.000078 s          2 x    0.000000 gflops/sec
-layer1_spinad:       0.000145 s          5 x    0.000000 gflops/sec
-c2_into_z2_rhf:      0.000160 s          1 x    0.000019 gflops/sec
-lccd_rhf:            0.000243 s          1 x    0.000012 gflops/sec
+It. Correlation Energy T1 Residual T2 Residual CPU Time (s) Walltime (s)
+-------------------------------------------------------------------------
+  6  -0.078157592419443 7.95443e-08 2.79275e-08        0.002        0.002
 
-LCCD correlation energy: 0.0
+CCSD iterations converged in 6 cycles and 0.017 seconds (0.003 s/it.) at 0.106 Gflops/sec
 
-Total LCCD energy: -2.846292188947868
+CCSD correlation energy: -0.07815759241944255
 
---executable xncc finished with status     0 in        0.29 seconds (walltime).
-  The final electronic energy is        -2.846292188947868 a.u. 
-  This computation required                            1.83 seconds (walltime).
+layer1_fill:           0.000001 s          1 x    0.000000 gflops/sec
+layer1_dot:            0.000003 s         12 x    0.000000 gflops/sec
+realloc:               0.000008 s          1 x    0.000000 gflops/sec
+layer1_axpby:          0.000046 s         88 x    0.909893 gflops/sec
+c1_into_z1_rhf:        0.000206 s          6 x    0.014315 gflops/sec
+c_into_wmnie_rhf:      0.000234 s         12 x    0.029495 gflops/sec
+weight:                0.000334 s         12 x    0.000000 gflops/sec
+c1_into_z2_rhf:        0.000366 s          6 x    0.096115 gflops/sec
+c_into_fem_rhf:        0.000504 s          6 x    0.038676 gflops/sec
+c_into_wmnij_rhf:      0.000557 s          6 x    0.020222 gflops/sec
+layer1_sym:            0.000570 s         18 x    0.010480 gflops/sec
+c_into_wmbij_rhf:      0.000828 s          6 x    0.125767 gflops/sec
+c2_into_z1_rhf:        0.001116 s         12 x    0.064796 gflops/sec
+c_into_fmi_rhf:        0.001146 s          6 x    0.022467 gflops/sec
+c_into_fea_rhf:        0.001238 s          6 x    0.200638 gflops/sec
+c_into_wmaei_rhf:      0.002787 s         12 x    0.145374 gflops/sec
+c2_into_z2_rhf:        0.003945 s         12 x    0.208387 gflops/sec
+layer1_spinad:         0.005396 s        186 x    0.108209 gflops/sec
+ccsd_rhf:              0.014073 s          6 x    0.124802 gflops/sec
+
+CCSD correlation energy: -0.0781576475835144
+
+Total CCSD energy: -5.800464337152359
+
+--executable xncc finished with status     0 in        0.36 seconds (walltime).
+  The final electronic energy is        -5.800464337152359 a.u. 
+  This computation required                            1.58 seconds (walltime).
