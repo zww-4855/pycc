@@ -43,6 +43,7 @@ def cceqns_driver(driveCCobj,cc_info):
         resid_t2ab += np.reciprocal(driveCCobj.denomInfo["D2ab"])*T2_ab
 
         if "pCCD" in driveCCobj.cc_type or "pLCCD" in driveCCobj.cc_type: # zero the off-diagonal if pCCD/pLCCD calc
+            print('zeroing off-diagonal of T2..')
             resid_t2aa = resid_t2bb = 0.0*resid_t2aa
             resid_t2ab = misc.zeroT2_offDiagonal(resid_t2ab)
 
