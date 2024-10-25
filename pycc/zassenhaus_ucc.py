@@ -20,12 +20,12 @@ def T1resid_eqn(F,W,T1,T2,o,v):
     rov2 += -2.000000000 * np.einsum("ib,jc,bcja->ia",T1,T1,W[v,v,o,v],optimize="optimal")
     rov += rov2*0.5
 
-    # Q1 [T1^,[W,T2]]
+    # Q1 [T1^,[W,T2]] s.t. (T1^W*)cT2; originally comes from [T1^,[T1^,[W,T2]]] ZWW
     rov3 = 0.500000000 * np.einsum("bj,klab,ijkl->ia",T1dag,T2,W[o,o,o,o],optimize="optimal")
     rov3 += -1.000000000 * np.einsum("bj,ikac,jckb->ia",T1dag,T2,W[o,v,o,v],optimize="optimal")
     rov3 += 1.000000000 * np.einsum("bj,jkac,ickb->ia",T1dag,T2,W[o,v,o,v],optimize="optimal")
     rov3 += 1.000000000 * np.einsum("bj,ikbc,jcka->ia",T1dag,T2,W[o,v,o,v],optimize="optimal")
-    rov3 += -1.000000000 * np.einsum("bj,jkbc,icka->ia",T1dag,T2,W[o,v,o,v],optimize="optimal")
+    #rov3 += -1.000000000 * np.einsum("bj,jkbc,icka->ia",T1dag,T2,W[o,v,o,v],optimize="optimal")
     rov3 += 0.500000000 * np.einsum("bj,ijcd,cdab->ia",T1dag,T2,W[v,v,v,v],optimize="optimal")
     rov += rov3
 
@@ -40,8 +40,8 @@ def T1resid_eqn(F,W,T1,T2,o,v):
     rov5 += -1.000000000 * np.einsum("jb,ibja->ia",T1,W[o,v,o,v],optimize="optimal")
     rov += rov5
 
-    # Q1 0.5*[T1^,[[W,T1],T1]]
-    #rov6 = 2.000000000 * np.einsum("ja,ib,ck,kbjc->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
+    # Q1 0.5*[T1^,[[W,T1],T1]] --- Wovov *must* touch every T1/T1^ as the diagram is fully connected ZWW 10/22
+    rov6 = 2.000000000 * np.einsum("ja,ib,ck,kbjc->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
     rov6 = -2.000000000 * np.einsum("ja,kb,ck,ibjc->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
     rov6 += 2.000000000 * np.einsum("ja,kb,bl,iljk->ia",T1,T1,T1dag,W[o,o,o,o],optimize="optimal")
     rov6 += 2.000000000 * np.einsum("ib,jc,dj,bcad->ia",T1,T1,T1dag,W[v,v,v,v],optimize="optimal")
@@ -49,10 +49,10 @@ def T1resid_eqn(F,W,T1,T2,o,v):
     #rov6 += 2.000000000 * np.einsum("jb,kc,cj,ibka->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
     rov += rov6*0.5
 
-    # Q1 [T1^,[[W,T1],T1]] -- only leftover, (T1^W)T1^2 portion 
-    rov7 = 2.000000000 * np.einsum("ja,ib,ck,kbjc->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
-    rov7 += 2.000000000 * np.einsum("jb,kc,cj,ibka->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
-    rov += rov7
+    # Q1 [T1^,[[W,T1],T1]] -- only leftover, (T1^W)T1^2 portion; T1^ does *not* touch Wovov ZWW 10/22 NEED TO COME BACK HERE AND VERIFY THIS SURVIVES AFTER CANCELLATION
+    #rov7 = 2.000000000 * np.einsum("ja,ib,ck,kbjc->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
+    rov7 = 2.000000000 * np.einsum("jb,kc,cj,ibka->ia",T1,T1,T1dag,W[o,v,o,v],optimize="optimal")
+    rov += 0.5*rov7
 
     return rov
 
@@ -93,32 +93,32 @@ def subtractOff_T1sqr(W,T1,T2,o,v):
     T1dag=T1.transpose(1,0)
     T2dag=T2.transpose(2,3,0,1)
 
-    # -0.5*[T1^,[T1^,W]]
+    # -0.5*[T1^,[T1^,W]] ZWW
     term1 = 1.000000000 * np.einsum("ai,bj,ijab->",T1dag,T1dag,W[o,o,v,v],optimize="optimal")
     term1 = -0.5*term1
 
-    # -0.5*[T1^,[T1^,[W,T1]]]
+    # -0.5*[T1^,[T1^,[W,T1]]] ZWW
     term2 = 2.000000000 * np.einsum("ia,bj,ci,jabc->",T1,T1dag,T1dag,W[o,v,v,v],optimize="optimal")
     term2 += 2.000000000 * np.einsum("ia,bj,ak,jkib->",T1,T1dag,T1dag,W[o,o,o,v],optimize="optimal")
     term2 = -0.5*term2
 
-    # -0.5*[T1^,[T1^,[W,T2]]]
+    # -0.5*[T1^,[T1^,[W,T2]]] -- checked ZWW 10/22
     term3 = 0.500000000 * np.einsum("ai,bj,klab,ijkl->",T1dag,T1dag,T2,W[o,o,o,o],optimize="optimal")
     term3 += 2.000000000 * np.einsum("ai,bj,jkac,ickb->",T1dag,T1dag,T2,W[o,v,o,v],optimize="optimal")
     #term3 += -2.000000000 * np.einsum("ai,bj,jkbc,icka->",T1dag,T1dag,T2,W[o,v,o,v],optimize="optimal")
     term3 += 0.500000000 * np.einsum("ai,bj,ijcd,cdab->",T1dag,T1dag,T2,W[v,v,v,v],optimize="optimal")
     term3 = -0.5*term3
 
-    # -0.25*[T1^,[T1^,[[W,T1],T1]]]
+    # -0.25*[T1^,[T1^,[[W,T1],T1]]] -- ** Wovov must be fully connected to every T1/T1^ --- ZWW
     term4 = -2.000000000 * np.einsum("ia,jb,cj,di,abcd->",T1,T1,T1dag,T1dag,W[v,v,v,v],optimize="optimal")
     term4 += 2.000000000 * np.einsum("ia,jb,ak,bl,klij->",T1,T1,T1dag,T1dag,W[o,o,o,o],optimize="optimal")
     term4 += -4.000000000 * np.einsum("ia,jb,bk,ci,kajc->",T1,T1,T1dag,T1dag,W[o,v,o,v],optimize="optimal")
     #term4 += 4.000000000 * np.einsum("ia,jb,ck,bi,kajc->",T1,T1,T1dag,T1dag,W[o,v,o,v],optimize="optimal")
     term4 = -0.25*term4
 
-    # -0.5*[T1^,[T1^,[[W,T1],T1]]] -- the other part where (T1^W)T1^T1^2
+    # -0.25*[T1^,[T1^,[[W,T1],T1]]] -- the other part where (T1^W)T1^T1^2 ***CHECK THIS****
     term5 = 4.000000000 * np.einsum("ia,jb,ck,bi,kajc->",T1,T1,T1dag,T1dag,W[o,v,o,v],optimize="optimal")
-    term5 = -0.5*term5
+    term5 = -0.25*term5
 
     print('subtracted off total:', term1+term2+term3+term4+term5)
     return term1+term2+term3+term4+term5
