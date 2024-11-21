@@ -2,6 +2,7 @@ import numpy as np
 import pycc.tamps as tamps
 import pycc.cc_energy as cc_energy
 import pycc.misc as misc
+import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
 from copy import deepcopy
 
 def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,va,vb):
@@ -26,15 +27,30 @@ def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,v
     #firstOrderwvfxn,E2 = firstOrder_Driver(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
     #E3=secondOrder_Driver(driveCCobj,firstOrderwvfxn,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
 
+################################################################
+################################################################
+#   Now, add [S] and [T] corrections on top of pUCCD ansatze
+    E4_singlesFO = build_sqrbrak_corrections.build_FOsqrBrakSingles
+    E4_triplesFO = build_sqrbrak_corrections.build_FOsqrBrakTriples
 
+
+################################################################
     print('\n\n\n\n\n ')
     print('**********************')
-    print('Summary of results:')
+    print('Summary of (doubles) results:')
     print('E(2): ', E2)
     print('E(3): ', E3)
     print('E(4): ', E4)
-    print('Total correction to pUCCD thru fourth-order:', E2+E3+E4)
-    print("Total pUCC+E(2)+E(3) energy: ", driveCCobj.correlationE["totalE"]+E2+E3+E4)
+
+    print('\n\n\n\n\n ')
+    print('**********************')
+    print('Summary of (singles/triples) results:')
+    print('E(4) [S]:',E4_singlesFO)
+    print('E(4) [T]:',E4_triplesFO)
+
+    print('Total correction to pUCCD thru fourth-order, including [S] and [T]:', E2+E3+E4+E4_singlesFO+E4_triplesFO)
+    print("Total pUCC+E(2)+E(3)+E(4)+[S]+[T] energy: ", driveCCobj.correlationE["totalE"]+E2+E3+E4+E4_singlesFO+E4_triplesFO)
+
 
 def antisym_intermed(intermed):
     antisym = intermed
@@ -126,6 +142,40 @@ def get_FO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     # check if intermediate is automatically symmetric
     # Done, now, construct final energy correction with this intermediate:
 
+    t2_aa = driveCCobj.pcc_amps["FO_aa"]
+    t2_bb = driveCCobj.pcc_amps["FO_bb"]
+    t2_ab = driveCCobj.pcc_amps["FO_ab"]
+    t2_ab = misc.zeroT2_Diagonal(t2_ab)
+    dims = np.shape(W_aaaa)[0]
+    nocc = np.shape(t2_aa)[0]
+    nvirt = np.shape(t2_aa)[2]
+    abdims = np.shape(W_abab)[0]
+    abdimsy = np.shape(W_abab)[1]
+    Wtmp_aa = Wtmp_bb =  np.zeros((dims,dims,dims,dims))
+    Wtmp_ab = np.zeros((abdims,abdimsy,abdims,abdimsy))
+
+    Wtmp_aa[:nocc,:nocc,:nocc,:nocc] = intermed_aa["oooo"]
+    Wtmp_aa[nocc:, nocc:,nocc:,nocc:] = intermed_aa["vvvv"]
+    Wtmp_aa[:nocc, nocc:, :nocc,nocc:]=intermed_aa["ovov"]
+    Wtmp_aa[nocc:, :nocc, nocc:, :nocc]=intermed_aa["ovov"].transpose(1,0,3,2)
+
+    Wtmp_bb[:nocc,:nocc,:nocc,:nocc] = intermed_bb["OOOO"]
+    Wtmp_bb[nocc:, nocc:,nocc:,nocc:] = intermed_bb["VVVV"]
+    Wtmp_bb[:nocc, nocc:, :nocc,nocc:]=intermed_bb["OVOV"]
+    Wtmp_bb[nocc:, :nocc, nocc:, :nocc]=intermed_bb["OVOV"].transpose(1,0,3,2)
+
+    Wtmp_ab[:nocc,:nocc,:nocc,:nocc] = intermed_ab["oOoO"]
+    Wtmp_ab[nocc:, nocc:,nocc:,nocc:] = intermed_ab["vVvV"]
+    Wtmp_ab[:nocc, nocc:, :nocc,nocc:]=intermed_ab["oVoV"]
+    Wtmp_ab[nocc:, :nocc, nocc:, :nocc]=intermed_ab["oVoV"].transpose(1,0,3,2)
+
+
+   
+    t2new_aa,t2new_bb,t2new_ab = mp3_wvfxn_base(driveCCobj,Wtmp_aa,Wtmp_bb,Wtmp_ab,t2_aa,t2_bb,t2_ab,oa,ob,va,vb)
+    # zero-out mp3 ab portion
+    t2new_ab = misc.zeroT2_Diagonal(t2new_ab)
+    energy_d2 = cc_energy.spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab,t2new_aa,t2new_bb,t2new_ab,oa,ob,va,vb)
+    print("E(4) contribution from intermediate term, <0|hbar^1|q>QR0Q hbar^2 QR0Q<q|hbar^1|0>: ",energy_d2)
 
 ################################################################################
     # <0|hbar^2|q>QR0Q hbar^1 QR0Q <q|hbar^1|0> + h.c.
@@ -165,7 +215,7 @@ def get_FO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     energyDa *= 2 
     print('E(4) contribution from <0|hbar^3|q>QR0Q<q|Hbar^1|0>', energyD+energyDa)
 
-    total = energy + energyB + energyC + energyD + energyDa
+    total = energy + energyB + energyC + energyD + energyDa + energy_d2
     print('\n Total E(4) contribution:', total)
     return total
 
