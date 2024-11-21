@@ -10,6 +10,13 @@ def ucc_eqnDriver(calcType,Fock,W,T1,T2,o,v):
         D1T1 = zassenhaus_ucc.T1resid_eqn(Fock,W,T1,T2,o,v) 
         D2T2 = zassenhaus_ucc.T2resid_eqn(Fock,W,T1,T2,o,v) 
 
+    if calcType == "ZUCCSD-4bar" or calcType == "ZUCCD-4bar":
+        D1T1 = uccsd4_t1resid(Fock,W,T1,T2,o,v)
+        D2T2 = uccsd4_t2resid(Fock,W,T1,T2,o,v)
+        # offset (WT2^2)_c and (T2^W)cT2 by new prefactors
+        D2T2 -= (2.0/6.0)*uccsd_wnT2sqr(W,T2,o,v)
+        D2T2 += (8.0/12.0)*uccsd_T2dagWnT2(W,T2,o,v)
+
     if calcType == "UCCD3":
         D1T1 = T1 ## should be 0
         D2T2 = ucc3_t2resid(Fock,W,T2,o,v)

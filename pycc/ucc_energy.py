@@ -10,7 +10,23 @@ def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
     if calcType == "UCCD3":
         return 0.250000000 * np.einsum("ijab,abij->",T2,W[v,v,o,o],optimize="optimal")
 
-    if "UCCSD4" in calcType or "UCCD4" in calcType:
+    if calcType == "ZUCCSD-4bar" or calcType == "ZUCCD-4bar":
+        T2dag = T2.transpose(2,3,0,1)
+        D2 = driveCCobj.denomInfo["D2aa"]
+        energy = uccsd4_energy(W,T2,o,v,D2)
+        r = 1.000000000 * np.einsum("ijab,acik,bdjl,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize=
+"optimal")
+        r += 0.500000000 * np.einsum("ijab,cdjk,abil,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize
+    ="optimal")
+        r += 0.125000000 * np.einsum("ijab,abkl,cdij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize
+    ="optimal")
+        r += 0.500000000 * np.einsum("ijab,bckl,adij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize
+    ="optimal")
+        oldr=(4.0/12.0)*r
+        print('hacked energy:',energy-oldr,oldr)
+        energy = energy - oldr
+
+    elif "UCCSD4" in calcType or "UCCD4" in calcType:
         D2 = driveCCobj.denomInfo["D2aa"]
         energy = uccsd4_energy(W,T2,o,v,D2)
 
