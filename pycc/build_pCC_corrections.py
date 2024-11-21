@@ -36,6 +36,74 @@ def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,v
     print('Total correction to pUCCD thru fourth-order:', E2+E3+E4)
     print("Total pUCC+E(2)+E(3) energy: ", driveCCobj.correlationE["totalE"]+E2+E3+E4)
 
+def antisym_intermed(intermed):
+    antisym = intermed
+    antisym += -1.0*antisym.transpose(1,0,2,3)
+    antisym += -1.0*antisym.transpose(0,1,3,2)
+    antisym   += antisym.transpose(1,0,3,2)
+
+    return antisym
+
+def build_intermediate(W_aaaa,W_bbbb,W_abab,T2dag_aa,T2dag_bb,T2dag_ab,oa,ob,va,vb):
+    T2dag=T2dag_aa
+
+    # all alpha portion first
+    intermed_aa={}
+    Rvvvv = 0.125000000 * np.einsum("ijab,cdij->cdab",W_aaaa[oa,oa,va,va],T2dag,optimize="optimal")
+    Rvvvv += Rvvvv.transpose(2,3,0,1)
+    Rvvvv = antisym_intermed(Rvvvv)
+    intermed_aa.update({"vvvv":Rvvvv})
+
+    Roooo = 0.125000000 * np.einsum("ijab,abkl->ijkl",W_aaaa[oa,oa,va,va],T2dag,optimize="optimal")
+    Roooo += Roooo.transpose(2,3,0,1)
+    Roooo = antisym_intermed(Roooo)
+    print(np.equal(Roooo,-1.0*Roooo.transpose(0,1,3,2)), Roooo[1,2,1,2],Roooo[1,2,2,1])
+    intermed_aa.update({"oooo":Roooo})
+
+    Rovov = -1.000000000 * np.einsum("ikac,bcjk->ibja",W_aaaa[oa,oa,va,va],T2dag,optimize="optimal")
+    Rovov += -1.000000000 * np.einsum("iIaA,bAjI->ibja",W_abab[oa,ob,va,vb],T2dag,optimize="optimal")
+    Rovov += Rovov.transpose(2,3,0,1)
+    #Rovov = antisym_intermed(Rovov)
+    intermed_aa.update({"ovov":Rovov})
+ 
+    # next all beta portion
+    intermed_bb={}
+    RVVVV = 0.125000000 * np.einsum("IJAB,CDIJ->CDAB",W_bbbb[ob,ob,va,va],T2dag_bb,optimize="optimal")
+    RVVVV += RVVVV.transpose(2,3,0,1)
+    RVVVV = antisym_intermed(RVVVV)
+    intermed_bb.update({"VVVV":RVVVV})
+
+    ROOOO = 0.125000000 * np.einsum("IJAB,ABKL->IJKL",W_bbbb[ob,ob,va,va],T2dag_bb,optimize="optimal")
+    ROOOO += ROOOO.transpose(2,3,0,1)
+    ROOOO = antisym_intermed(ROOOO)
+    intermed_bb.update({"OOOO":ROOOO})
+
+    ROVOV = -1.000000000 * np.einsum("iIaA,aBiJ->IBJA",W_abab[oa,ob,va,vb],T2dag_ab,optimize="optimal")
+    ROVOV += -1.000000000 * np.einsum("IKAC,BCJK->IBJA",W_bbbb[ob,ob,vb,vb],T2dag_bb,optimize="optimal")
+    ROVOV += ROVOV.transpose(2,3,0,1)
+    #ROVOV = antisym_intermed(ROVOV)
+    intermed_bb.update({"OVOV":ROVOV})
+
+    #next split alpha/beta
+    intermed_ab={}
+    RvVvV = 1.000000000 * np.einsum("iIaA,bBiI->bBaA",W_abab[oa,ob,va,vb],T2dag_ab,optimize="optimal")
+    RvVvV += RvVvV.transpose(2,3,0,1)
+    RvVvV = antisym_intermed(RvVvV)
+    intermed_ab.update({"vVvV":RvVvV})
+
+    RoOoO = 1.000000000 * np.einsum("iIaA,aAjJ->iIjJ",W_abab[oa,ob,va,vb],T2dag_ab,optimize="optimal")
+    RoOoO += RoOoO.transpose(2,3,0,1)
+    RoOoO = antisym_intermed(RoOoO)
+    intermed_ab.update({"oOoO":RoOoO})
+
+    RoVoV = -1.000000000 * np.einsum("iIaA,aBjI->iBjA",W_abab[oa,ob,va,vb],T2dag_ab,optimize="optimal")
+    RoVoV += RoVoV.transpose(2,3,0,1)
+    #print(np.equal(RoVoV,-1.0*RoVoV.transpose(1,2,0,3)))
+    #sys.exit()
+    intermed_ab.update({"oVoV":RoVoV})
+
+    return intermed_aa,intermed_bb,intermed_ab
+
 def get_FO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     # Start down the line: <0|hbar^2|q>R0<q|hbar^2|0> first
     T2_aa = driveCCobj.pcc_amps["SO_aa_Vtau2"]
@@ -50,7 +118,16 @@ def get_FO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     energy += 1.000000000 * np.einsum("aAiI,iIaA->",D2T2_ab.transpose(2,3,0,1),T2_ab,optimize="optimal")
     energy += 0.250000000 * np.einsum("ABIJ,IJAB->",D2T2_bb.transpose(2,3,0,1),T2_bb,optimize="optimal")
     print('E(4) contribution from <0|hbar^2|q>R0<q|hbar^2|0>:', energy)
+    
+    # <0|hbar^1|q>QR0Q hbar^2 QR0Q<q|hbar^1|0>
+    # Construct the intermediate first:::
+    intermed_aa,intermed_bb,intermed_ab = build_intermediate(W_aaaa,W_bbbb,W_abab,T2_aa.transpose(2,3,0,1),T2_bb.transpose(2,3,0,1),T2_ab.transpose(2,3,0,1),oa,ob,va,vb)
 
+    # check if intermediate is automatically symmetric
+    # Done, now, construct final energy correction with this intermediate:
+
+
+################################################################################
     # <0|hbar^2|q>QR0Q hbar^1 QR0Q <q|hbar^1|0> + h.c.
     T2_aa = driveCCobj.pcc_amps["TO_aa_QVQVtau2"]
     T2_bb = driveCCobj.pcc_amps["TO_bb_QVQVtau2"]
