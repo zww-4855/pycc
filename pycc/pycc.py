@@ -466,11 +466,15 @@ class run_xacc():
             Reads background information printed by xacc (number of occupied/virtual orbitals and MO energies).
     """
     
-    def __init__(self,bkgrd_infile,tamp_infile=None,tei_infile=None):
+    def __init__(self,bkgrd_infile,tamp_infile=None,tei_infile=None,ref='spin-orbital'):
         """
         Initializes the `run_xacc` object by reading background information from the `bkgrd_infile`, 
         CC amplitudes from the `tamp_infile`, and two-electron integrals from the `tei_infile`. 
         Sets up the necessary data structures for subsequent MBPT correction.
+        TO DO:::::: Need to add support specifying which orbitals I am reading in/working with? 
+        Spin-orbitals or spatial orbitals? Idea: What if I add 'run_xacc' as a subclass to the driveCC
+        SCF handler -- this way I can reuse some of the functionals to build the MO denoms, etc, if 
+        necessary
 
         :param bkgrd_infile: Path to the background input file containing the number of occupied and 
                               virtual orbitals and molecular orbital energies.
@@ -478,6 +482,11 @@ class run_xacc():
                              Default is None.
         :param tei_infile: (Optional) Path to the input file containing the two-electron integrals. 
                            Default is None.
+
+        :param ref: The reference frame in which we are working; a choice between the 'spin-orbital' or
+                    'spatial' representation. If working in 'spatial' frame, will need to convert all
+                    tensors.
+                    Default is 'spin-orbital'
         """
         self.nocc=None
         self.nvirt=None
