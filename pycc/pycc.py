@@ -84,6 +84,9 @@ class SetupCC():
             self.denomInfo.update({"D2aabkup":D2aa_bk,"D2bbbkup":D2bb_bk,"D2abbkup":D2ab_bk})
             D2aa = D2bb = 0.0*D2aa
             D2ab = misc.zeroT2_offDiagonal(D2ab)
+            D1aa,D1bb = set_denoms.D1denomFast(epsaa,epsbb,occ_aa,occ_bb,virt_aa,virt_bb,n)
+            D3aaa,D3bbb,D3aab,D3abb = set_denoms.D3denomFast(epsaa,epsbb,occ_aa,occ_bb,virt_aa,virt_bb,n)
+            self.denomInfo.update({"D1aa":D1aa,"D1bb":D1bb,"D3aaa":D3aaa,"D3bbb":D3bbb,"D3aab":D3aab,"D3abb":D3abb})
 
     def get_denomsSlow(self,pyscf_mf,cc_calc):
         virt_aa=self.occSliceInfo["virt_aa"]

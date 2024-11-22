@@ -1,52 +1,85 @@
 import numpy as np
 import pycc.tamps as tamps
 
-def build_FOsqrBrakTriples(): 
-    t3resid=wicked_T3corr.build_T3_secondO(self.g,self.o,self.v,self.t2)
-    t3resid=wicked_T3corr.antisym_T3(t3resid,self.nocc,self.nvirt)
-    t3residOrigContract=t3resid
-    t3resid=t3resid.transpose(3,4,5,0,1,2)
-    t3=t3resid*self.denoms["D3aa"]
-    t3Contract=t3
-    t3=t3.transpose(3,4,5,0,1,2)
+def build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
 
-    energy=wicked_T3corr.getE_squareBrackT(self.g,self.o,self.v,t3,t2_dag)
-    print('[T]-based triples energy correction to CC is:',energy)
-    return energy
+    Rooovvv,RooOvvV, RoOOvVV, ROOOVVV = get_netT3_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
 
-def build_FOsqrBrakSingles():
-    netT1=get_netT1_fromT2(self.g,self.o,self.v,self.t2)
-    t1_bar=netT1.transpose(1,0)*self.denoms["D1aa"]
-    print('shapes',np.shape(netT1),np.shape(t1_bar))
-    print('check on [S]',np.einsum("ia,ai->",t1_bar,netT1))
-    t1_bar=t1_bar.transpose(1,0)
-    #t2_bar_resid=get_netT2_fromT1bar(self.g,self.o,self.v,t1_bar)
-    D2T2_aa,D2T2_bb,D2T2_ab = get_netT2_fromT1bar(T1_aa,T1_bb,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
+    nocc=np.shape(Rooovvv)[0]
+    nvir=np.shape(Rooovvv)[3]
+    Rooovvv = tamps.antisym_T3SI_aaa(Rooovvv, nocc, nvir)
+    ROOOVVV = tamps.antisym_T3SI_aaa(ROOOVVV, nocc, nvir)
+    RooOvvV = tamps.antisym_T3SI_aab(RooOvvV, nocc, nvir)
+    RoOOvVV = tamps.antisym_T3SI_abb(RoOOvVV, nocc, nvir)
 
-    D2T2_aa = tamps.antisym_T2(D2T2_aa,None,None)
-    D2T2_bb = tamps.antisym_T2(D2T2_bb,None,None)
-    D2T2_ab = tamps.antisym_T2(D2T2_ab,None,None)
+    T3dag_aaa = (Rooovvv*driveCCobj.denomInfo["D3aaa"]).transpose(3,4,5,0,1,2)
+    T3dag_bbb = (ROOOVVV*driveCCobj.denomInfo["D3bbb"]).transpose(3,4,5,0,1,2)
+    T3dag_aab = (RooOvvV*driveCCobj.denomInfo["D3aab"]).transpose(3,4,5,0,1,2)
+    T3dag_abb = (RoOOvVV*driveCCobj.denomInfo["D3abb"]).transpose(3,4,5,0,1,2)
 
-    #t2_bar_resid=wicked_T3corr.antisym_T2(t2_bar_resid,self.nocc,self.nvirt)
-    #singles_correction=0.250000000 * np.einsum("abij,ijab->",t2_dag,t2_bar_resid,optimize="optimal")
-    singles_correction = get_singles_correction(T2_aa,T2_bb,T2_ab,D2T2dag_aa,D2T2dag_bb,D2T2dag_ab)
+
+
+    triples_correction = 0.111111111 * np.einsum("ijkabc,abcijk->",Rooovvv,T3dag_aaa,optimize="optimal")
+    triples_correction += 0.250000000 * np.einsum("ijIabA,abAijI->",RooOvvV,T3dag_aab,optimize="optimal")
+    triples_correction += 0.250000000 * np.einsum("iIJaAB,aABiIJ->",RoOOvVV,T3dag_abb,optimize="optimal")
+    triples_correction += 0.111111111 * np.einsum("IJKABC,ABCIJK->",ROOOVVV,T3dag_bbb,optimize="optimal")
+
+    print('[T] correction to UCC is:',triples_correction)
+    return triples_correction
+
+def build_FOsqrBrakSingles(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
+    #netT1=get_netT1_fromT2(self.g,self.o,self.v,self.t2)
+    netT1_aa, netT1_bb = get_netT1_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
+
+    t1bar_aa = netT1_aa*driveCCobj.denomInfo["D1aa"]
+    t1bar_bb = netT1_bb*driveCCobj.denomInfo["D1bb"]
+
+    singles_correction = 1.000000000 * np.einsum("ia,ai->",t1bar_aa,netT1_aa.transpose(1,0),optimize="optimal")
+    singles_correction += 1.000000000 * np.einsum("IA,AI->",t1bar_bb,netT1_bb.transpose(1,0),optimize="optimal")
+
     print('[S] singles correction to UCC:',singles_correction)
     return singles_correction
 
 
 
 
+def get_netT3_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
+    Rooovvv = -0.250000000 * np.einsum("ijla,klbc->ijkabc",W_aaaa[oa,oa,oa,va],T2_aa,optimize="optimal")
+    Rooovvv += -0.250000000 * np.einsum("idab,jkcd->ijkabc",W_aaaa[oa,va,va,va],T2_aa,optimize="optimal")
 
-def get_netT1_fromT2():
-    Rov = np.zeros((nocc,nvir))
-    Rov += -0.500000000 * np.einsum("ibjk,jkab->ia",W_aaaa[oa,va,oa,oa],T2_aa,optimize="optimal")
+
+    RooOvvV = 0.500000000 * np.einsum("ijka,kIbA->ijIabA",W_aaaa[oa,oa,oa,va],T2_ab,optimize="optimal")
+    RooOvvV += 0.500000000 * np.einsum("iIkA,jkab->ijIabA",W_abab[oa,ob,oa,vb],T2_aa,optimize="optimal")
+    RooOvvV += 0.500000000 * np.einsum("icab,jIcA->ijIabA",W_aaaa[oa,va,va,va],T2_ab,optimize="optimal")
+    RooOvvV += -1.000000000 * np.einsum("iIaJ,jJbA->ijIabA",W_abab[oa,ob,va,ob],T2_ab,optimize="optimal")
+    RooOvvV += 1.000000000 * np.einsum("iBaA,jIbB->ijIabA",W_abab[oa,vb,va,vb],T2_ab,optimize="optimal")
+    RooOvvV += -0.500000000 * np.einsum("cIaA,ijbc->ijIabA",W_abab[va,ob,va,vb],T2_aa,optimize="optimal")
+
+
+    RoOOvVV = -1.000000000 * np.einsum("iIjA,jJaB->iIJaAB",W_abab[oa,ob,oa,vb],T2_ab,optimize="optimal")
+    RoOOvVV += 0.500000000 * np.einsum("iIaK,JKAB->iIJaAB",W_abab[oa,ob,va,ob],T2_bb,optimize="optimal")
+    RoOOvVV += -0.500000000 * np.einsum("iCaA,IJBC->iIJaAB",W_abab[oa,vb,va,vb],T2_bb,optimize="optimal")
+    RoOOvVV += 1.000000000 * np.einsum("bIaA,iJbB->iIJaAB",W_abab[va,ob,va,vb],T2_ab,optimize="optimal")
+    RoOOvVV += 0.500000000 * np.einsum("IJKA,iKaB->iIJaAB",W_bbbb[ob,ob,ob,vb],T2_ab,optimize="optimal")
+    RoOOvVV += 0.500000000 * np.einsum("ICAB,iJaC->iIJaAB",W_bbbb[ob,vb,vb,vb],T2_ab,optimize="optimal")
+
+
+    ROOOVVV = -0.250000000 * np.einsum("IJLA,KLBC->IJKABC",W_bbbb[ob,ob,ob,vb],T2_bb,optimize="optimal")
+    ROOOVVV += -0.250000000 * np.einsum("IDAB,JKCD->IJKABC",W_bbbb[ob,vb,vb,vb],T2_bb,optimize="optimal")
+
+
+    return Rooovvv,RooOvvV, RoOOvVV, ROOOVVV
+
+
+
+def get_netT1_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
+    Rov = -0.500000000 * np.einsum("ibjk,jkab->ia",W_aaaa[oa,va,oa,oa],T2_aa,optimize="optimal")
     Rov += -0.500000000 * np.einsum("bcja,ijbc->ia",W_aaaa[va,va,oa,va],T2_aa,optimize="optimal")
-    Rov += -1.000000000 * np.einsum("iAjI,jIaA->ia",W_abab[oa,vb,oa,vb],T2_ab,optimize="optimal")
+    Rov += -1.000000000 * np.einsum("iAjI,jIaA->ia",W_abab[oa,vb,oa,ob],T2_ab,optimize="optimal")
     Rov += 1.000000000 * np.einsum("bAaI,iIbA->ia",W_abab[va,vb,va,ob],T2_ab,optimize="optimal")
 
-    ROV = np.zeros((nocc,nvir))
-    ROV += -1.000000000 * np.einsum("aIiJ,iJaA->IA",W_abab[va,ob,oa,ob],T2_ab,optimize="optimal")
-    ROV += 1.000000000 * np.einsum("aBiA,iIaB->IA",W_abab[va,vb,oa,ob],T2_ab,optimize="optimal")
+    ROV = -1.000000000 * np.einsum("aIiJ,iJaA->IA",W_abab[va,ob,oa,ob],T2_ab,optimize="optimal")
+    ROV += 1.000000000 * np.einsum("aBiA,iIaB->IA",W_abab[va,vb,oa,vb],T2_ab,optimize="optimal")
     ROV += -0.500000000 * np.einsum("IBJK,JKAB->IA",W_bbbb[ob,vb,ob,ob],T2_bb,optimize="optimal")
     ROV += -0.500000000 * np.einsum("BCJA,IJBC->IA",W_bbbb[vb,vb,ob,vb],T2_bb,optimize="optimal")
 

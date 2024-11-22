@@ -30,8 +30,12 @@ def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,v
 ################################################################
 ################################################################
 #   Now, add [S] and [T] corrections on top of pUCCD ansatze
-    E4_singlesFO = build_sqrbrak_corrections.build_FOsqrBrakSingles
-    E4_triplesFO = build_sqrbrak_corrections.build_FOsqrBrakTriples
+    T2_aa = driveCCobj.tamps["t2aa"]
+    T2_bb = driveCCobj.tamps["t2bb"]
+    T2_ab = driveCCobj.tamps["t2ab"]
+    E4_singlesFO = build_sqrbrak_corrections.build_FOsqrBrakSingles(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
+
+    E4_triplesFO = build_sqrbrak_corrections.build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
 
 
 ################################################################

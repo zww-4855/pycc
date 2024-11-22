@@ -35,6 +35,50 @@ def D2denomFast(epsaa,epsbb,occ_aa,occ_bb,virt_aa,virt_bb,n):
 
     return D2_aa, D2_bb, D2_ab
 
+def D3denomFast(epsaa,epsbb,occ_aa,occ_bb,virt_aa,virt_bb,n):
+    D3_aaa = 1.0 / (
+        -epsaa[virt_aa, n, n, n, n, n]
+        - epsaa[n, virt_aa, n, n, n, n]
+        - epsaa[n,      n, virt_aa,n, n, n]
+        + epsaa[n, n, n ,occ_aa,n, n]
+        + epsaa[n, n, n, n, occ_aa, n]
+        + epsaa[n, n, n, n, n, occ_aa]
+    )
+
+    D3_bbb = 1.0 / (
+        -epsbb[virt_bb, n, n, n, n, n]
+        - epsbb[n, virt_bb, n, n, n, n]
+        - epsbb[n,      n, virt_bb,n, n, n]
+        + epsbb[n, n, n ,occ_bb,n, n]
+        + epsbb[n, n, n, n, occ_bb, n]
+        + epsbb[n, n, n, n, n, occ_bb]
+    )
+
+    D3_aab = 1.0 / (
+        -epsaa[virt_aa, n, n, n, n, n]
+        - epsaa[n, virt_aa, n, n, n, n]
+        - epsbb[n,      n, virt_bb,n, n, n]
+        + epsaa[n, n, n ,occ_aa,n, n]
+        + epsaa[n, n, n, n, occ_aa, n]
+        + epsbb[n, n, n, n, n, occ_bb]
+    )
+
+    D3_abb = 1.0 / (
+        -epsaa[virt_aa, n, n, n, n, n]
+        - epsbb[n, virt_bb, n, n, n, n]
+        - epsbb[n,      n, virt_bb,n, n, n]
+        + epsaa[n, n, n ,occ_aa,n, n]
+        + epsbb[n, n, n, n, occ_bb, n]
+        + epsbb[n, n, n, n, n, occ_bb]
+    )
+
+    D3_aaa = D3_aaa.transpose(3,4,5,0,1,2)
+    D3_bbb = D3_bbb.transpose(3,4,5,0,1,2)
+    D3_aab = D3_aab.transpose(3,4,5,0,1,2)
+    D3_abb = D3_abb.transpose(3,4,5,0,1,2)
+    return D3_aaa, D3_bbb, D3_aab, D3_abb
+
+
 def D1denomSlow(epsaa,occ_aa,virt_aa,n):
     D1=1.0/(-epsaa[virt_aa,n]+epsaa[n,occ_aa])
     D1=D1.transpose(1,0)

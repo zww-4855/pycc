@@ -706,3 +706,65 @@ def antisym_T4(Roooovvvv,nocc,nvirt):
     Roooovvvv_anti +=  -1 * np.einsum("ijklabcd->lijkdacb", Roooovvvv)
     Roooovvvv_anti +=  1 * np.einsum("ijklabcd->lijkdabc", Roooovvvv)
     return Roooovvvv_anti
+
+
+def antisym_T3SI_aaa(Rooovvv, nocc, nvir):
+    # antisymmetrize the residual
+    Rooovvv_anti = np.zeros((nocc, nocc, nocc, nvir, nvir, nvir))
+    Rooovvv_anti += +1 * np.einsum("ijkabc->ijkabc", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->ijkacb", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->ijkbac", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->ijkbca", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->ijkcab", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->ijkcba", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->ikjabc", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->ikjacb", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->ikjbac", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->ikjbca", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->ikjcab", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->ikjcba", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->jikabc", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->jikacb", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->jikbac", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->jikbca", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->jikcab", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->jikcba", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->jkiabc", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->jkiacb", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->jkibac", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->jkibca", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->jkicab", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->jkicba", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->kijabc", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->kijacb", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->kijbac", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->kijbca", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->kijcab", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->kijcba", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->kjiabc", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->kjiacb", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->kjibac", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->kjibca", Rooovvv)
+    Rooovvv_anti += -1 * np.einsum("ijkabc->kjicab", Rooovvv)
+    Rooovvv_anti += +1 * np.einsum("ijkabc->kjicba", Rooovvv)
+    return Rooovvv_anti
+
+def antisym_T3SI_aab(RooOvvV, nocc, nvir):
+    # antisymmetrize the residual
+    RooOvvV_anti = np.zeros((nocc, nocc, nocc, nvir, nvir, nvir))
+    RooOvvV_anti += np.einsum("ijkabc->ijkabc", RooOvvV)
+    RooOvvV_anti -= np.einsum("ijkabc->ijkbac", RooOvvV)
+    RooOvvV_anti -= np.einsum("ijkabc->jikabc", RooOvvV)
+    RooOvvV_anti += np.einsum("ijkabc->jikbac", RooOvvV)
+    return RooOvvV_anti
+
+def antisym_T3SI_abb(RoOOvVV, nocc, nvir):
+    # antisymmetrize the residual
+    RoOOvVV_anti = np.zeros((nocc, nocc, nocc, nvir, nvir, nvir))
+    RoOOvVV_anti += np.einsum("ijkabc->ijkabc", RoOOvVV)
+    RoOOvVV_anti -= np.einsum("ijkabc->ijkacb", RoOOvVV)
+    RoOOvVV_anti -= np.einsum("ijkabc->ikjabc", RoOOvVV)
+    RoOOvVV_anti += np.einsum("ijkabc->ikjacb", RoOOvVV)
+    return RoOOvVV_anti
+
+
