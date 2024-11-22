@@ -25,7 +25,9 @@ class SetupCC():
         """
          Extracts the pyscf_mf, pyscf_mol, and relevant user-input from the cc_info dictionary for use in a subsequent pycc CC calculation
         """
-        
+        if isinstance(self,Run_xacc):
+            print('This is an instance of Run_xacc')
+            return
         # Load mean-field information from PySCF object
         self.hf_e=pyscf_mf.e_tot
         self.nuc_e=pyscf_mf.energy_nuc()
@@ -421,14 +423,16 @@ class DriveCC(SetupCC):
 
 
 
-class run_xacc():
+class Run_xacc(SetupCC):
     """
-    The `run_xacc` class handles perturbative corrections - based on MBPT - given a set of converged,
+    The `Run_xacc` class handles perturbative corrections - based on MBPT - given a set of converged,
     infinite-order unitary coupled cluster amplitudes. Currently, the class simply computes every 
     correction we have derived: [4S] and [6S] w.r.t UCCD, [T] w.r.t UCCSD, as well as corrections thru
     fourth-order w.r.t. pUCCD. Future work incorporate quadruples' corrections as well. 
-    The class is initialized from data read from input files that are a product of a prior UCC calculation
-    perfromed in XACC. (e.g. background information, T-amplitudes, and two-electron integrals) 
+    Subclass of SetupCC(), in case it is necessary to use some of its' methods to adapt to 
+    spatial orbital demands. The class is initialized from data read from input files 
+    that are a product of a prior UCC calculation perfromed in XACC. 
+    (e.g. background information, T-amplitudes, and two-electron integrals) 
     The purpose of the class is to compute the previously derived energy corrections.
 
     Attributes:
@@ -488,37 +492,48 @@ class run_xacc():
                     tensors.
                     Default is 'spin-orbital'
         """
+        # call constructor to inherit class' methods; useful in the case of
+        # spatial orbital methods
+        SetupCC.__init__(self,None,None,None)
+
         self.nocc=None
         self.nvirt=None
         self.mo_energies=None
-        self.read_bkgrd(bkgrd_infile)
+        self.read_bkgrd(bkgrd_infile,ref)
 
         self.o=slice(None,self.nocc)
         self.v=slice(self.nocc,None)
-        self.denoms=self.set_denoms()
+        self.denomInfo={}
+        self.set_denoms(ref)
 
         self.t2amps=np.zeros((self.nvirt,self.nvirt,self.nocc,self.nocc))
         self.t1amps=np.zeros((self.nvirt,self.nocc))
-        self.read_tamps(tamp_infile)
+        self.read_tamps(tamp_infile,ref)
 
 
         nbas=self.nocc+self.nvirt
         self.tei=np.zeros((nbas,nbas,nbas,nbas))
         self.read_tei(tei_infile)
+        self.mp2_energy()
+
         #self.ccd_energyTest()
         #self.mp2_energy()
 
-    def set_denoms(self):
+    def set_denoms(self,ref):
         eps_a = np.asarray(self.mo_energies)
         eps_b = np.asarray(self.mo_energies)
-        eps = np.append(eps_a, eps_b)
-        eps=np.sort(eps)
         n=np.newaxis
         v=self.v
         o=self.o
-        self.e_ai = set_denoms.D1denomSlow(eps,o,v,n) #1 / (-eps[v,n] + eps[n,o])
-        self.e_abij = set_denoms.D2denomSlow(eps,o,v,n) #1 / (-eps[v, n, n, n] - eps[n, v, n, n] + eps[n, n, o, n] + eps[n, n, n, o])
-        self.e_abcijk = set_denoms.D3denomsSlow(eps,o,v,n) #1/(-eps[v,n,n,n,n,n]-eps[n,v,n,n,n,n]-eps[n,n,v,n,n,n]+eps[n,n,n,o,n,n]+eps[n,n,n,n,o,n]+eps[n,n,n,n,n,o])
+
+        if ref == 'spatial':
+            eps = eps_a
+        else:
+            eps = np.append(eps_a, eps_b)
+            eps=np.sort(eps)
+            self.denomInfo.update({'D1aa':  set_denoms.D1denomSlow(eps,o,v,n)})
+            self.denomInfo.update({'D2aa':set_denoms.D2denomSlow(eps,o,v,n)})        
+            self.denomInfo.update({'D3aa':set_denoms.D3denomSlow(eps,o,v,n)})
         
     def ccd_energyTest(self):
         """
@@ -537,7 +552,7 @@ class run_xacc():
         n=np.newaxis
         o=slice(None,self.nocc)
         v=slice(self.nocc,None)
-        #print(self.mo_energies,type(self.mo_energies[0]),self.nocc,o,v)
+        print(self.mo_energies,type(self.mo_energies[0]),self.nocc,o,v)
         eps_a = np.asarray(self.mo_energies)
         eps_b = np.asarray(self.mo_energies)
         eps = np.append(eps_a, eps_b)
@@ -552,19 +567,6 @@ class run_xacc():
         print('ccd test E:',ccd_test)
         print('i',self.nocc,'a',self.nvirt)
         print('mp2E:', mp2E)
-        e=0.0
-        print(np.shape(e_abij))
-        for i in range(8):
-            for j in range(i+1,8):
-                for a in range(8,12):
-                    for b in range(a+1,12):
-                        denom=self.mo_energies[floor(i/2)]+self.mo_energies[floor(j/2)]-self.mo_energies[floor(a/2)]-self.mo_energies[floor(b/2)]
-                        if abs(self.t2amps[a-self.nocc,b-self.nocc,i,j])>10E-6:
-                            e+=(self.tei[a,b,i,j])**2/denom
-                            #print(a,b,i,j,self.t2amps[a-self.nocc,b-self.nocc,i,j])#self.tei[a,b,i,j],denom)
-        print('looped e:',e)
-        #print(self.tei[8,9,0,1],self.tei[8,9,1,0])
-        #sys.exit()
 
     def read_tei(self,tei_infile):
         """
@@ -598,7 +600,7 @@ class run_xacc():
         #self.tei=expand_tei(tei,self.nocc,self.nvirt)
         #print('tei',self.tei)
 
-    def read_tamps(self,tamp_infile):
+    def read_tamps(self,tamp_infile,ref):
         """
         Reads T1 and T2 CC amplitudes from the specified input file.
         and stores result in class attribute. 
@@ -631,11 +633,13 @@ class run_xacc():
                         b=operator_list[1]-self.nocc
                         i=operator_list[2]
                         j=operator_list[3]
-                        self.t2amps[a,b,i,j]=amp_key
-                        self.t2amps[b,a,i,j]= -1.0* amp_key
-                        self.t2amps[a,b,j,i]= -1.0*amp_key
-                        self.t2amps[b,a,j,i]=amp_key
-                        #print(self.t2amps[a,b,i,j]) 
+                        if ref == 'spatial':
+                            self.t2amps[a,b-1,i,j-1] = 4.0*amp_key # only works for pUCCD!
+                        else:
+                            self.t2amps[a,b,i,j]=amp_key
+                            self.t2amps[b,a,i,j]= -1.0* amp_key
+                            self.t2amps[a,b,j,i]= -1.0*amp_key
+                            self.t2amps[b,a,j,i]=amp_key
                     else: # dealing with t1amp
                         a=operator_list[0]-self.nocc
                         i=operator_list[1]
@@ -648,13 +652,15 @@ class run_xacc():
         #print('t2:',self.t2amps)
         self.t2amps=self.t2amps#*0.25
 
-    def read_bkgrd(self,bkgrd_infile):
+    def read_bkgrd(self,bkgrd_infile,ref):
         """
         Reads pertinent background information, such as the number of occupied and virtual orbitals,
         as well as the molecular orbital energies from the specified input file.
 
         :param bkgrd_infile: Path to the background input file.
 
+        :param ref: specifies whether or not we are pursuing corrections w.r.t. 'spatial' or
+                    'spin-orbital' (s)
         :return: None
         """
         with open(bkgrd_infile,'r') as f:
@@ -667,6 +673,9 @@ class run_xacc():
             mo_energies.append(float(element.strip('[').strip(']')))
         self.mo_energies=mo_energies
 
+        if ref == "spatial": # defines nocc/nvirt w.r.t. # spatial orbs
+            self.nocc = self.nocc - int(lines[1].strip().split()[-1])
+            self.nvirt = self.nvirt - int(lines[2].strip().split()[-1])
 
 
 
