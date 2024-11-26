@@ -10,12 +10,13 @@ def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,v
     ob = driveCCobj.occSliceInfo["occ_bb"]
     va = driveCCobj.occSliceInfo["virt_aa"]
     vb = driveCCobj.occSliceInfo["virt_bb"]
-
+    print(oa,ob,va,vb)
 
     W_aaaa = driveCCobj.integralInfo["tei_aaaa"]
     W_bbbb = driveCCobj.integralInfo["tei_bbbb"]
     W_abab = driveCCobj.integralInfo["tei_abab"]
 
+    print(np.shape(W_aaaa))
     build_FO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
     E2 = get_SO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
 
@@ -413,6 +414,7 @@ def build_SO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     T2_bb = driveCCobj.tamps["t2bb"]
     T2_ab = driveCCobj.tamps["t2ab"]
 
+    print(np.shape(T2_aa),np.shape(mp3_wvfxn_aa))
     Vtau2_wvfxn_aa, Vtau2_wvfxn_bb, Vtau2_wvfxn_ab = mp3_wvfxn_base(driveCCobj,W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb)
     # zero-out mp3 ab portion
     Vtau2_wvfxn_ab = misc.zeroT2_Diagonal(Vtau2_wvfxn_ab)
@@ -455,6 +457,7 @@ def get_SO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     mp2_bb = driveCCobj.pcc_amps["FO_bb"]
     mp2_ab = driveCCobj.pcc_amps["FO_ab"]
 
+    print('mp2_aa',mp2_aa)
     # Don't need to zero the off-diagonal of T2aaaa/bbbb, but will need to zero-out the diagonal of the newly constructed T2ab
     mp2_ab = misc.zeroT2_Diagonal(mp2_ab)
     mp2_correction = cc_energy.spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab,mp2_aa,mp2_bb,mp2_ab,oa,ob,va,vb)
@@ -478,6 +481,7 @@ def build_FO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     mp2_aa = tamps.antisym_T2(mp2_aa,nocc,nvir)
     mp2_bb = tamps.antisym_T2(mp2_bb,nocc,nvir)
 
+    print(np.shape(mp2_aa),np.shape(mp2_aa*driveCCobj.denomInfo["D2aabkup"]))
     # aaaa/bbbb portion to FO T2, so save these
     driveCCobj.pcc_amps.update({"FO_aa":mp2_aa*driveCCobj.denomInfo["D2aabkup"]})
     driveCCobj.pcc_amps.update({"FO_bb":mp2_bb*driveCCobj.denomInfo["D2bbbkup"]})
