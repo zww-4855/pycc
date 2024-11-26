@@ -25,13 +25,21 @@ class SetupCC():
         """
          Extracts the pyscf_mf, pyscf_mol, and relevant user-input from the cc_info dictionary for use in a subsequent pycc CC calculation
         """
-        if isinstance(self,Run_xacc):
-            print('This is an instance of Run_xacc')
-            return
+        # Initialize data dictionaries
+        self.occInfo=None
+        self.occSliceInfo=None
+        self.denomInfo={}
+        self.integralInfo={}
+        self.eps=None
+
+#        if isinstance(self,Run_xacc): #if Run_xacc class instatiated, do nothing
+#            print('This is an instance of Run_xacc')
+#            return
         # Load mean-field information from PySCF object
         self.hf_e=pyscf_mf.e_tot
         self.nuc_e=pyscf_mf.energy_nuc()
-        
+        self.nmo = np.shape(pyscf_mf.mo_coeff)[0]
+
         # Initialize basics of CC calculation
         self.max_iter=cc_info.get("max_iter",100)
         self.dump_tamps=cc_info.get('dump_tamps',False)
@@ -40,13 +48,6 @@ class SetupCC():
         self.diis_size=cc_info.get("diis_size")
         self.diis_start_cycle=cc_info.get("diis_start_cycle")
 
-        # Initialize data dictionaries
-        self.occInfo=None
-        self.occSliceInfo=None
-        self.denomInfo={}
-        self.integralInfo={}
-        self.eps=None
-        self.nmo = np.shape(pyscf_mf.mo_coeff)[0]
 
         if "slowSOcalc" in cc_info: # If a slow, spin-orb-based CC calc
             self.cc_calcs=cc_info.get("slowSOcalc",'CCD')
@@ -136,6 +137,15 @@ class SetupCC():
         h1e = np.array((pyscf_mf.get_hcore(), pyscf_mf.get_hcore()))
         f = pyscf_mf.get_fock()
         orb = pyscf_mf.mo_coeff
+        print(type(orb),np.shape(orb))
+        orb = np.array(orb)
+        print(type(orb),np.shape(orb))
+        coeff_aa = orb[0][:,self.dropcore:]
+        coeff_bb = orb[1][:,self.dropcore:]
+        orb = np.array([coeff_aa,coeff_bb])
+
+
+        print(np.shape(orb),'final')
         na, nb = pyscf_mf.nelec
 
         h1aa = orb[0].T @ h1e[0] @ orb[0]
@@ -186,8 +196,11 @@ class SetupCC():
         
         # set the spin-integrated integrals and mo_energies
         self.integralInfo={"oei_aa":faa,"oei_bb":fbb,"tei_aaaa":g_aaaa,"tei_bbbb":g_bbbb,"tei_abab":g_abab}
-        self.eps = {"eps_aa":pyscf_mf.mo_energy[0],"eps_bb":pyscf_mf.mo_energy[1]}
+        print('type',type(pyscf_mf.mo_energy),np.shape(pyscf_mf.mo_energy))
 
+        moE_aa = pyscf_mf.mo_energy[0][self.dropcore:]
+        moE_bb = pyscf_mf.mo_energy[1][self.dropcore:]
+        self.eps = {"eps_aa":moE_aa,"eps_bb":moE_bb}
 
     def get_integrals(self,pyscf_mf,pyscf_mol):
         dropcore=self.dropcore
@@ -263,8 +276,10 @@ class SetupCC():
         if calcType=="fastSIcalc": # running UHF, spin-integrated calc
             print('inside get_occ info:')
             na, nb = pyscf_mf.nelec
+            na = na -self.dropcore
+            nb = nb-self.dropcore
             f = pyscf_mf.get_fock()
-            nvirta = f[0].shape[0] - na
+            nvirta = f[0].shape[0] - na 
             nvirtb = f[1].shape[0] - nb
             self.occInfo={"nocc_aa":na,"nocc_bb":nb,"nvirt_aa":nvirta,"nvirt_bb":nvirtb}
 
@@ -470,7 +485,7 @@ class Run_xacc(SetupCC):
             Reads background information printed by xacc (number of occupied/virtual orbitals and MO energies).
     """
     
-    def __init__(self,bkgrd_infile,tamp_infile=None,tei_infile=None,ref='spin-orbital'):
+    def __init__(self,bkgrd_infile,tamp_infile=None,tei_infile=None,ref='spin-orbital',pyscf_mf=None,pyscf_mol=None,cc_runtype=None):
         """
         Initializes the `run_xacc` object by reading background information from the `bkgrd_infile`, 
         CC amplitudes from the `tamp_infile`, and two-electron integrals from the `tei_infile`. 
@@ -492,10 +507,6 @@ class Run_xacc(SetupCC):
                     tensors.
                     Default is 'spin-orbital'
         """
-        # call constructor to inherit class' methods; useful in the case of
-        # spatial orbital methods
-        SetupCC.__init__(self,None,None,None)
-
         self.nocc=None
         self.nvirt=None
         self.mo_energies=None
@@ -503,31 +514,36 @@ class Run_xacc(SetupCC):
 
         self.o=slice(None,self.nocc)
         self.v=slice(self.nocc,None)
-        self.denomInfo={}
-        self.set_denoms(ref)
-
         self.t2amps=np.zeros((self.nvirt,self.nvirt,self.nocc,self.nocc))
         self.t1amps=np.zeros((self.nvirt,self.nocc))
         self.read_tamps(tamp_infile,ref)
-
-
-        nbas=self.nocc+self.nvirt
-        self.tei=np.zeros((nbas,nbas,nbas,nbas))
-        self.read_tei(tei_infile)
-        self.mp2_energy()
+        if ref == 'spin-orbital':
+            self.denomInfo={}
+            self.set_denoms(ref,self.o,self.v)
+    
+            nbas=self.nocc+self.nvirt
+            self.tei=np.zeros((nbas,nbas,nbas,nbas))
+            self.read_tei(tei_infile)
+            self.mp2_energy()
+        elif ref == "spatial":
+            # call constructor to inherit class' methods; useful in the case of
+            # spatial orbital methods
+            SetupCC.__init__(self,pyscf_mf,pyscf_mol,cc_runtype)
+            self.tamps = self.t2amps
+            self.pcc_amps ={}
+            build_pCC_corrections.drive_pcc_energyCorrections(self)
 
         #self.ccd_energyTest()
         #self.mp2_energy()
 
-    def set_denoms(self,ref):
+    def set_denoms(self,ref,o,v):
         eps_a = np.asarray(self.mo_energies)
         eps_b = np.asarray(self.mo_energies)
         n=np.newaxis
-        v=self.v
-        o=self.o
 
         if ref == 'spatial':
-            eps = eps_a
+            self.D1_aa,self.D1_bb=set_denoms.D1denomFast(eps_a,eps_b,o,o,v,v,n)
+            self.D2_aa,self.D2_bb,self.D2_ab=set_denoms.D2denomFast(eps_a,eps_b,o,o,v,v,n)
         else:
             eps = np.append(eps_a, eps_b)
             eps=np.sort(eps)
@@ -600,6 +616,34 @@ class Run_xacc(SetupCC):
         #self.tei=expand_tei(tei,self.nocc,self.nvirt)
         #print('tei',self.tei)
 
+    def convert_tei_2spatial(self,tei,nbas_spinorbs):
+        from collections import Counter
+        nbas_spat = int(nbas_spinorbs/2)
+        W_aaaa = W_bbbb = W_abab = np.zeros((nbas_spat,nbas_spat,nbas_spat,nbas_spat))
+        icount=jcount=kcount=lcount=0
+        for i in range(nbas_spinorbs):
+            for j in range(nbas_spinorbs):
+                for k in range(nbas_spinorbs):
+                    for l in range(nbas_spinorbs):
+                        counts = Counter([i, j, k, l])
+
+                        # Check if any value occurs 3 or more times
+                        if any(count >= 3 for count in counts.values()) or i==j or k==l:
+                            pass # Go to next cycle, because the value of the 2e-int == 0
+
+                        if i%2 ==0 and j%2==0 and k%2==0 and l%2==0: #aaaa type
+                            W_aaaa[i//2,j//2,k//2,l//2]=4.0*tei[i,j,k,l]
+                        elif i%2==1 and j%2==1 and k%2==1 and l%2==1: #bbbb type
+                            W_bbbb[i//2,j//2,k//2,l//2]=tei[i,j,k,l]
+                        elif (                                        #abab type
+    (i % 2 == 0 and j % 2 == 1 and k % 2 == 0 and l % 2 == 1) or
+    (i % 2 == 1 and j % 2 == 0 and k % 2 == 1 and l % 2 == 0) or
+    (i % 2 == 1 and j % 2 == 0 and k % 2 == 0 and l % 2 == 1) or
+    (i % 2 == 0 and j % 2 == 1 and k % 2 == 1 and l % 2 == 0)
+):
+                            W_abab[i//2,j//2,k//2,l//2]=tei[i,j,k,l]
+        return W_aaaa,W_bbbb,W_abab
+
     def read_tamps(self,tamp_infile,ref):
         """
         Reads T1 and T2 CC amplitudes from the specified input file.
@@ -633,13 +677,10 @@ class Run_xacc(SetupCC):
                         b=operator_list[1]-self.nocc
                         i=operator_list[2]
                         j=operator_list[3]
-                        if ref == 'spatial':
-                            self.t2amps[a,b-1,i,j-1] = 4.0*amp_key # only works for pUCCD!
-                        else:
-                            self.t2amps[a,b,i,j]=amp_key
-                            self.t2amps[b,a,i,j]= -1.0* amp_key
-                            self.t2amps[a,b,j,i]= -1.0*amp_key
-                            self.t2amps[b,a,j,i]=amp_key
+                        self.t2amps[a,b,i,j]=amp_key
+                        self.t2amps[b,a,i,j]= -1.0* amp_key
+                        self.t2amps[a,b,j,i]= -1.0*amp_key
+                        self.t2amps[b,a,j,i]=amp_key
                     else: # dealing with t1amp
                         a=operator_list[0]-self.nocc
                         i=operator_list[1]
@@ -651,6 +692,28 @@ class Run_xacc(SetupCC):
         #print('t1:',self.t1amps)
         #print('t2:',self.t2amps)
         self.t2amps=self.t2amps#*0.25
+        if ref == 'spatial':
+            t2_aa,t2_bb,t2_ab = self.convert_t2_spatial(self.t2amps)
+            self.t2amps={}
+            self.t2amps.update({"t2aa":t2_aa,"t2bb":t2_bb,"t2ab":t2_ab})
+
+
+    def convert_t2_spatial(self,t2_spin):
+        nvirt_spin=np.shape(t2_spin)[0]
+        nocc_spin=np.shape(t2_spin)[3]
+
+        nvirt_spat=int(nvirt_spin/2)
+        nocc_spat=int(nocc_spin/2)
+        t2_spat=np.zeros((nocc_spat,nocc_spat,nvirt_spat,nvirt_spat))
+        t2_aa= t2_bb=t2_spat
+        for a in range(0,nvirt_spin,2):
+            for i in range(0,nocc_spin,2):
+                a_spat=int(a//2)
+                i_spat=int(i//2)
+                t2_spat[i_spat,i_spat,a_spat,a_spat]=t2_spin[a,a+1,i,i+1]
+
+        return t2_aa,t2_bb,t2_spat
+
 
     def read_bkgrd(self,bkgrd_infile,ref):
         """
@@ -673,9 +736,9 @@ class Run_xacc(SetupCC):
             mo_energies.append(float(element.strip('[').strip(']')))
         self.mo_energies=mo_energies
 
-        if ref == "spatial": # defines nocc/nvirt w.r.t. # spatial orbs
-            self.nocc = self.nocc - int(lines[1].strip().split()[-1])
-            self.nvirt = self.nvirt - int(lines[2].strip().split()[-1])
+#        if ref == "spatial": # defines nocc/nvirt w.r.t. # spatial orbs
+#            self.nocc = self.nocc - int(lines[1].strip().split()[-1])
+#            self.nvirt = self.nvirt - int(lines[2].strip().split()[-1])
 
 
 
