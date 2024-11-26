@@ -9,6 +9,7 @@ import pycc.props as props
 import pycc.misc as misc
 import pycc.build_pCC_corrections as build_pCC_corrections
 import pycc.pcc_base as pcc_base
+import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
 from copy import deepcopy
 import pickle
 
@@ -750,6 +751,8 @@ class XaccCorrection(RunXacc):
         RunXacc.__init__(self,*args, **kwargs)
         self.denoms=self.denomInfo
         D2 = self.denoms["D2aa"]#.transpose(2,3,0,1)
+        D3 = self.denoms["D3aa"]
+        D1 = self.denoms["D1aa"]
         o=self.o
         v=self.v
         nocc=self.nocc
@@ -817,6 +820,17 @@ class XaccCorrection(RunXacc):
 #          Finally, d5
 
 #          Then build [S]/[T] corrections
+            D3T3 = build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,T2)
+            D3T3 = tamps.antisym_T3(D3T3,None,None)
+            T3 = D3T3*D3
+            sqrBrak_T =0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3,T3.transpose(3,4,5,0,1,2))
+            print('[T] correction to pUCCD:',sqrBrak_T)
+         
+            D1T1 = build_sqrbrak_corrections.build_T1_fromT2_SOspin(W,o,v,T2)
+            T1approx = D1T1*D1
+            sqrBrak_S = np.einsum("ia,ai->",D1T1,T1approx.transpose(1,0))
+            print('[S] correction to pUCCD', sqrBrak_S)
+
 
     def finalize(self,label='pUCCD',dataDict={}):
         print('\n\n\n\n\n ')

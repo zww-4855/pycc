@@ -1,6 +1,20 @@
 import numpy as np
 import pycc.tamps as tamps
 
+def build_T1_fromT2_SOspin(g,o,v,t2):
+    rov = -0.500000000 * np.einsum("jkab,ibjk->ia",t2,g[o,v,o,o],optimize="optimal")
+    rov += -0.500000000 * np.einsum("ijbc,bcja->ia",t2,g[v,v,o,v],optimize="optimal")
+    return rov
+
+def sqr_brakT_spin(t3resid,t3_dag):
+    return 0.111111111 * np.einsum("ijkabc,abcijk->",t3resid,t3_dag,optimize="optimal")
+
+def build_T3_secondO_spin(g,o,v,t2):
+    rooovvv = -0.250000000 * np.einsum("ilab,jklc->ijkabc",t2,g[o,o,o,v],optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("ijad,kdbc->ijkabc",t2,g[o,v,v,v],optimize="optimal")
+    return rooovvv
+
+
 def build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
 
     Rooovvv,RooOvvV, RoOOvVV, ROOOVVV = get_netT3_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
