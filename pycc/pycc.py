@@ -8,6 +8,8 @@ import pycc.rdm1 as rdm1
 import pycc.props as props
 import pycc.misc as misc
 import pycc.build_pCC_corrections as build_pCC_corrections
+import pycc.pcc_base as pcc_base
+from copy import deepcopy
 import pickle
 
 class SetupCC():
@@ -438,7 +440,7 @@ class DriveCC(SetupCC):
 
 
 
-class Run_xacc(SetupCC):
+class RunXacc(SetupCC):
     """
     The `Run_xacc` class handles perturbative corrections - based on MBPT - given a set of converged,
     infinite-order unitary coupled cluster amplitudes. Currently, the class simply computes every 
@@ -485,7 +487,7 @@ class Run_xacc(SetupCC):
             Reads background information printed by xacc (number of occupied/virtual orbitals and MO energies).
     """
     
-    def __init__(self,bkgrd_infile,tamp_infile=None,tei_infile=None,ref='spin-orbital',pyscf_mf=None,pyscf_mol=None,cc_runtype=None):
+    def __init__(self,CCbase='pUCCD',bkgrd_infile=None,tamp_infile=None,tei_infile=None,ref='spin-orbital',pyscf_mf=None,pyscf_mol=None,cc_runtype=None):
         """
         Initializes the `run_xacc` object by reading background information from the `bkgrd_infile`, 
         CC amplitudes from the `tamp_infile`, and two-electron integrals from the `tei_infile`. 
@@ -524,13 +526,15 @@ class Run_xacc(SetupCC):
             nbas=self.nocc+self.nvirt
             self.tei=np.zeros((nbas,nbas,nbas,nbas))
             self.read_tei(tei_infile)
-            self.mp2_energy()
+           # self.mp2_energy()
         elif ref == "spatial":
             # call constructor to inherit class' methods; useful in the case of
             # spatial orbital methods
             SetupCC.__init__(self,pyscf_mf,pyscf_mol,cc_runtype)
-            self.tamps = self.t2amps
+            self.tamps={}
+            self.convert_t2_spatial(self.t2amps)
             self.pcc_amps ={}
+            print('mo energies:',self.eps["eps_aa"])
             build_pCC_corrections.drive_pcc_energyCorrections(self)
 
         #self.ccd_energyTest()
@@ -582,8 +586,9 @@ class Run_xacc(SetupCC):
         ccd_test=0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v],self.t2amps)
         print('ccd test E:',ccd_test)
         print('i',self.nocc,'a',self.nvirt)
-        print('mp2E:', mp2E)
+        print('mp2E: w/ pUCCD amps', mp2E)
 
+        print('final check:',0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v], self.t2amps))
     def read_tei(self,tei_infile):
         """
         Reads two-electron integrals from the input file and stores them in a 4D numpy array.
@@ -691,11 +696,7 @@ class Run_xacc(SetupCC):
 
         #print('t1:',self.t1amps)
         #print('t2:',self.t2amps)
-        self.t2amps=self.t2amps#*0.25
-        if ref == 'spatial':
-            t2_aa,t2_bb,t2_ab = self.convert_t2_spatial(self.t2amps)
-            self.t2amps={}
-            self.t2amps.update({"t2aa":t2_aa,"t2bb":t2_bb,"t2ab":t2_ab})
+        self.t2amps=self.t2amps.transpose(2,3,0,1)#*0.25
 
 
     def convert_t2_spatial(self,t2_spin):
@@ -706,13 +707,16 @@ class Run_xacc(SetupCC):
         nocc_spat=int(nocc_spin/2)
         t2_spat=np.zeros((nocc_spat,nocc_spat,nvirt_spat,nvirt_spat))
         t2_aa= t2_bb=t2_spat
+        counter=0
         for a in range(0,nvirt_spin,2):
             for i in range(0,nocc_spin,2):
                 a_spat=int(a//2)
                 i_spat=int(i//2)
-                t2_spat[i_spat,i_spat,a_spat,a_spat]=t2_spin[a,a+1,i,i+1]
+                # -1.0* prefactor necessary to ensure conventions bt xacc/pycc
+                t2_spat[i_spat,i_spat,a_spat,a_spat]=(-1.0)**(counter)*t2_spin[a,a+1,i,i+1]
+                counter+=1
 
-        return t2_aa,t2_bb,t2_spat
+        self.tamps.update({"t2aa":t2_aa,"t2bb":t2_bb,"t2ab":t2_spat})
 
 
     def read_bkgrd(self,bkgrd_infile,ref):
@@ -740,6 +744,108 @@ class Run_xacc(SetupCC):
 #            self.nocc = self.nocc - int(lines[1].strip().split()[-1])
 #            self.nvirt = self.nvirt - int(lines[2].strip().split()[-1])
 
+
+class XaccCorrection(RunXacc):
+    def __init__(self,*args,**kwargs):
+        RunXacc.__init__(self,*args, **kwargs)
+        self.denoms=self.denomInfo
+        D2 = self.denoms["D2aa"]#.transpose(2,3,0,1)
+        o=self.o
+        v=self.v
+        nocc=self.nocc
+        nvirt=self.nvirt
+        W = self.tei
+        T2 = self.t2amps
+
+        if 'pUCCD' in args:
+            #Initialize dictionary that will stored off-diagonal corrections to T2,
+            # as well as the full and off-diagonal correction order-by-order
+            self.t2amps_all = {}
+            self.correction_all =  {}
+##############################################################################
+#           Start with lowest (2nd) order
+            fullMP2_base = pcc_base.build_MP2_T2(W[o,o,v,v],D2)
+            tmpfullMP2_base = np.copy(fullMP2_base)
+            odMP2_base = pcc_base.kill_Diag_T2(tmpfullMP2_base,self.nocc,self.nvirt)
+            self.t2amps_all.update({"mp2_full":fullMP2_base,"mp2_od":odMP2_base})
+            fullMP2_E = pcc_base.get_WnT2_energy(fullMP2_base,self.tei[v,v,o,o])
+            odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
+            self.correction_all.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E})
+
+##############################################################################
+#            Move on to 3rd order. Recall this has two pieces, off-diagonal MP3
+#            and 2.0*<0|V|q2>D2<q2|[V,T2']|0>, where T2' is the pUCCD amplitude
+
+            MP3_base = pcc_base.build_LCCD_T2(odMP2_base.transpose(1,0,2,3),W,o,v,D2)
+            odMP3_base = pcc_base.kill_Diag_T2(np.copy(MP3_base),self.nocc,self.nvirt)
+            fullMP3_base = pcc_base.build_LCCD_T2(fullMP2_base.transpose(1,0,2,3),W,o,v,D2)
+            odMP3_E = pcc_base.get_WnT2_energy(odMP3_base,W[v,v,o,o])
+            fullMP3_E = pcc_base.get_WnT2_energy(fullMP3_base,W[v,v,o,o])
+            self.t2amps_all.update({"mp3_full":fullMP3_base,"mp3_od":odMP3_base})
+            self.correction_all.update({"mp3_full":fullMP3_E,"mp3_od":odMP3_E})
+            self.finalize('pUCCD',self.correction_all)
+
+            SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
+            odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
+            odSO_E = 2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
+            print('odSO_E:',odSO_E)
+            self.t2amps_all.update({"vt2_mp3_od":odSO_base})
+            self.correction_all.update({"odSO_E":odSO_E})
+            self.finalize('pUCCD',self.correction_all)
+
+            SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
+            SO_base = SO_base/D2
+            off = pcc_base.get_WnT2_energy(SO_base,odMP2_base.transpose(2,3,0,1))
+            print('off:',off)
+##############################################################################
+#            4th order now. In total, there are five diagrams we need to construct
+#            start w/ d1 
+            odSO_base_resid = odSO_base/D2
+            d1_energy = pcc_base.get_WnT2_energy(odSO_base,odSO_base_resid.transpose(2,3,0,1))
+            print('d1:',d1_energy)
+# *****SKIPPING D2, MUST COME BACK
+
+#           now d3
+            mp3_base_resid = odMP3_base/D2
+            d3_energy = 2.0*pcc_base.get_WnT2_energy(odSO_base,mp3_base_resid.transpose(2,3,0,1))
+            print('d3:',d3_energy)
+
+#          now d4
+            d4_energy = pcc_base.get_WnT2_energy(odMP3_base,mp3_base_resid.transpose(2,3,0,1))
+            print('d4:',d4_energy)
+
+#          Finally, d5
+
+#          Then build [S]/[T] corrections
+
+    def finalize(self,label='pUCCD',dataDict={}):
+        print('\n\n\n\n\n ')
+        print('**********************')
+        print('Summary of Xacc correction results:')
+        if "pUCCD" in label:
+            for key, value in dataDict.items():
+                if "full" in key:
+                    continue
+                print(f"{key}: {value}")
+
+            for key, value in dataDict.items():
+                if "full" in key:
+                    print(f"{key}: {value}")
+
+
+#        print('E(2): ', E2)
+#        print('E(3): ', E3)
+#        print('E(4): ', E4)
+#        print('total Doubles contribution:',E2+E3+E4)
+#    
+#        print('\n\n\n\n\n ')
+#        print('**********************')
+#        print('Summary of (singles/triples) results:')
+#        print('E(4) [S]:',E4_singlesFO)
+#        print('E(4) [T]:',E4_triplesFO)
+#    
+#        print('Total correction to pUCCD thru fourth-order, including [S] and [T]:', E2+E3+E4+E4_singlesFO+E4_triplesFO)
+#        print("Total pUCC+E(2)+E(3)+E(4)+[S]+[T] energy: ", driveCCobj.correlationE["totalE"]+E2+E3+E4+E4_singlesFO+E4_triplesFO)
 
 
 if __name__ == "__main__":

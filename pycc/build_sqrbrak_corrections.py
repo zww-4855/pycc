@@ -24,8 +24,11 @@ def build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,
     triples_correction += 0.250000000 * np.einsum("iIJaAB,aABiIJ->",RoOOvVV,T3dag_abb,optimize="optimal")
     triples_correction += 0.111111111 * np.einsum("IJKABC,ABCIJK->",ROOOVVV,T3dag_bbb,optimize="optimal")
 
-    print('[T] correction to UCC is:',triples_correction)
-    return triples_correction*0.25
+    print('[T] correction to UCC is:', 0.250000000 * np.einsum("ijIabA,abAijI->",RooOvvV,T3dag_aab,optimize="optimal"))
+    print('other addon',0.250000000 * np.einsum("iIJaAB,aABiIJ->",RoOOvVV,T3dag_abb,optimize="optimal"))
+    print('last:', 0.111111111 * np.einsum("IJKABC,ABCIJK->",ROOOVVV,T3dag_bbb,optimize="optimal"))
+    #sys.exit()
+    return triples_correction
 
 def build_FOsqrBrakSingles(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     #netT1=get_netT1_fromT2(self.g,self.o,self.v,self.t2)

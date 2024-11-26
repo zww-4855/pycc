@@ -20,3 +20,9 @@ def zeroT2_Diagonal(tensor):
             diagT2[occ,occ,virt,virt]= 0.0 #tensor[occ,occ,virt,virt]
     return diagT2
 
+def print_diagT2(tensor):
+    o = np.shape(tensor)[0]
+    v = np.shape(tensor)[2]
+    for i in range(o):
+        for a in range(v):
+            print(tensor[i,i,a,a])

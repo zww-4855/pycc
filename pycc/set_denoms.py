@@ -1,7 +1,7 @@
 
 def D1denomFast(epsaa,epsbb,occ_aa,occ_bb,virt_aa,virt_bb,n):
     D1_aa = 1.0/ (-epsaa[virt_aa,n] + epsaa[n,occ_aa])
-    D1_bb = 1.0/ (-epsbb[virt_bb,n] + epsaa[n,occ_bb])
+    D1_bb = 1.0/ (-epsbb[virt_bb,n] + epsbb[n,occ_bb])
     
     D1_aa=D1_aa.transpose(1,0)
     D1_bb=D1_bb.transpose(1,0)

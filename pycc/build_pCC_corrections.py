@@ -3,7 +3,10 @@ import pycc.tamps as tamps
 import pycc.cc_energy as cc_energy
 import pycc.misc as misc
 import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+import pycc.pcc_base as pcc_base
 from copy import deepcopy
+
+
 
 def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,va,vb):
     oa = driveCCobj.occSliceInfo["occ_aa"]
@@ -16,13 +19,26 @@ def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,v
     W_bbbb = driveCCobj.integralInfo["tei_bbbb"]
     W_abab = driveCCobj.integralInfo["tei_abab"]
 
+################################################################
+    # test tau2 mp2 E
+    test_tau2ab = driveCCobj.tamps["t2ab"]
+    test_tau2bb = driveCCobj.tamps["t2bb"]
+    test_tau2aa = driveCCobj.tamps["t2aa"]
+    wn_tau2E = cc_energy.spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab.transpose(0,2,1,3),test_tau2aa,test_tau2bb,test_tau2ab,oa,ob,va,vb)
+    print(np.shape(test_tau2ab))
+
+    print('Wntau2 MP2 energy:', wn_tau2E)
+
+################################################################
+    #sys.exit()
     print(np.shape(W_aaaa))
     build_FO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
     E2 = get_SO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
 
     build_SO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
     E3 = get_TO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
-
+    
+#    sys.exit()
     build_TO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
     E4 = get_FO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
     #firstOrderwvfxn,E2 = firstOrder_Driver(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
@@ -47,6 +63,7 @@ def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,v
     print('E(2): ', E2)
     print('E(3): ', E3)
     print('E(4): ', E4)
+    print('total Doubles contribution:',E2+E3+E4)
 
     print('\n\n\n\n\n ')
     print('**********************')
@@ -413,8 +430,8 @@ def build_SO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     T2_aa = driveCCobj.tamps["t2aa"]
     T2_bb = driveCCobj.tamps["t2bb"]
     T2_ab = driveCCobj.tamps["t2ab"]
-
-    print(np.shape(T2_aa),np.shape(mp3_wvfxn_aa))
+    misc.print_diagT2(T2_ab)
+    #sys.exit()
     Vtau2_wvfxn_aa, Vtau2_wvfxn_bb, Vtau2_wvfxn_ab = mp3_wvfxn_base(driveCCobj,W_aaaa,W_bbbb,W_abab,T2_aa,T2_bb,T2_ab,oa,ob,va,vb)
     # zero-out mp3 ab portion
     Vtau2_wvfxn_ab = misc.zeroT2_Diagonal(Vtau2_wvfxn_ab)
@@ -459,13 +476,37 @@ def get_SO_energy(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
 
     print('mp2_aa',mp2_aa)
     # Don't need to zero the off-diagonal of T2aaaa/bbbb, but will need to zero-out the diagonal of the newly constructed T2ab
-    mp2_ab = misc.zeroT2_Diagonal(mp2_ab)
     mp2_correction = cc_energy.spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab,mp2_aa,mp2_bb,mp2_ab,oa,ob,va,vb)
     print('\n\n MP2 E(2) correction to pUCC:', mp2_correction)
 
     energy_aa = 0.250000000 * np.einsum("abij,ijab->",W_aaaa[va,va,oa,oa],mp2_aa,optimize="optimal")
     energy_bb = 0.250000000 * np.einsum("ABIJ,IJAB->",W_bbbb[vb,vb,ob,ob],mp2_bb,optimize="optimal")
     print('purely triplet-excited effects on E(2):',energy_aa,energy_bb)
+
+
+    nocc=np.shape(mp2_ab)[0]
+    nvirt=np.shape(mp2_ab)[2]
+    summed=0.0
+    print('nocc,nvirt',nocc,nvirt)
+    print(W_abab)
+    
+    for i in range(nocc):
+        for j in range(i+1,nocc):
+            for a in range(nvirt):
+                for b in range(a+1,nvirt):
+                    print('a,b,i,j,Wabij',a,b,i,j,W_abab[nocc+a,i,nocc+b,j],mp2_ab[i,j,a,b])
+                    summed+=W_abab[i,j,nocc+a,nocc+b]*mp2_ab[i,j,a,b]
+    print(summed)
+    sys.exit()
+    for i in range(nocc):
+        for j in range(i+1,nocc):
+            for a in range(nvirt):
+                for b in range(a+1,nvirt):
+                    print('i,j,a,b,t2ab,wb,element:',i,j,a,b,mp2_ab[i,j,a,b],W_abab[nocc+a,nocc+b,i,j],mp2_ab[i,j,a,b]*W_abab[nocc+a,nocc+b,i,j])
+            summed+=mp2_ab[i,j,a,b]*W_abab[nocc+a,nocc+b,i,j]
+ 
+    print('loop off-diagonal mp2abab:', summed)
+    sys.exit()
     return mp2_correction
 
 def build_FO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
@@ -488,9 +529,9 @@ def build_FO_wvfxn(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
 
     # now collect all ab terms, and save to dictionary
     FO_ab = 1.000000000 * np.einsum("iIaA->iIaA",W_abab[oa,ob,va,vb],optimize="optimal")
-
-
-    driveCCobj.pcc_amps.update({"FO_ab":FO_ab*driveCCobj.denomInfo["D2abbkup"]})
+    FO_ab = FO_ab*driveCCobj.denomInfo["D2abbkup"]
+    FO_ab = misc.zeroT2_Diagonal(FO_ab)
+    driveCCobj.pcc_amps.update({"FO_ab":FO_ab})
 
 
 def firstOrder_Driver(driveCCobj,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
