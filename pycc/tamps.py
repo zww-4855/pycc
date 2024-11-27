@@ -768,3 +768,10 @@ def antisym_T3SI_abb(RoOOvVV, nocc, nvir):
     return RoOOvVV_anti
 
 
+def antisym_intermed(intermed):
+    antisym = intermed
+    antisym += -1.0*antisym.transpose(1,0,2,3)
+    antisym += -1.0*antisym.transpose(0,1,3,2)
+    antisym   += antisym.transpose(1,0,3,2)
+
+    return antisym

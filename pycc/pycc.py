@@ -10,6 +10,7 @@ import pycc.misc as misc
 import pycc.build_pCC_corrections as build_pCC_corrections
 import pycc.pcc_base as pcc_base
 import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+import pycc.ucc_eqns as ucc_eqns
 from copy import deepcopy
 import pickle
 
@@ -774,7 +775,7 @@ class XaccCorrection(RunXacc):
             fullMP2_E = pcc_base.get_WnT2_energy(fullMP2_base,self.tei[v,v,o,o])
             odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
             self.correction_all.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E})
-
+            totalE2=odMP2_E
 ##############################################################################
 #            Move on to 3rd order. Recall this has two pieces, off-diagonal MP3
 #            and 2.0*<0|V|q2>D2<q2|[V,T2']|0>, where T2' is the pUCCD amplitude
@@ -788,10 +789,13 @@ class XaccCorrection(RunXacc):
             self.correction_all.update({"mp3_full":fullMP3_E,"mp3_od":odMP3_E})
             self.finalize('pUCCD',self.correction_all)
 
-            SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
+            # IS this transpose correct here?????? ##
+            SO_base = pcc_base.build_LCCD_T2(T2.transpose(1,0,2,3),W,o,v,D2)
             odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
             odSO_E = 2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
             print('odSO_E:',odSO_E)
+            totalE3=odSO_E+odMP3_E
+
             self.t2amps_all.update({"vt2_mp3_od":odSO_base})
             self.correction_all.update({"odSO_E":odSO_E})
             self.finalize('pUCCD',self.correction_all)
@@ -807,7 +811,35 @@ class XaccCorrection(RunXacc):
             d1_energy = pcc_base.get_WnT2_energy(odSO_base,odSO_base_resid.transpose(2,3,0,1))
             print('d1:',d1_energy)
 # *****SKIPPING D2, MUST COME BACK
+            # build intermediates
+            roooo = 0.125000000 * np.einsum("ijab,abkl->ijkl",T2,W[v,v,o,o],optimize="optimal")
+            rvvvv = 0.125000000 * np.einsum("ijab,cdij->cdab",T2,W[v,v,o,o],optimize="optimal")
+            rovov = -1.000000000 * np.einsum("ikac,bcjk->ibja",T2,W[v,v,o,o],optimize="optimal")
 
+            roooo += roooo.transpose(2,3,0,1)
+            rvvvv += rvvvv.transpose(2,3,0,1)
+            rovov += rovov.transpose(2,3,0,1)
+
+            roooo = tamps.antisym_intermed(roooo)
+            rvvvv = tamps.antisym_intermed(rvvvv)
+            d2_base = 0.125000000 * np.einsum("klab,ijkl->ijab",T2,roooo,optimize="optimal")
+            d2_base += -1.000000000 * np.einsum("ikac,jckb->ijab",T2,rovov,optimize="optimal")
+            d2_base += 0.125000000 * np.einsum("ijcd,cdab->ijab",T2,rvvvv,optimize="optimal")
+        
+            d2_base = tamps.antisym_T2(d2_base,None,None)
+            d2_base = d2_base*D2
+            d2_base = pcc_base.kill_Diag_T2(d2_base,nocc,nvirt)
+            d2_E = pcc_base.get_WnT2_energy(d2_base,W[v,v,o,o])
+            print('d2 E:',d2_E)
+            #print(np.equal(roooo,-1.0*roooo.transpose(0,1,3,2)), roooo[1,2,1,2],roooo[1,2,2,1])
+            #print(np.equal(rvvvv,-1.0*rvvvv.transpose(0,1,3,2)), rvvvv[1,2,1,2],rvvvv[1,2,2,1])
+            #print(np.equal(rovov,-1.0*rovov.transpose(2,1,0,3)), rovov[1,2,1,2],rovov[1,2,1,2])
+            
+            #sys.exit()
+
+
+
+####################################################3
 #           now d3
             mp3_base_resid = odMP3_base/D2
             d3_energy = 2.0*pcc_base.get_WnT2_energy(odSO_base,mp3_base_resid.transpose(2,3,0,1))
@@ -818,6 +850,19 @@ class XaccCorrection(RunXacc):
             print('d4:',d4_energy)
 
 #          Finally, d5
+            d5_base= 0.5*ucc_eqns.uccsd_T2dagWnT2(W,T2,o,v)
+            d5_base = tamps.antisym_T2(d5_base,None,None)
+            d5_base = pcc_base.kill_Diag_T2(d5_base,nocc,nvirt)
+            d5_energy = 2.0*pcc_base.get_WnT2_energy(d5_base,W[v,v,o,o])
+            print('d5:',d5_energy)
+            totalE4 = d1_energy + d2_E + d3_energy+d4_energy+d5_energy
+            self.correction_all.update({"d1_E":d1_energy,"d2_E":d2_E,"d3_E":d3_energy,
+                "d4_E":d4_energy, "d5_E":d5_energy})
+            self.correction_all.update({'total E(2) from doubles:':totalE2,'total E(3) from doubles:':totalE3, 'total E(4) from doubles:': totalE4, 'total correction from doubles:':totalE2+totalE3+totalE4})
+
+            self.finalize('pUCCD',self.correction_all)
+
+
 
 #          Then build [S]/[T] corrections
             D3T3 = build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,T2)
