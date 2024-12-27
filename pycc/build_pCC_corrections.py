@@ -26,8 +26,11 @@ def drive_pcc_energyCorrections(driveCCobj):#,W_aaaa,W_bbbb,W_abab,T2_ab,oa,ob,v
     test_tau2aa = driveCCobj.tamps["t2aa"]
     wn_tau2E = cc_energy.spinIntegrated_CCDE(W_aaaa,W_bbbb,W_abab.transpose(0,2,1,3),test_tau2aa,test_tau2bb,test_tau2ab,oa,ob,va,vb)
     print(np.shape(test_tau2ab))
+    overlap_T2dagT2 = cc_energy.spinIntegrated_CCDE(test_tau2aa.transpose(2,3,0,1),test_tau2bb.transpose(2,3,0,1),test_tau2ab.transpose(2,3,0,1),test_tau2aa,test_tau2bb,test_tau2ab,oa,ob,va,vb)
 
     print('Wntau2 MP2 energy:', wn_tau2E)
+    print('pUCCD overlap T2^T2:', overlap_T2dagT2)
+    overlap_T2dagT2 += 1
 
 ################################################################
     #sys.exit()
