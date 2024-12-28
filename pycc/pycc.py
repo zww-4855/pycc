@@ -1011,7 +1011,7 @@ class XaccCorrection(RunXacc):
 
         fullMP2_E = pcc_base.get_WnT2_energy(fullMP2_base,self.tei[v,v,o,o])
         odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
-        pccE_correction.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E,"Total E(2):":odMP2_E})
+        pccE_correction.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E,"Total E(2) from doubles:":odMP2_E})
 
         return
 
@@ -1032,13 +1032,13 @@ class XaccCorrection(RunXacc):
 
     def get_TO_pUCCenergy(self,W,T2,D2,o,v,t2amps_all,pccE_correction):
         # IS this transpose correct here?????? ##
-        SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
+        SO_base = pcc_base.build_LCCD_T2(T2.transpose(1,0,2,3),W,o,v,D2)
         odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
         odSO_E = 2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
         pccE_correction.update({"odSO_E":odSO_E})
         print('odSO_E:',odSO_E)
         totalE3 = pccE_correction["mp3_od"]+odSO_E
-        pccE_correction.update({"Total E(3):": totalE3})
+        pccE_correction.update({"Total E(3) from doubles:": totalE3})
         t2amps_all.update({"vt2_mp3_od":odSO_base})
 
         ## testing new way to construct MBPT3
@@ -1061,18 +1061,20 @@ class XaccCorrection(RunXacc):
     def get_FO_d2(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         # build intermediates
         roooo = 0.125000000 * np.einsum("ijab,abkl->ijkl",T2,W[v,v,o,o],optimize="optimal")
-        rvvvv = 0.125000000 * np.einsum("ijab,cdij->cdab",T2,W[v,v,o,o],optimize="optimal")
-        rovov = -1.000000000 * np.einsum("ikac,bcjk->ibja",T2,W[v,v,o,o],optimize="optimal")
+        roooo += 0.125000000 * np.einsum("abij,klab->klij",T2dag,W[o,o,v,v],optimize="optimal")
 
-        roooo += roooo.transpose(2,3,0,1)
-        rvvvv += rvvvv.transpose(2,3,0,1)
-        rovov += rovov.transpose(2,3,0,1)
+        rvvvv = 0.125000000 * np.einsum("ijab,cdij->cdab",T2,W[v,v,o,o],optimize="optimal")
+        rvvvv += 0.125000000 * np.einsum("abij,ijcd->abcd",T2dag,W[o,o,v,v],optimize="optimal")
+
+        rovov = -1.000000000 * np.einsum("ikac,bcjk->ibja",T2,W[v,v,o,o],optimize="optimal")
+        rovov += -1.000000000 * np.einsum("acik,jkbc->jaib",T2dag,W[o,o,v,v],optimize="optimal")
 
         roooo = tamps.antisym_intermed(roooo)
         rvvvv = tamps.antisym_intermed(rvvvv)
         # check antisymmetry
-        print(np.isclose(roooo.transpose(2,3,0,1), -1.0*roooo))
-        print(np.isclose(rovov.transpose(2,3,0,1), -1.0*rovov))
+        #print(np.isclose(roooo.transpose(1,0,2,3), -1.0*roooo))
+        #print(np.isclose(rovov.transpose(2,1,0,3), -1.0*rovov))
+        #print(np.isclose(rvvvv.transpose(1,0,2,3), -1.0*rvvvv))
 
         od_mp2 = t2amps_all["mp2_od"]
         d2_base = 0.125000000 * np.einsum("klab,ijkl->ijab",od_mp2,roooo,optimize="optimal")
@@ -1109,8 +1111,8 @@ class XaccCorrection(RunXacc):
         d4_energy = pcc_base.get_WnT2_energy(odMP3_base,mp3_base_resid.transpose(2,3,0,1))
         pccE_correction.update({"E4 d4":d4_energy})
  
-        test = pcc_base.build_LCCD_T2(odMP3_base.transpose(1,0,2,3),W,o,v,D2)
-        test = pcc_base.return_Diag_T2(test,self.nocc,self.nvirt)
+        test = pcc_base.build_LCCD_T2(odMP3_base,W,o,v,D2)
+        test = pcc_base.kill_Diag_T2(test,self.nocc,self.nvirt)
         testE = pcc_base.get_WnT2_energy(test,W[v,v,o,o])
         print('E4 compare:',d4_energy,testE)
 
@@ -1125,7 +1127,7 @@ class XaccCorrection(RunXacc):
 
     def get_FO_d6(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         od_W = pcc_base.kill_Diag_T2(np.copy(W),self.nocc,self.nvirt)
-        test_d5 = 0.5*ucc_eqns.uccsd_wnT2sqr(od_W,T2,o,v)
+        test_d5 = ucc_eqns.uccsd_wnT2sqr(od_W,T2,o,v)
         test_d5 = tamps.antisym_T2(test_d5,None,None)
         test_d5 = test_d5*D2 # ADDED THis 12/27/2024
         test_d5 = pcc_base.kill_Diag_T2(test_d5,self.nocc,self.nvirt)
@@ -1135,15 +1137,15 @@ class XaccCorrection(RunXacc):
 
     def get_FO_d7(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         C2 = t2amps_all["mp2_od"]
-        C2 = pcc_base.build_LCCD_T2(C2.transpose(1,0,2,3),W,o,v,D2)
+        C2 = pcc_base.build_LCCD_T2(C2,W,o,v,D2)
         C2 = pcc_base.return_Diag_T2(C2,self.nocc,self.nvirt)
         t2amps_all.update({"C2":C2})
  
         ### MUST ADD TRANSPOSITION BACK HERE ZWW
-        V_C2 = pcc_base.build_LCCD_T2(C2.transpose(1,0,2,3),W,o,v,D2)
+        V_C2 = pcc_base.build_LCCD_T2(C2,W,o,v,D2)
         t2amps_all.update({"partC3_VC2":pcc_base.return_Diag_T2(V_C2,self.nocc,self.nvirt)})
         newC2 = pcc_base.kill_Diag_T2(V_C2,self.nocc,self.nvirt)
-        E_d6 = 2.0*pcc_base.get_WnT2_energy(newC2,W[v,v,o,o])
+        E_d6 = pcc_base.get_WnT2_energy(newC2,W[v,v,o,o])
         pccE_correction.update({"E4 d7":E_d6})
         return
 
@@ -1161,7 +1163,7 @@ class XaccCorrection(RunXacc):
         C3tmp += sqrBrakS_T2 + sqrBrakT_T2
 
         # finally, add Q2' R0V(R0VR0V)D
-        Q2_wnT2sqr = 0.5*ucc_eqns.uccsd_wnT2sqr(W,od_mp2,o,v)
+        Q2_wnT2sqr = ucc_eqns.uccsd_wnT2sqr(W,od_mp2,o,v)
         Q2_wnT2sqr = tamps.antisym_T2(Q2_wnT2sqr,None,None)
         Q2_wnT2sqr = Q2_wnT2sqr*D2 # ADDED THis 12/27/2024
         Q2_wnT2sqr = pcc_base.return_Diag_T2(Q2_wnT2sqr,self.nocc,self.nvirt)
