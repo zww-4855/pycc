@@ -770,13 +770,16 @@ class XaccCorrection(RunXacc):
             self.get_TO_MBPTenergy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
             self.get_TO_pUCCenergy(W,T2,D2,o,v,self.t2amps_all,self.pccE_correction)
             print(self.t2amps_all.keys())
-            self.get_FO_d1(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d2(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d3(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d4(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d5(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d6(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d7(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 =0.0
+            totalE4 = self.get_FO_d1(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d2(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d3(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d4(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d5(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d6(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d7(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+
+            self.pccE_correction.update({"Total E(4):":totalE4})
 
             # Now get fourth order [S] and [T] corrections
             self.get_FO_singles(W,T2,o,v,D1,self.pccE_correction)
@@ -971,14 +974,16 @@ class XaccCorrection(RunXacc):
             self.get_TO_MBPTenergy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
             self.get_TO_pUCCenergy(W,T2,D2,o,v,self.t2amps_all,self.pccE_correction)
             print(self.t2amps_all.keys())
-            self.get_FO_d1(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d2(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d3(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d4(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d5(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d6(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_d7(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
 
+            totalE4 = 0.0
+            totalE4 += self.get_FO_d1(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d2(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d3(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d4(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d5(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d6(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            totalE4 += self.get_FO_d7(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            self.pccE_correction.update({"Total E(4):":totalE4})
             sys.exit()
 
 
@@ -1013,7 +1018,7 @@ class XaccCorrection(RunXacc):
         odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
         pccE_correction.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E,"Total E(2) from doubles:":odMP2_E})
 
-        return
+        return 
 
     def get_TO_MBPTenergy(self,W,D2,o,v,t2amps_all,pccE_correction):
         odMP2_base = t2amps_all["mp2_od"]
@@ -1028,7 +1033,7 @@ class XaccCorrection(RunXacc):
         t2amps_all.update({"mp3_full":fullMP3_base,"mp3_od":odMP3_base})
         pccE_correction.update({"mp3_full":fullMP3_E,"mp3_od":odMP3_E})
 
-        return
+        return 
 
     def get_TO_pUCCenergy(self,W,T2,D2,o,v,t2amps_all,pccE_correction):
         # IS this transpose correct here?????? ##
@@ -1049,7 +1054,7 @@ class XaccCorrection(RunXacc):
         r += 0.125000000 * np.einsum("ijab,abkl,klij->",T2i,T2dagi,W[o,o,o,o],optimize="optimal")
         print('Revised mbpt3 energy full:',r)
         #sys.exit()
-        return
+        return 
 
     def get_FO_d1(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         odSO_base = t2amps_all["vt2_mp3_od"]
@@ -1057,6 +1062,7 @@ class XaccCorrection(RunXacc):
         d1_energy = pcc_base.get_WnT2_energy(odSO_base,odSO_base_resid.transpose(2,3,0,1))
         print('HERE D1 ENERGY:',d1_energy)
         pccE_correction.update({"E4 d1:":d1_energy})
+        return d1_energy
 
     def get_FO_d2(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         # build intermediates
@@ -1087,7 +1093,7 @@ class XaccCorrection(RunXacc):
         d2_E = pcc_base.get_WnT2_energy(d2_base,W[v,v,o,o])
         print('d2 E:',d2_E)
         pccE_correction.update({"E4 d2":d2_E})
-        return
+        return d2_E
 
     def get_FO_d3(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         mp3_base_resid = t2amps_all["mp3_od"]/D2
@@ -1102,7 +1108,7 @@ class XaccCorrection(RunXacc):
         test = pcc_base.kill_Diag_T2(test,self.nocc,self.nvirt)
         testE = pcc_base.get_WnT2_energy(test,W[v,v,o,o])
         print('E4 compare:',d3_energy,2.0*testE)
-        return
+        return d3_energy
 
 
     def get_FO_d4(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
@@ -1115,6 +1121,7 @@ class XaccCorrection(RunXacc):
         test = pcc_base.kill_Diag_T2(test,self.nocc,self.nvirt)
         testE = pcc_base.get_WnT2_energy(test,W[v,v,o,o])
         print('E4 compare:',d4_energy,testE)
+        return d4_energy
 
     def get_FO_d5(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         d5_base= 0.5*ucc_eqns.uccsd_T2dagWnT2(W,T2,o,v)
@@ -1123,7 +1130,7 @@ class XaccCorrection(RunXacc):
         d5_base = pcc_base.kill_Diag_T2(d5_base,self.nocc,self.nvirt)
         d5_energy = 2.0*pcc_base.get_WnT2_energy(d5_base,W[v,v,o,o])
         pccE_correction.update({"E4 d5":d5_energy})
-        return
+        return d5_energy
 
     def get_FO_d6(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         od_W = pcc_base.kill_Diag_T2(np.copy(W),self.nocc,self.nvirt)
@@ -1133,7 +1140,7 @@ class XaccCorrection(RunXacc):
         test_d5 = pcc_base.kill_Diag_T2(test_d5,self.nocc,self.nvirt)
         test_d5_energy= 2.0*pcc_base.get_WnT2_energy(test_d5,W[v,v,o,o])
         pccE_correction.update({"E4 d6":test_d5_energy})
-        return    
+        return    test_d5_energy
 
     def get_FO_d7(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         C2 = t2amps_all["mp2_od"]
@@ -1147,7 +1154,7 @@ class XaccCorrection(RunXacc):
         newC2 = pcc_base.kill_Diag_T2(V_C2,self.nocc,self.nvirt)
         E_d6 = pcc_base.get_WnT2_energy(newC2,W[v,v,o,o])
         pccE_correction.update({"E4 d7":E_d6})
-        return
+        return E_d6
 
     def get_Overlap(self,T2,T2diag,C2,D2,D1,D3,W,nocc,nvirt,t2amps_all, pccE_correction):
         o=self.o
@@ -1379,50 +1386,26 @@ class XaccCorrection(RunXacc):
             for key, value in dataDict.items():
                 print(f"{key}: {value}")
 
-            print('**********************')
-            print('*** Printing E4 doubles-only information: ***')
-            print('**********************')
-            totalE4=0.0
-            for key, value in dataDict.items():
-                if "E4 d" in key:
-                    print(f"{key}: {value}")
-                    totalE4 += value
+            doubles_correction = dataDict["Total E(2) from doubles:"] + dataDict["Total E(3) from doubles:"] \
+                    + dataDict["Total E(4):"] #E2_E3 + E4_doubles
+            all_correction = doubles_correction + dataDict["Singles' [S]"] + dataDict["Triples' [T]"]
 
-            print('Total E(4) [doubles]:',totalE4)
-
-
-            print('**********************')
-            print('*** Printing final summary on pUCCD corrections: ***')
-            print('**********************')
-            totalE_Q2=0.0
-            beyondT2=0.0
-            for key, value in dataDict.items():
-                if "Total E" in key:
-                    totalE_Q2 += value
-                    print(f"{key}: {value}")
-                elif "Singles" or "Triples" in key:
-                    beyondT2 += value
-                    print(f"{key}: {value}")
-
-            print('Total E(4) [doubles]:',totalE4)
-            print('loop sum',totalE_Q2,beyondT2)
-
-            print("pUCCD + [D] correction (4th-order):",totalE_Q2+totalE4)
-            pUCCD_doubles = totalE_Q2+totalE4
-            pUCCD_all = pUCCD_doubles + beyondT2
-            print("pUCCD + [D] + [S] + [T] correction:",pUCCD_all)
-
-            print('**********************')
-            print('*** Printing summary of overlap/renormalization info: ***')
+            print('\n\n**********************')
+            print('*** Summary of pUCCD correction results: ***')
             print('**********************')
             for key, value in dataDict.items():
                 if "Overlap" in key:
                     print(f"{key}: {value}")
 
-            total_overlap = dataDict["Total Overlap"]     
-            print('Renormalized (R)-pUCCD + [D]:',pUCCD_doubles/total_overlap)
-            print('Renormalized (R)-pUCCD + [D] + [S] + [T]:',pUCCD_all/total_overlap)
+            total_overlap = dataDict["Total Overlap"]  
+            print()
+            print("pUCCD + [D]:",doubles_correction)
+            print("pUCCD + [D] + [S] + [T]:",all_correction)
+            print('Renormalized (R)-pUCCD + [D]:',doubles_correction/total_overlap)
+            print('Renormalized (R)-pUCCD + [D] + [S] + [T]:',all_correction/total_overlap)
 
+        print('\n\n**********************')
+        print('**********************')
 #        print('E(2): ', E2)
 #        print('E(3): ', E3)
 #        print('E(4): ', E4)
