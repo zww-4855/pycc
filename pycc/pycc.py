@@ -514,6 +514,7 @@ class RunXacc(SetupCC):
         self.nocc=None
         self.nvirt=None
         self.mo_energies=None
+        self.oei=None 
         self.read_bkgrd(bkgrd_infile,ref)
 
         self.o=slice(None,self.nocc)
@@ -740,7 +741,12 @@ class RunXacc(SetupCC):
         mo_energies=[]
         for element in tmp_energies.split(','):
             mo_energies.append(float(element.strip('[').strip(']')))
+     
+        # Add mo energy info to class variable storing oei 
         self.mo_energies=mo_energies
+        eps = np.append(mo_energies,mo_energies)
+        eps = np.sort(eps)
+        self.oei=np.diag(eps)
 
 #        if ref == "spatial": # defines nocc/nvirt w.r.t. # spatial orbs
 #            self.nocc = self.nocc - int(lines[1].strip().split()[-1])
@@ -759,6 +765,7 @@ class XaccCorrection(RunXacc):
         nocc=self.nocc
         nvirt=self.nvirt
         W = self.tei
+        F = self.oei
         T2 = self.t2amps
         self.t2amps_all = {}
         self.pccE_correction ={}
@@ -780,6 +787,13 @@ class XaccCorrection(RunXacc):
             totalE4 += self.get_FO_d7(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
 
             self.pccE_correction.update({"Total E(4):":totalE4})
+
+            self.build_C3(T2,self.t2amps_all,D2,D1,D3,W,nocc,nvirt,o,v)
+
+            self.get_TO_PHP( F, W, T2, D2, o,v,self.t2amps_all)
+            self.get_FO_PHP( F, W, T2, D2, o,v,self.t2amps_all)
+            #sys.exit()
+            self.calc_Fn_term(F,o,v,T2,T2.transpose(2,3,0,1),D2,W)
 
             # Now get fourth order [S] and [T] corrections
             self.get_FO_singles(W,T2,o,v,D1,self.pccE_correction)
@@ -1020,6 +1034,88 @@ class XaccCorrection(RunXacc):
 
         return 
 
+    def get_TO_PHP(self, F, W, T2, D2, o,v,t2amps_all):
+        C2 = t2amps_all["C2"]
+        roovv = 0.500000000 * np.einsum("ik,jkab->ijab",F[o,o],C2,optimize="optimal")
+        roovv += -0.500000000 * np.einsum("ca,ijbc->ijab",F[v,v],C2,optimize="optimal")
+        roovv = tamps.antisym_T2(roovv,None,None)
+        #roovv = roovv*D2
+        roovv = pcc_base.return_Diag_T2(roovv,self.nocc,self.nvirt)
+
+        PHP_1 = pcc_base.get_WnT2_energy(roovv,W[v,v,o,o])
+        PHP_2 = pcc_base.get_WnT2_energy(C2,W[v,v,o,o])
+        total = 2* (PHP_1+PHP_2)
+        print("Third order PHP: ", PHP_1+PHP_2,total)
+
+
+
+
+    def get_FO_PHP(self,F, W, T2, D2, o,v,t2amps_all):
+        C2 = t2amps_all["C2"]
+        roovv = 0.500000000 * np.einsum("ik,jkab->ijab",F[o,o],C2,optimize="optimal")
+        roovv += -0.500000000 * np.einsum("ca,ijbc->ijab",F[v,v],C2,optimize="optimal")
+        roovv = tamps.antisym_T2(roovv,None,None)
+        #roovv = roovv*D2
+        roovv = pcc_base.return_Diag_T2(roovv,self.nocc,self.nvirt)
+
+#        for i in range(self.nocc):
+#            for j in range(self.nocc):
+#                for a in range(self.nvirt):
+#                    for b in range(self.nvirt):
+#                        print('ijab term:',i,j,a,b,C2[i,j,a,b],roovv[i,j,a,b])
+#
+#        for i in range(self.nocc+self.nvirt):
+#            for j in range(self.nocc+self.nvirt):
+#                print('fock:',i,j,F[i,j])
+#
+#        sys.exit()
+        PHP_1 = pcc_base.get_WnT2_energy(roovv,C2.transpose(2,3,0,1))
+
+
+        C2base = pcc_base.build_LCCD_T2(C2,W,o,v,D2)
+        C2base = C2base / D2
+        C2base = pcc_base.return_Diag_T2(C2base, self.nocc,self.nvirt)
+        PHP_2 = pcc_base.get_WnT2_energy(C2base,T2.transpose(2,3,0,1))
+        print('FO PHP1/2:', PHP_1, PHP_2)
+        total = PHP_1 + 2.0*PHP_2
+
+        C3 = t2amps_all["C3"]
+        roovv = 0.500000000 * np.einsum("ik,jkab->ijab",F[o,o],C3,optimize="optimal")
+        roovv += -0.500000000 * np.einsum("ca,ijbc->ijab",F[v,v],C3,optimize="optimal")
+        roovv = tamps.antisym_T2(roovv,None,None)
+        #roovv = roovv*D2
+        roovv = pcc_base.return_Diag_T2(roovv,self.nocc,self.nvirt)
+
+        PHP_3 = pcc_base.get_WnT2_energy(roovv,T2.transpose(2,3,0,1))
+        PHP_4 = pcc_base.get_WnT2_energy(C3,W[v,v,o,o])
+        print('PHP_3/4',PHP_3,PHP_4)
+        total += 2.0*(PHP_3+PHP_4)
+        print("total FO PHP terms:", total)
+
+        T2dag = T2.transpose(2,3,0,1)
+        C2 = 0.0
+        C2 = t2amps_all["C2"]
+        r = -0.500000000 * np.einsum("ji,ikab,abjk->",F[o,o],C2,T2dag,optimize="optimal")
+        r += 0.500000000 * np.einsum("ba,ijbc,acij->",F[v,v],C2,T2dag,optimize="optimal")
+
+        print('new t2dag fn C2:',r)
+
+        r += 0.125000000 * np.einsum("ijab,cdij,abcd->",C2,T2dag,W[v,v,v,v],optimize="optimal")
+        r += -1.000000000 * np.einsum("ijab,acik,kbjc->",C2,T2dag,W[o,v,o,v],optimize="optimal")
+        r += 0.125000000 * np.einsum("ijab,abkl,klij->",C2,T2dag,W[o,o,o,o],optimize="optimal")
+
+        print('final:',r)
+        energy = 0.250000000 * np.einsum("ijab,abij->",C2,W[v,v,o,o],optimize="optimal")
+        print('energy:',energy)
+        C3 = t2amps_all["C3"]
+        energy = 0.250000000 * np.einsum("ijab,abij->",C3,W[v,v,o,o],optimize="optimal")
+        print('energy:',energy)
+
+        r = -0.500000000 * np.einsum("ji,ikab,abjk->",F[o,o],C3,T2dag,optimize="optimal")
+        r += 0.500000000 * np.einsum("ba,ijbc,acij->",F[v,v],C3,T2dag,optimize="optimal")
+        print('r',r)
+        #sys.exit()
+
     def get_TO_MBPTenergy(self,W,D2,o,v,t2amps_all,pccE_correction):
         odMP2_base = t2amps_all["mp2_od"]
         fullMP2_base = t2amps_all["mp2_full"]
@@ -1037,7 +1133,7 @@ class XaccCorrection(RunXacc):
 
     def get_TO_pUCCenergy(self,W,T2,D2,o,v,t2amps_all,pccE_correction):
         # IS this transpose correct here?????? ##
-        SO_base = pcc_base.build_LCCD_T2(T2.transpose(1,0,2,3),W,o,v,D2)
+        SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
         odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
         odSO_E = 2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
         pccE_correction.update({"odSO_E":odSO_E})
@@ -1053,6 +1149,17 @@ class XaccCorrection(RunXacc):
         r += -1.000000000 * np.einsum("ijab,acik,kbjc->",T2i,T2dagi,W[o,v,o,v],optimize="optimal")
         r += 0.125000000 * np.einsum("ijab,abkl,klij->",T2i,T2dagi,W[o,o,o,o],optimize="optimal")
         print('Revised mbpt3 energy full:',r)
+        #sys.exit()
+
+
+        C2 = W[o,o,v,v]*D2
+        C2 = pcc_base.kill_Diag_T2(C2,self.nocc,self.nvirt)
+        T2dag = T2.transpose(2,3,0,1)
+        r = 0.125000000 * np.einsum("ijab,cdij,abcd->",C2,T2dag,W[v,v,v,v],optimize="optimal")
+        r += -1.000000000 * np.einsum("ijab,acik,kbjc->",C2,T2dag,W[o,v,o,v],optimize="optimal")
+        r += 0.125000000 * np.einsum("ijab,abkl,klij->",C2,T2dag,W[o,o,o,o],optimize="optimal")
+ 
+        print('TEST 3rd order E:', r,odSO_E)
         #sys.exit()
         return 
 
@@ -1152,9 +1259,55 @@ class XaccCorrection(RunXacc):
         V_C2 = pcc_base.build_LCCD_T2(C2,W,o,v,D2)
         t2amps_all.update({"partC3_VC2":pcc_base.return_Diag_T2(V_C2,self.nocc,self.nvirt)})
         newC2 = pcc_base.kill_Diag_T2(V_C2,self.nocc,self.nvirt)
-        E_d6 = pcc_base.get_WnT2_energy(newC2,W[v,v,o,o])
+        E_d6 = 2.0*pcc_base.get_WnT2_energy(newC2,W[v,v,o,o])
         pccE_correction.update({"E4 d7":E_d6})
         return E_d6
+
+    def build_C3(self,T2,t2amps_all,D2,D1,D3,W,nocc,nvirt,o,v):
+        # Do off-diagonal singles' and triples' first
+        od_mp2 = t2amps_all["mp2_od"]
+        sqrBrakS_T2 = self.build_sqrBrakS_diagT2(od_mp2,W,o,v,D2,D1)
+        sqrBrakT_T2 = self.build_sqrBrakT_diagT2(od_mp2,W,o,v,D2,D3)
+        C3 = sqrBrakS_T2 + sqrBrakT_T2 
+
+        # Now do diagonal contrib. to singles' and triples'
+        C3 += self.build_sqrBrakS_diagT2(T2,W,o,v,D2,D1) + self.build_sqrBrakT_diagT2(T2,W,o,v,D2,D3)
+
+        # Now do Q2 WnT2^2/2 -like term
+        od_mp2 = t2amps_all["mp2_od"]
+        Q2_wnT2sqr = ucc_eqns.uccsd_wnT2sqr(W,od_mp2,o,v)
+        Q2_wnT2sqr = tamps.antisym_T2(Q2_wnT2sqr,None,None)
+        Q2_wnT2sqr = Q2_wnT2sqr*D2 # ADDED THis 12/27/2024
+        Q2_wnT2sqr = pcc_base.return_Diag_T2(Q2_wnT2sqr,self.nocc,self.nvirt)
+        C3 += Q2_wnT2sqr
+
+        # now
+        mp3_od_contrib = pcc_base.build_LCCD_T2(od_mp2,W,o,v,D2)
+        mp3_od_contrib = pcc_base.build_LCCD_T2(mp3_od_contrib,W,o,v,D2)
+        mp3_od_contrib = pcc_base.return_Diag_T2(mp3_od_contrib,self.nocc,self.nvirt)
+        C3 += mp3_od_contrib
+
+
+        # finally, do tau2 - mp3 like contrib
+        tau2_mp3_contrib = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
+        tau2_mp3_contrib = pcc_base.kill_Diag_T2(tau2_mp3_contrib, self.nocc,self.nvirt)
+        tau2_mp3_contrib = pcc_base.build_LCCD_T2(tau2_mp3_contrib,W,o,v,D2)
+        tau2_mp3_contrib = pcc_base.return_Diag_T2(tau2_mp3_contrib, self.nocc,self.nvirt)
+        C3 += tau2_mp3_contrib
+
+        t2amps_all.update({"C3":C3})
+
+        C2 = t2amps_all["C2"]
+        test_overlap = pcc_base.get_WnT2_energy(C3,C3.transpose(2,3,0,1))
+        test_overlap += 2.0*pcc_base.get_WnT2_energy(C2,C3.transpose(2,3,0,1))
+        test_overlap += pcc_base.get_WnT2_energy(C2,C2.transpose(2,3,0,1))
+        test_overlap += 1.0 + test_overlap
+
+        test_overlap += 2.0*pcc_base.get_WnT2_energy(C2,T2.transpose(2,3,0,1))
+        test_overlap += 2.0*pcc_base.get_WnT2_energy(C3,T2.transpose(2,3,0,1))
+        print('test overlap:', test_overlap)
+
+
 
     def get_Overlap(self,T2,T2diag,C2,D2,D1,D3,W,nocc,nvirt,t2amps_all, pccE_correction):
         o=self.o
@@ -1184,7 +1337,33 @@ class XaccCorrection(RunXacc):
                                  "Total Overlap":overlap})
         return overlap
 
+    def calc_Fn_term(self,F,o,v,T2,T2dag,D2,W):
+        roovv = -0.041666667 * np.einsum("ik,jlab,kmcd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.041666667 * np.einsum("ik,klab,jmcd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.020833333 * np.einsum("ik,lmab,jkcd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.166666667 * np.einsum("ik,jlac,kmbd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += -0.083333333 * np.einsum("ik,lmac,jkbd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.125000000 * np.einsum("lk,ikab,jmcd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += -0.125000000 * np.einsum("lk,imab,jkcd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += -0.062500000 * np.einsum("lk,kmab,ijcd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.250000000 * np.einsum("lk,ijac,kmbd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.500000000 * np.einsum("lk,imac,jkbd,cdlm->ijab",F[o,o],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.041666667 * np.einsum("ca,ijbd,klce,dekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += -0.166666667 * np.einsum("ca,ikbd,jlce,dekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.041666667 * np.einsum("ca,klbd,ijce,dekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += -0.020833333 * np.einsum("ca,ijde,klbc,dekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.083333333 * np.einsum("ca,ikde,jlbc,dekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += -0.250000000 * np.einsum("dc,ikab,jlde,cekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.062500000 * np.einsum("dc,klab,ijde,cekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.125000000 * np.einsum("dc,ijae,klbd,cekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += -0.500000000 * np.einsum("dc,ikae,jlbd,cekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        roovv += 0.125000000 * np.einsum("dc,klae,ijbd,cekl->ijab",F[v,v],T2,T2,T2dag,optimize="optimal")
+        D2T2 = tamps.antisym_T2(roovv,None,None)
+        D2T2 = D2T2*D2
 
+        newC2 = pcc_base.kill_Diag_T2(D2T2,self.nocc,self.nvirt)
+        E_d6 = pcc_base.get_WnT2_energy(newC2,W[v,v,o,o])
+        print('Fnresult:',E_d6)
 
 
     def get_FO_triples(self,W,T2,o,v,D3,pccE_correction):
