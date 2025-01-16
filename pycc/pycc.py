@@ -773,7 +773,7 @@ class XaccCorrection(RunXacc):
             #Initialize dictionary that will stored off-diagonal corrections to T2,
             # as well as the full and off-diagonal correction order-by-order
             print(self.t2amps_all.keys())
-            self.get_SO_energy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            self.get_SO_energy(T2,W,D2,o,v,self.t2amps_all,self.pccE_correction)
             self.get_TO_MBPTenergy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
             self.get_TO_pUCCenergy(W,T2,D2,o,v,self.t2amps_all,self.pccE_correction)
             print(self.t2amps_all.keys())
@@ -791,8 +791,8 @@ class XaccCorrection(RunXacc):
             self.build_C3(T2,self.t2amps_all,D2,D1,D3,W,nocc,nvirt,o,v)
 
             self.get_TO_PHP( F, W, T2, D2, o,v,self.t2amps_all)
-            self.get_FO_PHP( F, W, T2, D2, o,v,self.t2amps_all)
-            #sys.exit()
+            #self.get_FO_PHP( F, W, T2, D2, o,v,self.t2amps_all)
+            sys.exit()
             self.calc_Fn_term(F,o,v,T2,T2.transpose(2,3,0,1),D2,W)
 
             # Now get fourth order [S] and [T] corrections
@@ -807,231 +807,24 @@ class XaccCorrection(RunXacc):
             sys.exit()
 
 
-##############################################################################
-#           Determine pUCCD overlap thru (4th) order
-#            overlap = pcc_base.get_WnT2_energy(T2,T2.transpose(2,3,0,1))
-            print('pUCCD overlap T2^T2: ',  pcc_base.get_WnT2_energy(T2,T2.transpose(2,3,0,1)))
-            so_overlap = pcc_base.get_WnT2_energy(T2,T2.transpose(2,3,0,1))
-            fo_overlap = self.overlap_fourthO(T2,T2.transpose(2,3,0,1))
-            to_overlap = self.overlap_thirdO(T2,T2.transpose(2,3,0,1),W,o,v,D1,D2,D3,nocc,nvirt)
-            new_overlap = 1 + so_overlap + fo_overlap
-            print('new_overlap:',new_overlap)
-            overlap_lhs_T2diag = self.overlap_lhs_T2diag(T2,T2.transpose(2,3,0,1),W,D2,nocc,nvirt)
-            overlap_rhs_T2diag = self.overlap_rhs_T2diag(T2,T2.transpose(2,3,0,1),D2,nocc,nvirt)
-            od_overlap = pcc_base.get_WnT2_energy(overlap_rhs_T2diag,overlap_lhs_T2diag.transpose(2,3,0,1))
-            print('od_overlap:',od_overlap)
-            #sys.exit()
-#            overlap += 1
-
-#           Start with lowest (2nd) order
-            #fullMP2_base = pcc_base.build_MP2_T2(W[o,o,v,v],D2)
-            fullMP2_base =  W[o,o,v,v] * D2
-            tmpfullMP2_base = np.copy(fullMP2_base)
-            odMP2_base = pcc_base.kill_Diag_T2(tmpfullMP2_base,self.nocc,self.nvirt)
-            self.t2amps_all.update({"mp2_full":fullMP2_base,"mp2_od":odMP2_base})
-            print(self.t2amps_all.keys())
-            fullMP2_E = pcc_base.get_WnT2_energy(fullMP2_base,self.tei[v,v,o,o])
-            odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
-            self.correction_all.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E})
-            totalE2=odMP2_E
-            #Now, define internal MP3-like base as the second order correction to pUCC
-            # such that PVQV|0>
-            C2 = pcc_base.kill_Diag_T2(np.copy(fullMP2_base),self.nocc,self.nvirt)
-            C2 = pcc_base.build_LCCD_T2(C2.transpose(1,0,2,3),W,o,v,D2)
-            C2 = pcc_base.return_Diag_T2(C2,self.nocc,self.nvirt)
-
-            Q2_VC2 = pcc_base.build_LCCD_T2(C2,W,o,v,D2)
-#####################################################
-# added zww 12/27/2024
-#####################################################
-            so_overlap_mbpt = pcc_base.get_WnT2_energy(C2,T2.transpose(2,3,0,1))
-            print('SO overlap mbpt:', so_overlap_mbpt)
-
-            C2new = pcc_base.kill_Diag_T2(np.copy(fullMP2_base),self.nocc,self.nvirt)
-            C2new = pcc_base.build_LCCD_T2(C2new.transpose(1,0,2,3),W,o,v,D2) # can be full W
-            C2new = pcc_base.build_LCCD_T2(C2new.transpose(1,0,2,3),W,o,v,D2) # must be od W
-            C2new = pcc_base.return_Diag_T2(C2new,self.nocc,self.nvirt)
-            to_overlap_mbpt = pcc_base.get_WnT2_energy(C2new,T2.transpose(2,3,0,1))
-            print('TO overlap contrib:', to_overlap_mbpt)
-
-            C2_t2base =  pcc_base.build_LCCD_T2(T2,W,o,v,D2)
-            C2_t2base = pcc_base.kill_Diag_T2(np.copy(C2_t2base),self.nocc,self.nvirt)
-            C2_t2base =  pcc_base.build_LCCD_T2(C2_t2base,W,o,v,D2)
-            C2_t2base =  pcc_base.return_Diag_T2(C2_t2base,self.nocc,self.nvirt)
-            to_overlap_full =  pcc_base.get_WnT2_energy(C2_t2base,T2.transpose(2,3,0,1))
-            print('TO overlap w/ tau2 base:', to_overlap_full)
-            #sys.exit()
-
-            E_d6 = 2.0*pcc_base.get_WnT2_energy(Q2_VC2,W[v,v,o,o])
-
-            X = C2 + T2
-            overlap = 1 + 4.0*pcc_base.get_WnT2_energy(T2,T2.transpose(2,3,0,1)) \
-                      + 4.0*pcc_base.get_WnT2_energy(C2,C2.transpose(2,3,0,1)) \
-                      + 2.0*pcc_base.get_WnT2_energy(C2,T2.transpose(2,3,0,1)) 
-            t2hat_t = pcc_base.get_WnT2_energy(T2,T2.transpose(2,3,0,1))
-            t2hat_c = pcc_base.get_WnT2_energy(C2/D2,T2.transpose(2,3,0,1))
-            print('t2hat C',t2hat_c)
-            chat_c = pcc_base.get_WnT2_energy(C2,C2.transpose(2,3,0,1))
-            test = 1.0 + 2.0*t2hat_t + 2.0*t2hat_t*t2hat_t + 2.0*t2hat_t**3 +2.0*t2hat_t**4 \
-                    +pcc_base.get_WnT2_energy(C2,C2.transpose(2,3,0,1)) \
-                    + 2.0*t2hat_c  
-                    #+2.0*t2hat_t*pcc_base.get_WnT2_energy(C2,C2.transpose(2,3,0,1)) \
-                    #+ 2.0*pcc_base.get_WnT2_energy(C2,T2.transpose(2,3,0,1)) 
-            #overlap += pcc_base.get_WnT2_energy(C2,C2.transpose(2,3,0,1))
-            print('new overlap:',overlap,test,t2hat_c,chat_c)
-            final_overlap = self.get_overlap_FO(T2,T2.transpose(2,3,0,1),C2,D2,D1,D3,W,nocc,nvirt)
-            print('FINAL OVERLAP:',final_overlap)
-            #sys.exit()
-##############################################################################
-#            Move on to 3rd order. Recall this has two pieces, off-diagonal MP3
-#            and 2.0*<0|V|q2>D2<q2|[V,T2']|0>, where T2' is the pUCCD amplitude
-
-            MP3_base = pcc_base.build_LCCD_T2(odMP2_base.transpose(1,0,2,3),W,o,v,D2)
-            odMP3_base = pcc_base.kill_Diag_T2(np.copy(MP3_base),self.nocc,self.nvirt)
-            fullMP3_base = pcc_base.build_LCCD_T2(fullMP2_base.transpose(1,0,2,3),W,o,v,D2)
-            odMP3_E = pcc_base.get_WnT2_energy(odMP3_base,W[v,v,o,o])
-            fullMP3_E = pcc_base.get_WnT2_energy(fullMP3_base,W[v,v,o,o])
-            print('fullMP3_E:', fullMP3_E)
-            #sys.exit()
-            self.t2amps_all.update({"mp3_full":fullMP3_base,"mp3_od":odMP3_base})
-            self.correction_all.update({"mp3_full":fullMP3_E,"mp3_od":odMP3_E})
-            self.finalize('pUCCD',self.correction_all)
-
-            # IS this transpose correct here?????? ##
-            SO_base = pcc_base.build_LCCD_T2(T2.transpose(1,0,2,3),W,o,v,D2)
-            odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
-            odSO_E = 2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
-            print('odSO_E:',odSO_E)
-            totalE3=odSO_E+odMP3_E
-
-            self.t2amps_all.update({"vt2_mp3_od":odSO_base})
-            self.correction_all.update({"odSO_E":odSO_E})
-            self.finalize('pUCCD',self.correction_all)
-
-            SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
-            SO_base = SO_base/D2
-            off = pcc_base.get_WnT2_energy(SO_base,odMP2_base.transpose(2,3,0,1))
-            print('off:',off)
-##############################################################################
-#            4th order now. In total, there are five diagrams we need to construct
-#            start w/ d1 
-            odSO_base_resid = odSO_base/D2
-            d1_energy = pcc_base.get_WnT2_energy(odSO_base,odSO_base_resid.transpose(2,3,0,1))
-            print('d1:',d1_energy)
-# *****SKIPPING D2, MUST COME BACK
-            # build intermediates
-            roooo = 0.125000000 * np.einsum("ijab,abkl->ijkl",T2,W[v,v,o,o],optimize="optimal")
-            rvvvv = 0.125000000 * np.einsum("ijab,cdij->cdab",T2,W[v,v,o,o],optimize="optimal")
-            rovov = -1.000000000 * np.einsum("ikac,bcjk->ibja",T2,W[v,v,o,o],optimize="optimal")
-
-            roooo += roooo.transpose(2,3,0,1)
-            rvvvv += rvvvv.transpose(2,3,0,1)
-            rovov += rovov.transpose(2,3,0,1)
-
-            roooo = tamps.antisym_intermed(roooo)
-            rvvvv = tamps.antisym_intermed(rvvvv)
-            d2_base = 0.125000000 * np.einsum("klab,ijkl->ijab",T2,roooo,optimize="optimal")
-            d2_base += -1.000000000 * np.einsum("ikac,jckb->ijab",T2,rovov,optimize="optimal")
-            d2_base += 0.125000000 * np.einsum("ijcd,cdab->ijab",T2,rvvvv,optimize="optimal")
-        
-            d2_base = tamps.antisym_T2(d2_base,None,None)
-            d2_base = d2_base*D2
-            d2_base = pcc_base.kill_Diag_T2(d2_base,nocc,nvirt)
-            d2_E = pcc_base.get_WnT2_energy(d2_base,W[v,v,o,o])
-            print('d2 E:',d2_E)
-            #print(np.equal(roooo,-1.0*roooo.transpose(0,1,3,2)), roooo[1,2,1,2],roooo[1,2,2,1])
-            #print(np.equal(rvvvv,-1.0*rvvvv.transpose(0,1,3,2)), rvvvv[1,2,1,2],rvvvv[1,2,2,1])
-            #print(np.equal(rovov,-1.0*rovov.transpose(2,1,0,3)), rovov[1,2,1,2],rovov[1,2,1,2])
-            
-            #sys.exit()
 
 
-
-####################################################3
-#           now d3
-            mp3_base_resid = odMP3_base/D2
-            d3_energy = 2.0*pcc_base.get_WnT2_energy(odSO_base,mp3_base_resid.transpose(2,3,0,1))
-            print('d3:',d3_energy)
-
-#          now d4
-            d4_energy = pcc_base.get_WnT2_energy(odMP3_base,mp3_base_resid.transpose(2,3,0,1))
-            print('d4:',d4_energy)
-
-#          Finally, d5
-            d5_base= 0.5*ucc_eqns.uccsd_T2dagWnT2(W,T2,o,v)
-            d5_base = tamps.antisym_T2(d5_base,None,None)
-            d5_base = d5_base*D2 # ADDED THis 12/27/2024
-            d5_base = pcc_base.kill_Diag_T2(d5_base,nocc,nvirt)
-            d5_energy = 2.0*pcc_base.get_WnT2_energy(d5_base,W[v,v,o,o])
-
-            print('d5:',d5_energy)
-            print('d6:', E_d6)
-## Try d5 part a 0.5*[[V,t2],t2]
-            #0.5*ucc_eqns.uccsd_wnT2sqr(W,self.correction_all["mp2_od"],o,v)
-            test_d5 = 0.5*ucc_eqns.uccsd_wnT2sqr(W,T2,o,v)
-            test_d5 = tamps.antisym_T2(test_d5,None,None)
-            test_d5 = test_d5*D2 # ADDED THis 12/27/2024
-            test_d5 = pcc_base.kill_Diag_T2(test_d5,nocc,nvirt)
-            test_d5_energy= 2.0*pcc_base.get_WnT2_energy(test_d5,W[v,v,o,o])
-            print('tried this out for 0.5*[[V,t2],t2]:',test_d5_energy)
-            #sys.exit()
-
-            totalE4 = d1_energy + d2_E + d3_energy+d4_energy+d5_energy + E_d6 + test_d5_energy #added d6 diagram 12/19
-            self.correction_all.update({"d1_E":d1_energy,"d2_E":d2_E,"d3_E":d3_energy,
-                "d4_E":d4_energy, "d5_E":d5_energy, "d6_E":E_d6})
-            self.correction_all.update({'total E(2) from doubles:':totalE2,'total E(3) from doubles:':totalE3, 'total E(4) from doubles:': totalE4, 'total correction from doubles:':totalE2+totalE3+totalE4})
-
-            self.finalize('pUCCD',self.correction_all)
-
-            print(self.t2amps_all.keys())
-            self.get_SO_energy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_TO_MBPTenergy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_TO_pUCCenergy(W,T2,D2,o,v,self.t2amps_all,self.pccE_correction)
-            print(self.t2amps_all.keys())
-
-            totalE4 = 0.0
-            totalE4 += self.get_FO_d1(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d2(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d3(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d4(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d5(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d6(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d7(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.pccE_correction.update({"Total E(4):":totalE4})
-            sys.exit()
-
-
-
-#          Then build [S]/[T] corrections
-            D3T3 = build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,T2)
-            D3T3 = tamps.antisym_T3(D3T3,None,None)
-            T3 = D3T3*D3
-            sqrBrak_T =0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3,T3.transpose(3,4,5,0,1,2))
-            print('[T] correction to pUCCD:',sqrBrak_T)
-         
-            D1T1 = build_sqrbrak_corrections.build_T1_fromT2_SOspin(W,o,v,T2)
-            T1approx = D1T1*D1
-            sqrBrak_S = np.einsum("ia,ai->",D1T1,T1approx.transpose(1,0))
-            print('[S] correction to pUCCD', sqrBrak_S)
-        
-            print('*********************************')
-            print('[D]:', totalE2+totalE3+totalE4 ) 
-            print('Final [D] + [S] + [T] correction to pUCCD:', totalE2+totalE3+totalE4+sqrBrak_S+sqrBrak_T)
-            print('Renormalized [D]:',(totalE2+totalE3+totalE4)/overlap)
-            print('Renormalized pUCCD + [D] + [S] + [T] correction:', (totalE2+totalE3+totalE4+sqrBrak_S+sqrBrak_T)/overlap)
-            print('Overlap at fourth order:', overlap)
-
-
-    def get_SO_energy(self,W,D2,o,v,t2amps_all,pccE_correction):
+    def get_SO_energy(self,T2,W,D2,o,v,t2amps_all,pccE_correction):
         fullMP2_base =  W[o,o,v,v] * D2
         tmpfullMP2_base = np.copy(fullMP2_base)
         odMP2_base = pcc_base.kill_Diag_T2(tmpfullMP2_base,self.nocc,self.nvirt)
-        self.t2amps_all.update({"mp2_full":fullMP2_base,"mp2_od":odMP2_base})
+        t2FO_full = T2 + odMP2_base
+        self.t2amps_all.update({"mp2_full":fullMP2_base,
+                                "mp2_od":odMP2_base,    
+                                "t2FO_full":T2+odMP2_base})
 
         fullMP2_E = pcc_base.get_WnT2_energy(fullMP2_base,self.tei[v,v,o,o])
         odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
         pccE_correction.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E,"Total E(2) from doubles:":odMP2_E})
 
+ 
+        SO_overlap = pcc_base.get_WnT2_energy(t2FO_full, t2FO_full.transpose(2,3,0,1))
+        pccE_correction.update({"SO_overlap":SO_overlap})
         return 
 
     def get_TO_PHP(self, F, W, T2, D2, o,v,t2amps_all):
@@ -1044,7 +837,7 @@ class XaccCorrection(RunXacc):
 
         PHP_1 = pcc_base.get_WnT2_energy(roovv,W[v,v,o,o])
         PHP_2 = pcc_base.get_WnT2_energy(C2,W[v,v,o,o])
-        total = 2* (PHP_1+PHP_2)
+        total =  (PHP_1+PHP_2)
         print("Third order PHP: ", PHP_1+PHP_2,total)
 
 
@@ -1126,22 +919,58 @@ class XaccCorrection(RunXacc):
         fullMP3_E = pcc_base.get_WnT2_energy(fullMP3_base,W[v,v,o,o])
         print('fullMP3_E:', fullMP3_E)
         #sys.exit()
-        t2amps_all.update({"mp3_full":fullMP3_base,"mp3_od":odMP3_base})
+        t2amps_all.update({"mp3_full":fullMP3_base,"mp3_od":odMP3_base,
+                           "t2SO_mp3":MP3_base})
         pccE_correction.update({"mp3_full":fullMP3_E,"mp3_od":odMP3_E})
+
+
+
+
+        diag_MP2base = t2amps_all["mp2_full"]
+        diag_MP2base = pcc_base.return_Diag_T2(diag_MP2base,self.nocc,self.nvirt)
+        diag_MP2base2 = np.copy(diag_MP2base)
+        diag_MP2base = pcc_base.build_LCCD_T2(diag_MP2base,W,o,v,D2)
+        diag_MP2base = pcc_base.return_Diag_T2(diag_MP2base,self.nocc,self.nvirt)
+        diag_E = pcc_base.get_WnT2_energy(diag_MP2base,W[v,v,o,o])
+
+
+        od2 = t2amps_all["mp2_od"]
+        od2 = pcc_base.build_LCCD_T2(od2,W,o,v,D2)# self.nocc,self.nvirt)
+        od2 = pcc_base.return_Diag_T2(od2,self.nocc,self.nvirt)
+        od_d_E = pcc_base.get_WnT2_energy(od2,W[v,v,o,o])
+        #od_d_E = pcc_base.get_WnT2_energy(odMP2_base.transpose(2,3,0,1),MP3_base/D2)
+
+        print('values:',od_d_E,diag_E,odMP3_E,2*od_d_E+diag_E+odMP3_E,fullMP3_E)
+        #sys.exit()
 
         return 
 
     def get_TO_pUCCenergy(self,W,T2,D2,o,v,t2amps_all,pccE_correction):
         # IS this transpose correct here?????? ##
+        #T2 = T2.transpose(1,0,2,3)
         SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
         odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
-        odSO_E = 2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
+        t2SO_full = odSO_base  + t2amps_all["t2SO_mp3"]
+        t2amps_all.update({"t2SO_pucc":odSO_base,"t2SO_full":t2SO_full})
+        
+        #modified this line 1/13/25 ZWW
+        odSO_E =pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o]) #2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
         pccE_correction.update({"odSO_E":odSO_E})
         print('odSO_E:',odSO_E)
         totalE3 = pccE_correction["mp3_od"]+odSO_E
         pccE_correction.update({"Total E(3) from doubles:": totalE3})
+        print('Total E(2) from doubles:',pccE_correction["mp2_od"])
+        print('Total E(3) from doubles:',pccE_correction["Total E(3) from doubles:"])
         t2amps_all.update({"vt2_mp3_od":odSO_base})
 
+
+        t2FO_full = t2amps_all["t2FO_full"]
+        overlap = (2.0*pcc_base.get_WnT2_energy(t2SO_full,t2FO_full.transpose(2,3,0,1))
+                  + pcc_base.get_WnT2_energy(t2FO_full,t2FO_full.transpose(2,3,0,1))
+                  + pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1))
+                  + 1.0)
+        print('overlap:',overlap)
+        sys.exit()
         ## testing new way to construct MBPT3
         T2i = W[o,o,v,v]*D2
         T2dagi = T2i.transpose(2,3,0,1) #W[v,v,o,o]*D2.transpose(2,3,0,1)
