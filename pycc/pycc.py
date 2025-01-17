@@ -775,19 +775,14 @@ class XaccCorrection(RunXacc):
         self.t2amps_all = {}
         self.pccE_correction ={}
         if 'pUCCD' in args:
-            #Initialize dictionary that will stored off-diagonal corrections to T2,
-            # as well as the full and off-diagonal correction order-by-order
-            print(self.t2amps_all.keys())
             # Build second-order energy correction, and 1st & 2nd-order wavefxn correction
             self.get_SO_energy(T2,W,D2,o,v,self.t2amps_all,self.pccE_correction)
             self.build_t2_SO(T2,W,D2,o,v,self.t2amps_all)
            
             # Use 2nd-order wavefxn to construct 3rd order energy correction, and construct
-            #self.get_TO_MBPTenergy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
             self.get_TO_MBPTtest(W,D2,o,v,self.t2amps_all,self.pccE_correction)
 
-            #self.get_TO_pUCCenergy(W,T2,D2,o,v,self.t2amps_all,self.pccE_correction)
-            #sys.exit()
+
 
             # Construct the portion of the 3rd-order wavefxn associated with pure doubles-only, then calculate
             # <0|WnT2'''|0> and 0.25*<0|(T2'^)^2 WnT2'|0>, where 
@@ -798,32 +793,6 @@ class XaccCorrection(RunXacc):
             self.get_FO_quadratic_energy(T2,W,o,v,self.t2amps_all,self.pccE_correction)
             self.get_newOverlap(T2,o,v,self.t2amps_all,self.pccE_correction)
 
-
-            print(self.t2amps_all.keys())
-            totalE4 =0.0
-            totalE4 = self.get_FO_d1(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d2(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d3(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d4(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d5(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d6(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            totalE4 += self.get_FO_d7(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
-
-            self.pccE_correction.update({"Total E(4):":totalE4})
-
-            self.build_C3(T2,self.t2amps_all,D2,D1,D3,W,nocc,nvirt,o,v)
-
-            self.get_TO_PHP( F, W, T2, D2, o,v,self.t2amps_all)
-            #self.get_FO_PHP( F, W, T2, D2, o,v,self.t2amps_all)
-            sys.exit()
-            self.calc_Fn_term(F,o,v,T2,T2.transpose(2,3,0,1),D2,W)
-
-            # Now get fourth order [S] and [T] corrections
-            self.get_FO_singles(W,T2,o,v,D1,self.pccE_correction)
-            self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
-
-            overlap = self.get_Overlap(T2,T2.transpose(2,3,0,1),self.t2amps_all["C2"],D2,D1,D3, \
-                                       + W,nocc,nvirt,self.t2amps_all,self.pccE_correction)
 
             self.finalize('pUCCD',self.pccE_correction)
             print('Shutting down....')
@@ -845,9 +814,6 @@ class XaccCorrection(RunXacc):
         odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
         pccE_correction.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E,"Total E(2) from doubles:":odMP2_E})
 
- 
-        SO_overlap = pcc_base.get_WnT2_energy(t2FO_full, t2FO_full.transpose(2,3,0,1))
-        pccE_correction.update({"SO_overlap":SO_overlap})
         return 
 
     def build_t2_SO(self,T2,W,D2,o,v,t2amps_all):
@@ -864,16 +830,24 @@ class XaccCorrection(RunXacc):
         # construct the full SO correction
         t2_SO_full = odSO_base + mp_base
 
+
+        print('odso ovrlap:',pcc_base.get_WnT2_energy(odSO_base,odSO_base.transpose(2,3,0,1)))
+        print('t2SO_mp3 ovrlap:',pcc_base.get_WnT2_energy(mp_base,mp_base.transpose(2,3,0,1)))#t2amps_all["t2SO_mp3"],t2amps_all["t2SO_mp3"].transpose(2,3,0,1)))
         # now build full MP3 base as bkup 
         fullMP2_base = t2amps_all["mp2_full"]
         fullMP3_base = pcc_base.build_LCCD_T2(fullMP2_base,W,o,v,D2)
 
+        print(pcc_base.get_WnT2_energy(t2_SO_full,t2_SO_full.transpose(2,3,0,1)))
         t2amps_all.update({"t2SO_pucc":odSO_base,
-                          "t2SO_mp":mp_base,
+                          "t2SO_mp3":mp_base,
+                          #"t2SO_mp3":t2_SO_full,
                           "t2SO_full":t2_SO_full,
                           "t2SO_mp3base":fullMP3_base,
                           "t2SO_mp_diag":mp_base_diag,
                           "t2SO_mp_od":mp_base_od})
+
+        test = t2amps_all["t2SO_mp3"]
+        print('testing t2SO_mp3 ovrlap:',pcc_base.get_WnT2_energy(test,test.transpose(2,3,0,1)))
         return
 
     def get_TO_MBPTtest(self,W,D2,o,v,t2amps_all,pccE_correction):
@@ -901,7 +875,7 @@ class XaccCorrection(RunXacc):
             "pucc_TO":pucc_TO_E, "Total E(3) from doubles:":totalE3})
 
         
-        print('toal e3 zww:',totalE3)
+        print("Total E(3) from doubles:",totalE3)
 
     def get_TO_MBPTenergy(self,W,D2,o,v,t2amps_all,pccE_correction):
         odMP2_base = t2amps_all["mp2_od"]
@@ -915,6 +889,8 @@ class XaccCorrection(RunXacc):
         #sys.exit()
         t2amps_all.update({"mp3_full":fullMP3_base,"mp3_od":odMP3_base,
                            "t2SO_mp3":MP3_base})
+        print(pcc_base.get_WnT2_energy(MP3_base,MP3_base.transpose(2,3,0,1)))
+        #sys.exit()
         pccE_correction.update({"mp3_full":fullMP3_E,"mp3_od":odMP3_E})
 
 
@@ -945,6 +921,12 @@ class XaccCorrection(RunXacc):
         SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
         odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
         t2SO_full = odSO_base  + t2amps_all["t2SO_mp3"]
+        print('odso ovrlap:',pcc_base.get_WnT2_energy(odSO_base,odSO_base.transpose(2,3,0,1)))
+
+        tmp = t2amps_all["t2SO_mp3"]
+        print('t2SO_mp3 ovrlap:',pcc_base.get_WnT2_energy(tmp,tmp.transpose(2,3,0,1)))
+        print('t2SO-full ovlp:',pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1)))
+        #sys.exit()
         t2amps_all.update({"t2SO_pucc":odSO_base,"t2SO_full":t2SO_full})
         
         #modified this line 1/13/25 ZWW
@@ -996,11 +978,14 @@ class XaccCorrection(RunXacc):
         tmp = pcc_base.return_Diag_T2(tmp, self.nocc,self.nvirt)
         tmp = pcc_base.build_LCCD_T2(tmp,W,o,v,D2)
         tmp = pcc_base.kill_Diag_T2(tmp,self.nocc,self.nvirt)
-        
+        print('t2SO_full:',pcc_base.get_WnT2_energy(tmp,tmp.transpose(2,3,0,1)),
+                pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1))) 
         t2_TO_mp4ladder = t2_TOorig + tmp
         t2amps_all.update({"t2TO_mp4":t2_TO_mp4ladder})
         print('test:',pcc_base.get_WnT2_energy(t2_TO_mp4ladder,W[v,v,o,o]))
-        sys.exit()
+        tmp = t2amps_all["t2SO_mp3"]
+        print('final t2SO_mp3 ovrlap:',pcc_base.get_WnT2_energy(tmp,tmp.transpose(2,3,0,1)))
+
         # now have to build 0.5*T2^WT2 using first-order T2
         t2_FO_full = t2amps_all["t2FO_full"]
         quad_term1 = 0.5*ucc_eqns.uccsd_T2dagWnT2(W,t2_FO_full,o,v)
@@ -1057,12 +1042,18 @@ class XaccCorrection(RunXacc):
         t2SO_full = t2amps_all["t2SO_full"]
         t2TO_full = t2amps_all["t2TO_full"]
 
+        storage =[pcc_base.get_WnT2_energy(t2FO_full,t2FO_full.transpose(2,3,0,1)),
+                    pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1)),
+                    2.0*pcc_base.get_WnT2_energy(t2FO_full,t2SO_full.transpose(2,3,0,1)),
+                    2.0*pcc_base.get_WnT2_energy(t2FO_full,t2TO_full.transpose(2,3,0,1))]
         overlap = ( pcc_base.get_WnT2_energy(t2FO_full,t2FO_full.transpose(2,3,0,1))
                    + pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1))
                    + 2.0*pcc_base.get_WnT2_energy(t2FO_full,t2SO_full.transpose(2,3,0,1))
                    + 2.0*pcc_base.get_WnT2_energy(t2FO_full,t2TO_full.transpose(2,3,0,1))
                    + 1.0 )
         print('overlap:',overlap)
+        for i in range(len(storage)):
+            print('overlap element ',i,': ',storage[i])
         sys.exit()
 
 
