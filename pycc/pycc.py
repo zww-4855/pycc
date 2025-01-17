@@ -529,7 +529,8 @@ class RunXacc(SetupCC):
             nbas=self.nocc+self.nvirt
             self.tei=np.zeros((nbas,nbas,nbas,nbas))
             self.read_tei(tei_infile)
-           # self.mp2_energy()
+            #self.mp2_energy()
+            #sys.exit()
         elif ref == "spatial":
             # call constructor to inherit class' methods; useful in the case of
             # spatial orbital methods
@@ -592,6 +593,10 @@ class RunXacc(SetupCC):
         print('mp2E: w/ pUCCD amps', mp2E)
 
         print('final check:',0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v], self.t2amps))
+
+        import pycc.pcc_base as pcc_base
+        print(pcc_base.get_WnT2_energy(self.t2amps,self.tei[v,v,o,o]))
+
     def read_tei(self,tei_infile):
         """
         Reads two-electron integrals from the input file and stores them in a 4D numpy array.
@@ -699,7 +704,7 @@ class RunXacc(SetupCC):
 
         #print('t1:',self.t1amps)
         #print('t2:',self.t2amps)
-        self.t2amps=self.t2amps.transpose(2,3,0,1)#*0.25
+        self.t2amps=self.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
 
 
     def convert_t2_spatial(self,t2_spin):
@@ -773,9 +778,27 @@ class XaccCorrection(RunXacc):
             #Initialize dictionary that will stored off-diagonal corrections to T2,
             # as well as the full and off-diagonal correction order-by-order
             print(self.t2amps_all.keys())
+            # Build second-order energy correction, and 1st & 2nd-order wavefxn correction
             self.get_SO_energy(T2,W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_TO_MBPTenergy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_TO_pUCCenergy(W,T2,D2,o,v,self.t2amps_all,self.pccE_correction)
+            self.build_t2_SO(T2,W,D2,o,v,self.t2amps_all)
+           
+            # Use 2nd-order wavefxn to construct 3rd order energy correction, and construct
+            #self.get_TO_MBPTenergy(W,D2,o,v,self.t2amps_all,self.pccE_correction)
+            self.get_TO_MBPTtest(W,D2,o,v,self.t2amps_all,self.pccE_correction)
+
+            #self.get_TO_pUCCenergy(W,T2,D2,o,v,self.t2amps_all,self.pccE_correction)
+            #sys.exit()
+
+            # Construct the portion of the 3rd-order wavefxn associated with pure doubles-only, then calculate
+            # <0|WnT2'''|0> and 0.25*<0|(T2'^)^2 WnT2'|0>, where 
+            #                       T2''' represents the 3rd order pure doubles wavefxn and
+            #                       T2' represents the 1st order wavefxn
+            self.build_t2_TO(T2,W,D2,o,v,self.t2amps_all)
+            self.get_FO_linear_energy(T2,T2.transpose(2,3,0,1),W,D1,D2,D3,o,v,self.t2amps_all,self.pccE_correction)
+            self.get_FO_quadratic_energy(T2,W,o,v,self.t2amps_all,self.pccE_correction)
+            self.get_newOverlap(T2,o,v,self.t2amps_all,self.pccE_correction)
+
+
             print(self.t2amps_all.keys())
             totalE4 =0.0
             totalE4 = self.get_FO_d1(T2,T2.transpose(2,3,0,1),W,D2,o,v,self.t2amps_all,self.pccE_correction)
@@ -827,87 +850,58 @@ class XaccCorrection(RunXacc):
         pccE_correction.update({"SO_overlap":SO_overlap})
         return 
 
-    def get_TO_PHP(self, F, W, T2, D2, o,v,t2amps_all):
-        C2 = t2amps_all["C2"]
-        roovv = 0.500000000 * np.einsum("ik,jkab->ijab",F[o,o],C2,optimize="optimal")
-        roovv += -0.500000000 * np.einsum("ca,ijbc->ijab",F[v,v],C2,optimize="optimal")
-        roovv = tamps.antisym_T2(roovv,None,None)
-        #roovv = roovv*D2
-        roovv = pcc_base.return_Diag_T2(roovv,self.nocc,self.nvirt)
+    def build_t2_SO(self,T2,W,D2,o,v,t2amps_all):
+        # build Q2od RV T2pucc
+        SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
+        odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
 
-        PHP_1 = pcc_base.get_WnT2_energy(roovv,W[v,v,o,o])
-        PHP_2 = pcc_base.get_WnT2_energy(C2,W[v,v,o,o])
-        total =  (PHP_1+PHP_2)
-        print("Third order PHP: ", PHP_1+PHP_2,total)
+        # now build (Q2all RV (Q2od RVod)), and partition
+        t2_FO_od = t2amps_all["mp2_od"]
+        mp_base = pcc_base.build_LCCD_T2(t2_FO_od,W,o,v,D2)
+        mp_base_diag = pcc_base.return_Diag_T2(mp_base,self.nocc,self.nvirt)
+        mp_base_od   = pcc_base.kill_Diag_T2(mp_base,self.nocc,self.nvirt)
 
+        # construct the full SO correction
+        t2_SO_full = odSO_base + mp_base
 
+        # now build full MP3 base as bkup 
+        fullMP2_base = t2amps_all["mp2_full"]
+        fullMP3_base = pcc_base.build_LCCD_T2(fullMP2_base,W,o,v,D2)
 
+        t2amps_all.update({"t2SO_pucc":odSO_base,
+                          "t2SO_mp":mp_base,
+                          "t2SO_full":t2_SO_full,
+                          "t2SO_mp3base":fullMP3_base,
+                          "t2SO_mp_diag":mp_base_diag,
+                          "t2SO_mp_od":mp_base_od})
+        return
 
-    def get_FO_PHP(self,F, W, T2, D2, o,v,t2amps_all):
-        C2 = t2amps_all["C2"]
-        roovv = 0.500000000 * np.einsum("ik,jkab->ijab",F[o,o],C2,optimize="optimal")
-        roovv += -0.500000000 * np.einsum("ca,ijbc->ijab",F[v,v],C2,optimize="optimal")
-        roovv = tamps.antisym_T2(roovv,None,None)
-        #roovv = roovv*D2
-        roovv = pcc_base.return_Diag_T2(roovv,self.nocc,self.nvirt)
+    def get_TO_MBPTtest(self,W,D2,o,v,t2amps_all,pccE_correction):
+        # get off-diagonal MP3
+        t2SO_mpOD = t2amps_all["t2SO_mp_od"]
+        mp3_od_E = pcc_base.get_WnT2_energy(t2SO_mpOD,W[v,v,o,o])
+        print('testE;',mp3_od_E)
 
-#        for i in range(self.nocc):
-#            for j in range(self.nocc):
-#                for a in range(self.nvirt):
-#                    for b in range(self.nvirt):
-#                        print('ijab term:',i,j,a,b,C2[i,j,a,b],roovv[i,j,a,b])
-#
-#        for i in range(self.nocc+self.nvirt):
-#            for j in range(self.nocc+self.nvirt):
-#                print('fock:',i,j,F[i,j])
-#
-#        sys.exit()
-        PHP_1 = pcc_base.get_WnT2_energy(roovv,C2.transpose(2,3,0,1))
+        # get Q2od RV T2od
+        t2SO_pucc = t2amps_all["t2SO_pucc"]
+        pucc_TO_E = 2.0*pcc_base.get_WnT2_energy(t2SO_pucc,W[v,v,o,o])
+        print('pucc_TO_E',pucc_TO_E)
 
+        # total 3rd order contrib
+        totalE3 = pucc_TO_E + mp3_od_E
 
-        C2base = pcc_base.build_LCCD_T2(C2,W,o,v,D2)
-        C2base = C2base / D2
-        C2base = pcc_base.return_Diag_T2(C2base, self.nocc,self.nvirt)
-        PHP_2 = pcc_base.get_WnT2_energy(C2base,T2.transpose(2,3,0,1))
-        print('FO PHP1/2:', PHP_1, PHP_2)
-        total = PHP_1 + 2.0*PHP_2
-
-        C3 = t2amps_all["C3"]
-        roovv = 0.500000000 * np.einsum("ik,jkab->ijab",F[o,o],C3,optimize="optimal")
-        roovv += -0.500000000 * np.einsum("ca,ijbc->ijab",F[v,v],C3,optimize="optimal")
-        roovv = tamps.antisym_T2(roovv,None,None)
-        #roovv = roovv*D2
-        roovv = pcc_base.return_Diag_T2(roovv,self.nocc,self.nvirt)
-
-        PHP_3 = pcc_base.get_WnT2_energy(roovv,T2.transpose(2,3,0,1))
-        PHP_4 = pcc_base.get_WnT2_energy(C3,W[v,v,o,o])
-        print('PHP_3/4',PHP_3,PHP_4)
-        total += 2.0*(PHP_3+PHP_4)
-        print("total FO PHP terms:", total)
-
-        T2dag = T2.transpose(2,3,0,1)
-        C2 = 0.0
-        C2 = t2amps_all["C2"]
-        r = -0.500000000 * np.einsum("ji,ikab,abjk->",F[o,o],C2,T2dag,optimize="optimal")
-        r += 0.500000000 * np.einsum("ba,ijbc,acij->",F[v,v],C2,T2dag,optimize="optimal")
-
-        print('new t2dag fn C2:',r)
-
-        r += 0.125000000 * np.einsum("ijab,cdij,abcd->",C2,T2dag,W[v,v,v,v],optimize="optimal")
-        r += -1.000000000 * np.einsum("ijab,acik,kbjc->",C2,T2dag,W[o,v,o,v],optimize="optimal")
-        r += 0.125000000 * np.einsum("ijab,abkl,klij->",C2,T2dag,W[o,o,o,o],optimize="optimal")
-
-        print('final:',r)
-        energy = 0.250000000 * np.einsum("ijab,abij->",C2,W[v,v,o,o],optimize="optimal")
-        print('energy:',energy)
-        C3 = t2amps_all["C3"]
-        energy = 0.250000000 * np.einsum("ijab,abij->",C3,W[v,v,o,o],optimize="optimal")
-        print('energy:',energy)
-
-        r = -0.500000000 * np.einsum("ji,ikab,abjk->",F[o,o],C3,T2dag,optimize="optimal")
-        r += 0.500000000 * np.einsum("ba,ijbc,acij->",F[v,v],C3,T2dag,optimize="optimal")
-        print('r',r)
+        # now get full MP3 energy:
+        fullMP3_base = t2amps_all["t2SO_mp3base"]
+        fullMP3_E = pcc_base.get_WnT2_energy(fullMP3_base,W[v,v,o,o])
+        print('full/od MP3_E:', fullMP3_E,mp3_od_E)
         #sys.exit()
+
+        #save this info
+        pccE_correction.update({"mp3_full":fullMP3_E,"mp3_TO_od":mp3_od_E,
+            "pucc_TO":pucc_TO_E, "Total E(3) from doubles:":totalE3})
+
+        
+        print('toal e3 zww:',totalE3)
 
     def get_TO_MBPTenergy(self,W,D2,o,v,t2amps_all,pccE_correction):
         odMP2_base = t2amps_all["mp2_od"]
@@ -917,7 +911,7 @@ class XaccCorrection(RunXacc):
         fullMP3_base = pcc_base.build_LCCD_T2(fullMP2_base,W,o,v,D2)
         odMP3_E = pcc_base.get_WnT2_energy(odMP3_base,W[v,v,o,o])
         fullMP3_E = pcc_base.get_WnT2_energy(fullMP3_base,W[v,v,o,o])
-        print('fullMP3_E:', fullMP3_E)
+        print('full/od MP3_E:', fullMP3_E,odMP3_E)
         #sys.exit()
         t2amps_all.update({"mp3_full":fullMP3_base,"mp3_od":odMP3_base,
                            "t2SO_mp3":MP3_base})
@@ -945,16 +939,16 @@ class XaccCorrection(RunXacc):
 
         return 
 
+
     def get_TO_pUCCenergy(self,W,T2,D2,o,v,t2amps_all,pccE_correction):
         # IS this transpose correct here?????? ##
-        #T2 = T2.transpose(1,0,2,3)
         SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
         odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
         t2SO_full = odSO_base  + t2amps_all["t2SO_mp3"]
         t2amps_all.update({"t2SO_pucc":odSO_base,"t2SO_full":t2SO_full})
         
         #modified this line 1/13/25 ZWW
-        odSO_E =pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o]) #2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
+        odSO_E =2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o]) #2.0*pcc_base.get_WnT2_energy(odSO_base,W[v,v,o,o])
         pccE_correction.update({"odSO_E":odSO_E})
         print('odSO_E:',odSO_E)
         totalE3 = pccE_correction["mp3_od"]+odSO_E
@@ -970,7 +964,7 @@ class XaccCorrection(RunXacc):
                   + pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1))
                   + 1.0)
         print('overlap:',overlap)
-        sys.exit()
+        #sys.exit()
         ## testing new way to construct MBPT3
         T2i = W[o,o,v,v]*D2
         T2dagi = T2i.transpose(2,3,0,1) #W[v,v,o,o]*D2.transpose(2,3,0,1)
@@ -991,6 +985,92 @@ class XaccCorrection(RunXacc):
         print('TEST 3rd order E:', r,odSO_E)
         #sys.exit()
         return 
+
+
+    def build_t2_TO(self,T2,W,D2,o,v,t2amps_all):
+        # first, build MP4-like ladders "t2SO_full"
+        t2SO_full = t2amps_all["t2SO_full"]
+        t2_TOorig = pcc_base.build_LCCD_T2(np.copy(t2SO_full),W,o,v,D2)
+        # have to add Q2od RV Q2d RV T2puccd
+        tmp = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
+        tmp = pcc_base.return_Diag_T2(tmp, self.nocc,self.nvirt)
+        tmp = pcc_base.build_LCCD_T2(tmp,W,o,v,D2)
+        tmp = pcc_base.kill_Diag_T2(tmp,self.nocc,self.nvirt)
+        
+        t2_TO_mp4ladder = t2_TOorig + tmp
+        t2amps_all.update({"t2TO_mp4":t2_TO_mp4ladder})
+        print('test:',pcc_base.get_WnT2_energy(t2_TO_mp4ladder,W[v,v,o,o]))
+        sys.exit()
+        # now have to build 0.5*T2^WT2 using first-order T2
+        t2_FO_full = t2amps_all["t2FO_full"]
+        quad_term1 = 0.5*ucc_eqns.uccsd_T2dagWnT2(W,t2_FO_full,o,v)
+        T2dag = T2.transpose(2,3,0,1)
+        W_diag = pcc_base.return_Diag_T2(np.copy(W[o,o,v,v]), self.nocc,self.nvirt)
+        roovv = -0.250000000 * np.einsum("ikab,cdkl,jlcd->ijab",T2,T2dag,W_diag,optimize="optimal")
+        roovv += 0.062500000 * np.einsum("klab,cdkl,ijcd->ijab",T2,T2dag,W_diag,optimize="optimal")
+        roovv += -0.250000000 * np.einsum("ijac,cdkl,klbd->ijab",T2,T2dag,W_diag,optimize="optimal")
+        roovv += 1.000000000 * np.einsum("ikac,cdkl,jlbd->ijab",T2,T2dag,W_diag,optimize="optimal")
+        roovv += -0.250000000 * np.einsum("klac,cdkl,ijbd->ijab",T2,T2dag,W_diag,optimize="optimal")
+        roovv += 0.062500000 * np.einsum("ijcd,cdkl,klab->ijab",T2,T2dag,W_diag,optimize="optimal")
+        roovv += -0.250000000 * np.einsum("ikcd,cdkl,jlab->ijab",T2,T2dag,W_diag,optimize="optimal")
+        roovv = 0.5*roovv
+        quad_term1 = quad_term1 - roovv
+        quad_term1 = tamps.antisym_T2(quad_term1,None,None)
+        quad_term1 = quad_term1 *D2
+        t2amps_all.update({"t2TO_t2dagwt2":quad_term1})
+
+        # now have to build 0.5*WT2^2
+        quad_term2 = 0.5*ucc_eqns.uccsd_wnT2sqr(W,t2_FO_full,o,v)
+        W_diag = W_diag.transpose(2,3,0,1)
+        quad_term2tmp = -0.250000000 * np.einsum("ikab,jlcd,cdkl->ijab",T2,T2,W_diag,optimize="optimal")
+        quad_term2tmp += 0.062500000 * np.einsum("klab,ijcd,cdkl->ijab",T2,T2,W_diag,optimize="optimal")
+        quad_term2tmp += -0.250000000 * np.einsum("ijac,klbd,cdkl->ijab",T2,T2,W_diag,optimize="optimal")
+        quad_term2tmp += 0.500000000 * np.einsum("ikac,jlbd,cdkl->ijab",T2,T2,W_diag,optimize="optimal")
+        quad_term2  -= 0.5*quad_term2tmp
+        quad_term2 = tamps.antisym_T2(quad_term2,None,None) 
+        quad_term2 = quad_term2 *D2
+        t2amps_all.update({"t2TO_wt2sqr":quad_term2})
+
+        t2amps_all.update({"t2TO_full":quad_term1+quad_term2+t2_TO_mp4ladder})
+
+
+    def get_FO_linear_energy(self,T2,T2dag,W,D1,D2,D3,o,v,t2amps_all,pccE_correction):
+        t2TO_full = t2amps_all["t2TO_full"]
+        doublesE = pcc_base.get_WnT2_energy(t2TO_full,W[v,v,o,o])
+        print('Doubles-only contrib to WnT2 @ E(4):',doublesE)
+
+        # now build [S]/[T]
+        t2FO_full = t2amps_all["t2FO_full"]
+        singles_E4 = self.get_FO_singles(W,t2FO_full,o,v,D1,pccE_correction)
+        triples_E4 = self.get_FO_triples(W,t2FO_full,o,v,D3,pccE_correction)
+        print('[S] and [T]',singles_E4,triples_E4)
+        
+        #finally, update the 3rd order T2 w/ T1/T3 info in preparation for overlap
+        # calculation
+        t2_TO_trips = self.build_sqrBrakT_T2(T2,W,o,v,D2,D3)
+        t2_TO_sing = self.build_sqrBrakS_T2(T2,W,o,v,D2,D1)
+        t2_TO_all = t2TO_full +t2_TO_trips + t2_TO_sing
+        t2amps_all.update({"t2TO_full":t2_TO_all})
+
+    def get_newOverlap(self,T2,o,v,t2amps_all,pccE_correction):
+        t2FO_full = t2amps_all["t2FO_full"]
+        t2SO_full = t2amps_all["t2SO_full"]
+        t2TO_full = t2amps_all["t2TO_full"]
+
+        overlap = ( pcc_base.get_WnT2_energy(t2FO_full,t2FO_full.transpose(2,3,0,1))
+                   + pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1))
+                   + 2.0*pcc_base.get_WnT2_energy(t2FO_full,t2SO_full.transpose(2,3,0,1))
+                   + 2.0*pcc_base.get_WnT2_energy(t2FO_full,t2TO_full.transpose(2,3,0,1))
+                   + 1.0 )
+        print('overlap:',overlap)
+        sys.exit()
+
+
+    def get_FO_quadratic_energy(self,T2,W,o,v,t2amps_all,pccE_correction):
+        t2dagwnt2 = t2amps_all["t2TO_t2dagwt2"]
+        quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,W[v,v,o,o])
+        print('quadE ', quad_E)
+        #sys.exit()
 
     def get_FO_d1(self,T2,T2dag,W,D2,o,v,t2amps_all,pccE_correction):
         odSO_base = t2amps_all["vt2_mp3_od"]
@@ -1202,7 +1282,7 @@ class XaccCorrection(RunXacc):
         sqrBrak_T =0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3,T3.transpose(3,4,5,0,1,2))
         print('[T] correction to pUCCD:',sqrBrak_T)
         pccE_correction.update({"Triples' [T]":sqrBrak_T})
-        return
+        return sqrBrak_T
     
     def get_FO_singles(self,W,T2,o,v,D1,pccE_correction):
          D1T1 = build_sqrbrak_corrections.build_T1_fromT2_SOspin(W,o,v,T2)
@@ -1210,7 +1290,7 @@ class XaccCorrection(RunXacc):
          sqrBrak_S = np.einsum("ia,ai->",D1T1,T1approx.transpose(1,0))
          print('[S] correction to pUCCD', sqrBrak_S)
          pccE_correction.update({"Singles' [S]":sqrBrak_S})
-         return
+         return sqrBrak_S
 
     def get_overlap_FO(self,T2,T2diag,C2,D2,D1,D3,W,nocc,nvirt):
         o=self.o
@@ -1327,7 +1407,7 @@ class XaccCorrection(RunXacc):
         print('[S] contrib to overlap :',sqr_brakS_overlap)
 
 
-    def build_sqrBrakS_diagT2(self,T2,W,o,v,D2,D1):
+    def build_sqrBrakS_T2(self,T2,W,o,v,D2,D1):
         totalT2 = T2 #+  pcc_base.kill_Diag_T2(W[o,o,v,v]*D2,self.nocc,self.nvirt)
         D1T1 = build_sqrbrak_corrections.build_T1_fromT2_SOspin(W,o,v,totalT2)
         T1 = D1T1*D1
@@ -1335,10 +1415,9 @@ class XaccCorrection(RunXacc):
         roovv += -0.500000000 * np.einsum("ic,jcab->ijab",T1,W[o,v,v,v],optimize="optimal")
         roovv = tamps.antisym_T2(roovv,None,None)
         roovv = roovv*D2
-        roovv = pcc_base.return_Diag_T2(roovv,self.nocc,self.nvirt)
         return roovv
 
-    def build_sqrBrakT_diagT2(self,T2,W,o,v,D2,D3):
+    def build_sqrBrakT_T2(self,T2,W,o,v,D2,D3):
         import pycc.wicked_T3corr as wicked_T3corr
         t3resid=wicked_T3corr.build_T3_secondO(W,o,v,T2)
         t3resid=tamps.antisym_T3(t3resid,None,None)
@@ -1351,8 +1430,7 @@ class XaccCorrection(RunXacc):
         netT2=wicked_T3corr.build_netT2(W,o,v,t3)
         netT2=wicked_T3corr.antisym_T2(netT2,self.nocc,self.nvirt)
         netT2 = netT2*D2
-        roovv = pcc_base.return_Diag_T2(netT2,self.nocc,self.nvirt)
-        return roovv
+        return netT2 
         #t2_likeE=0.250000000 * np.einsum("abij,ijab->",T2dag,netT2,optimize="optimal")
         #print('[T] contrib to third-order overlap: ',t2_likeE)
 
