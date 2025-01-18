@@ -15,6 +15,28 @@ def build_T3_secondO_spin(g,o,v,t2):
     return rooovvv
 
 
+## ADDED ZWW 1/18/2025 for fifth-order triples' corrections
+def buildTO_WT3_to_T3(W,o,v,T3):
+    rooovvv = 0.041666667 * np.einsum("ilmabc,jklm->ijkabc",T3,W[o,o,o,o],optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("ijlabd,kdlc->ijkabc",T3,W[o,v,o,v],optimize="optimal")
+    rooovvv += 0.041666667 * np.einsum("ijkade,debc->ijkabc",T3,W[v,v,v,v],optimize="optimal")
+    return rooovvv
+
+def buildTO_wnT2sqr_to_T3(W,o,v,T2):
+    rooovvv = 0.500000000 * np.einsum("ilab,jmcd,kdlm->ijkabc",T2,T2,W[o,v,o,o],optimize="optimal")
+    rooovvv += -0.125000000 * np.einsum("ilab,jkde,delc->ijkabc",T2,T2,W[v,v,o,v],optimize="optimal")
+    rooovvv += -0.125000000 * np.einsum("lmab,ijcd,kdlm->ijkabc",T2,T2,W[o,v,o,o],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("ijad,klbe,delc->ijkabc",T2,T2,W[v,v,o,v],optimize="optimal")
+    return rooovvv
+
+
+def buildTO_wnT1T2_to_T3(W,o,v,T1,T2):
+    rooovvv = -0.250000000 * np.einsum("ijlm,la,kmbc->ijkabc",W[o,o,o,o],T1,T2,optimize="optimal")
+    rooovvv += -0.500000000 * np.einsum("idla,lb,jkcd->ijkabc",W[o,v,o,v],T1,T2,optimize="optimal")
+    rooovvv += -0.500000000 * np.einsum("idla,jd,klbc->ijkabc",W[o,v,o,v],T1,T2,optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("deab,id,jkce->ijkabc",W[v,v,v,v],T1,T2,optimize="optimal")
+    return rooovvv
+
 def build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
 
     Rooovvv,RooOvvV, RoOOvVV, ROOOVVV = get_netT3_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
