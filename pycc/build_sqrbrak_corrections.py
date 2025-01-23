@@ -37,6 +37,26 @@ def buildTO_wnT1T2_to_T3(W,o,v,T1,T2):
     rooovvv += -0.250000000 * np.einsum("deab,id,jkce->ijkabc",W[v,v,v,v],T1,T2,optimize="optimal")
     return rooovvv
 
+
+
+### ADDED 6th order quadruples
+def build_SIXTHOQUADS_wnt2sqr(T2,W,o,v):
+    roooovvvv = -0.062500000 * np.einsum("imab,jncd,klmn->ijklabcd",T2,T2,W[o,o,o,o],optimize="optimal")
+    roooovvvv += -0.250000000 * np.einsum("imab,jkce,lemd->ijklabcd",T2,T2,W[o,v,o,v],optimize="optimal")
+    roooovvvv += -0.062500000 * np.einsum("ijae,klbf,efcd->ijklabcd",T2,T2,W[v,v,v,v],optimize="optimal")
+    return roooovv
+
+
+def build_SIXTHOQUADS_wnt3(T2,W,o,v):
+    roooovvvv = -0.041666667 * np.einsum("ijmabc,klmd->ijklabcd",T3,W[o,o,o,v],optimize="optimal")
+    roooovvvv += -0.041666667 * np.einsum("ijkabe,lecd->ijklabcd",T3,W[o,v,v,v],optimize="optimal")
+    return roooovvvv
+
+
+def build_SIXTHO_sqrBrakQuads(T4,T4dag,o,v):
+    r = 0.062500000 * np.einsum("ijklabcd,abcdijkl->",T4[o,o,o,o,v,v,v,v],T4dag[v,v,v,v,o,o,o,o],optimize="optimal")
+    return r
+
 def build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
 
     Rooovvv,RooOvvV, RoOOvVV, ROOOVVV = get_netT3_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
