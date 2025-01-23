@@ -829,13 +829,13 @@ class XaccCorrection(RunXacc):
     def build_t2_SO(self,T2,W,D2,o,v,t2amps_all):
         # build Q2od RV T2pucc
         SO_base = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
-        odSO_base = pcc_base.kill_Diag_T2(SO_base,self.nocc,self.nvirt)
+        odSO_base = pcc_base.kill_Diag_T2(np.copy(SO_base),self.nocc,self.nvirt)
 
         # now build (Q2all RV (Q2od RVod)), and partition
         t2_FO_od = t2amps_all["mp2_od"]
         mp_base = pcc_base.build_LCCD_T2(t2_FO_od,W,o,v,D2)
-        mp_base_diag = pcc_base.return_Diag_T2(mp_base,self.nocc,self.nvirt)
-        mp_base_od   = pcc_base.kill_Diag_T2(mp_base,self.nocc,self.nvirt)
+        mp_base_diag = pcc_base.return_Diag_T2(np.copy(mp_base),self.nocc,self.nvirt)
+        mp_base_od   = pcc_base.kill_Diag_T2(np.copy(mp_base),self.nocc,self.nvirt)
 
         # construct the full SO correction
         t2_SO_full = odSO_base + mp_base
@@ -870,10 +870,23 @@ class XaccCorrection(RunXacc):
         t2SO_pucc = t2amps_all["t2SO_pucc"]
         pucc_TO_E = 2.0*pcc_base.get_WnT2_energy(t2SO_pucc,W[v,v,o,o])
         print('pucc_TO_E',pucc_TO_E)
-
+        
+        # test 
+        test = t2amps_all["t2SO_full"]
+        print('testing (3):',pcc_base.get_WnT2_energy(test,W[v,v,o,o]))
         # total 3rd order contrib
-        totalE3 = pucc_TO_E + mp3_od_E
+        #totalE3 = pucc_TO_E + mp3_od_E
 
+
+        t1 = t2amps_all["t2SO_mp_od"]
+        t2 = t2amps_all["t2SO_mp_diag"]
+        t3 = t2amps_all['t2SO_pucc']
+        t_e = pcc_base.get_WnT2_energy(t1,W[v,v,o,o]) + pcc_base.get_WnT2_energy(t2,W[v,v,o,o]) + pcc_base.get_WnT2_energy(t3,W[v,v,o,o])
+        print('t_e',t_e)
+        print(pcc_base.get_WnT2_energy(t1,W[v,v,o,o]),pcc_base.get_WnT2_energy(t2,W[v,v,o,o]),pcc_base.get_WnT2_energy(t3,W[v,v,o,o]))
+        #sys.exit()
+
+        totalE3 = t_e
         # now get full MP3 energy:
         fullMP3_base = t2amps_all["t2SO_mp3base"]
         fullMP3_E = pcc_base.get_WnT2_energy(fullMP3_base,W[v,v,o,o])
@@ -890,9 +903,10 @@ class XaccCorrection(RunXacc):
 
 
     def build_t2_TO(self,T2,W,D2,o,v,t2amps_all):
-        # first, build MP4-like ladders "t2SO_full"
+        # first, build MP4-like ladders from second-order wavefxn "t2SO_full"
         t2SO_full = t2amps_all["t2SO_full"]
         t2_TOorig = pcc_base.build_LCCD_T2(np.copy(t2SO_full),W,o,v,D2)
+
         # have to add Q2od RV Q2d RV T2puccd
         tmp = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
         tmp = pcc_base.return_Diag_T2(tmp, self.nocc,self.nvirt)
@@ -919,6 +933,7 @@ class XaccCorrection(RunXacc):
         roovv += 0.062500000 * np.einsum("ijcd,cdkl,klab->ijab",T2,T2dag,W_diag,optimize="optimal")
         roovv += -0.250000000 * np.einsum("ikcd,cdkl,jlab->ijab",T2,T2dag,W_diag,optimize="optimal")
         roovv = 0.5*roovv
+        roovv = pcc_base.return_Diag_T2(np.copy(roovv),self.nocc,self.nvirt)
         quad_term1 = quad_term1 - roovv
         quad_term1 = tamps.antisym_T2(quad_term1,None,None)
         quad_term1 = quad_term1 *D2
@@ -931,7 +946,9 @@ class XaccCorrection(RunXacc):
         quad_term2tmp += 0.062500000 * np.einsum("klab,ijcd,cdkl->ijab",T2,T2,W_diag,optimize="optimal")
         quad_term2tmp += -0.250000000 * np.einsum("ijac,klbd,cdkl->ijab",T2,T2,W_diag,optimize="optimal")
         quad_term2tmp += 0.500000000 * np.einsum("ikac,jlbd,cdkl->ijab",T2,T2,W_diag,optimize="optimal")
+        quad_term2tmp =  pcc_base.return_Diag_T2(np.copy(quad_term2tmp),self.nocc,self.nvirt)
         quad_term2  -= 0.5*quad_term2tmp
+
         quad_term2 = tamps.antisym_T2(quad_term2,None,None) 
         quad_term2 = quad_term2 *D2
         t2amps_all.update({"t2TO_wt2sqr":quad_term2})
@@ -943,7 +960,6 @@ class XaccCorrection(RunXacc):
         t2TO_full = t2amps_all["t2TO_full"]
         doublesE = pcc_base.get_WnT2_energy(t2TO_full,W[v,v,o,o])
         print('Doubles-only contrib to WnT2 @ E(4):',doublesE)
-
         # now build [S]/[T]
         t2FO_full = t2amps_all["t2FO_full"]
         singles_E4,t1_SO = self.get_FO_singles(W,t2FO_full,o,v,D1,pccE_correction)
@@ -991,6 +1007,9 @@ class XaccCorrection(RunXacc):
         t2dagwnt2 = t2amps_all["t2TO_t2dagwt2"]
         quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,W[v,v,o,o])
         print('quadE ', quad_E)
+        t2FO = t2amps_all["t2FO_full"]
+        quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,t2FO.transpose(2,3,0,1))
+        print(quad_E,'here')
         #sys.exit()
 
 
