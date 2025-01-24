@@ -800,7 +800,7 @@ class XaccCorrection(RunXacc):
             sys.exit()
         elif 'T+' in args:
             # Calculate 4th order [T] first
-            triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction,self.t2amps_all)
+            triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
 
             # Now get 5th order triples corrections
             triples_E5,t3_TO = self.get_FIFTHO_triples(W,T1,T2,t3_SO,D3,D2,o,v,self.pccE_correction,self.t2amps_all)
@@ -1047,8 +1047,7 @@ class XaccCorrection(RunXacc):
         E5_wnT3SOdag_wnt2sqr = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
         print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
         T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO 
-        t2amps_all.update({"T3_TO":,T3_TO})
-
+        t2amps_all.update({"T3_TO":T3_TO})
 
 ######################################################################################################
 ######################################################################################################
@@ -1067,9 +1066,15 @@ class XaccCorrection(RunXacc):
         #E5_hbar2dag_c5 = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,newd3t3.transpose(3,4,5,0,1,2))
         print('E(5) Hbar2^ C3 from wnT2:',E5_hbar2_c3_wt2)
 
-
-
-        triples_E5= E5_wnT3SOdag_wnt2sqr + E5_t3SOdag_wnT3SO+ E5_hbar2_c3_wt2 + hbar2_c3_wnT1_C3
+        # Build Q2 (T2^W*)T3SO , then build total energy correction 0.5* ((T2^)^2 W )cT3SO
+        t2fo_tmp = build_sqrbrak_corrections.build_FOt2_Q2t2dagwt3(T2.transpose(2,3,0,1),T3SO,W,o,v)
+        t2fo_tmp = tamps.antisym_T2(t2fo_tmp,None,None)
+        E5_t2dagwnT3SO = pcc_base.get_WnT2_energy(t2fo_tmp*D2,W[v,v,o,o])
+        
+        offset = -0.5*pcc_base.get_WnT2_energy(T2,t2fo_tmp.transpose(2,3,0,1))
+        print('E(5) 0.5* ((T2^)^2 W )cT3SO',E5_t2dagwnT3SO)
+        print('E(5) offset:',offset)
+        triples_E5= E5_wnT3SOdag_wnt2sqr + E5_t3SOdag_wnT3SO+ E5_hbar2_c3_wt2 + E5_t2dagwnT3SO+offset 
         print('Fifth-order triples correction:',triples_E5)
         t3_TO=T3
         return triples_E5, t3_TO

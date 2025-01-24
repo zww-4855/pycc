@@ -86,6 +86,20 @@ def build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,
     #sys.exit()
     return triples_correction
 
+def build_FOt2_Q2t2dagwt3(T2dag,T3,W,o,v):
+    roovv = 0.125000000 * np.einsum("cdkl,ijmabd,klmc->ijab",T2dag,T3,W[o,o,o,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("cdkl,ilmabd,jkmc->ijab",T2dag,T3,W[o,o,o,v],optimize="optimal")
+    roovv += 0.125000000 * np.einsum("cdkl,klmabd,ijmc->ijab",T2dag,T3,W[o,o,o,v],optimize="optimal")
+    roovv += 0.125000000 * np.einsum("cdkl,ijlabe,kecd->ijab",T2dag,T3,W[o,v,v,v],optimize="optimal")
+    roovv += -0.125000000 * np.einsum("cdkl,iklabe,jecd->ijab",T2dag,T3,W[o,v,v,v],optimize="optimal")
+    roovv += -0.125000000 * np.einsum("cdkl,ijmacd,klmb->ijab",T2dag,T3,W[o,o,o,v],optimize="optimal")
+    roovv += -0.500000000 * np.einsum("cdkl,ilmacd,jkmb->ijab",T2dag,T3,W[o,o,o,v],optimize="optimal")
+    roovv += 0.500000000 * np.einsum("cdkl,ijlade,kebc->ijab",T2dag,T3,W[o,v,v,v],optimize="optimal")
+    roovv += -0.500000000 * np.einsum("cdkl,iklade,jebc->ijab",T2dag,T3,W[o,v,v,v],optimize="optimal")
+    roovv += 0.125000000 * np.einsum("cdkl,ijlcde,keab->ijab",T2dag,T3,W[o,v,v,v],optimize="optimal")
+    return roovv
+
+
 def build_FOsqrBrakSingles(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
     #netT1=get_netT1_fromT2(self.g,self.o,self.v,self.t2)
     netT1_aa, netT1_bb = get_netT1_fromT2(T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb)
