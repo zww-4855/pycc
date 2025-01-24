@@ -791,8 +791,8 @@ class XaccCorrection(RunXacc):
             #                       T2' represents the 1st order wavefxn
             self.build_t2_TO(T2,W,D2,o,v,self.t2amps_all)
             self.get_FO_linear_energy(T2,T2.transpose(2,3,0,1),W,D1,D2,D3,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_quadratic_energy(T2,W,o,v,self.t2amps_all,self.pccE_correction)
             self.get_newOverlap(T2,o,v,self.t2amps_all,self.pccE_correction)
+            self.get_FO_quadratic_energy(T2,W,o,v,self.t2amps_all,self.pccE_correction)
 
 
             self.finalize('pUCCD',self.pccE_correction)
@@ -875,7 +875,7 @@ class XaccCorrection(RunXacc):
         test = t2amps_all["t2SO_full"]
         print('testing (3):',pcc_base.get_WnT2_energy(test,W[v,v,o,o]))
         # total 3rd order contrib
-        #totalE3 = pucc_TO_E + mp3_od_E
+        totalE3 = pucc_TO_E + mp3_od_E
 
 
         t1 = t2amps_all["t2SO_mp_od"]
@@ -886,7 +886,7 @@ class XaccCorrection(RunXacc):
         print(pcc_base.get_WnT2_energy(t1,W[v,v,o,o]),pcc_base.get_WnT2_energy(t2,W[v,v,o,o]),pcc_base.get_WnT2_energy(t3,W[v,v,o,o]))
         #sys.exit()
 
-        totalE3 = t_e
+        #totalE3 = t_e
         # now get full MP3 energy:
         fullMP3_base = t2amps_all["t2SO_mp3base"]
         fullMP3_E = pcc_base.get_WnT2_energy(fullMP3_base,W[v,v,o,o])
@@ -975,9 +975,9 @@ class XaccCorrection(RunXacc):
         t2_TO_all = t2TO_full +t2_TO_trips + t2_TO_sing
         t2amps_all.update({"t2TO_full":t2_TO_all})
         
-        totalFO_E = singles_E4 + triples_E4 + doublesE
+        totalFO_E = singles_E4 + triples_E4 + doublesE #+ pccE_correction["-0.25*(T2^)^2WT2"]
         pccE_correction.update({"Total E(4) from doubles:":doublesE,
-            "Total E(4) w/ [S] and [T]:":totalFO_E})
+            "Total E(4) w/ [S], [T]:":totalFO_E})
 
 
     def get_newOverlap(self,T2,o,v,t2amps_all,pccE_correction):
@@ -1007,10 +1007,15 @@ class XaccCorrection(RunXacc):
         t2dagwnt2 = t2amps_all["t2TO_t2dagwt2"]
         quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,W[v,v,o,o])
         print('quadE ', quad_E)
-        t2FO = t2amps_all["t2FO_full"]
-        quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,t2FO.transpose(2,3,0,1))
-        print(quad_E,'here')
+        #t2FO = t2amps_all["t2FO_full"]
+        #quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,t2FO.transpose(2,3,0,1))
+        #print(quad_E,'here')
+        pccE_correction.update({"-0.25*(T2^)^2WT2":quad_E})
         #sys.exit()
+
+        totalFO_E = pccE_correction["Total E(4) w/ [S], [T]:"] + quad_E
+        pccE_correction.update({
+            "Total E(4) w/ [S], [T], and -0.25*(t2^)^2wt2:":totalFO_E})
 
 
     def get_FO_triples(self,W,T2,o,v,D3,pccE_correction):
@@ -1137,7 +1142,9 @@ class XaccCorrection(RunXacc):
             print("pUCCD + [D] + [S] + [T]:",all_correction)
             print('Renormalized (R)-pUCCD + [D]:',doubles_correction/total_overlap)
             print('Renormalized (R)-pUCCD + [D] + [S] + [T]:',all_correction/total_overlap)
-
+            x_data = np.array([1,1,1])
+            y_data = np.array([dataDict["Total E(2) from doubles:"],dataDict["Total E(3) from doubles:"],dataDict["Total E(4) w/ [S], [T], and -0.25*(t2^)^2wt2:"]])
+            misc.pade_approximant(x_data,y_data,dataDict)
         print('\n\n**********************')
         print('**********************')
 #        print('E(2): ', E2)

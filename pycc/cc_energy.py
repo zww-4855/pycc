@@ -211,12 +211,17 @@ def sixthOrderQf_wnT2cubed(W,T2,o,v,D2):
     teste =0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2)
     print('pdagq WnT2^3 6th order energy:',teste)
 
-
-#    import pycc.mbpt6 as mbpt6
-#    tmpT2=W[o,o,v,v]*D2
-#    D2T2mbpt = 0.5*mbpt6.residQf2_aaaa(W[o,o,v,v],tmpT2,tmpT2.transpose(2,3,0,1),o,v)
-#    mbpte =0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2mbpt)
-#    print('MBPT(6) energy for wnT2^2:',mbpte)
+    import pycc.pcc_base as pcc_base
+    T2tmp = W[o,o,v,v]*D2
+    T2tmp = pcc_base.build_LCCD_T2(T2tmp,W,o,v,D2)
+    mp3 = pcc_base.get_WnT2_energy(T2tmp,W[v,v,o,o])#.transpose(2,3,0,1))
+    print('mp3 energy !!!:',mp3)
+    import pycc.mbpt6 as mbpt6
+    tmpT2=W[o,o,v,v]*D2
+    D2T2mbpt = 0.5*mbpt6.residQf2_aaaa(W[o,o,v,v],tmpT2,tmpT2.transpose(2,3,0,1),o,v)
+    D2T2mbpt = D2T2mbpt.transpose(2,3,0,1)*D2
+    mbpte =0.25*np.einsum('jiab,abji',D2T2mbpt,W[v,v,o,o])
+    print('MBPT(6) energy for wnT2^2:',mbpte)
 
 # Test wicked_toT2 part:
 #    D2T2=0.5*qf.wnT2cubed_toT2(W,T2,o,v)
