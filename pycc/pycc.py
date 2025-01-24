@@ -792,7 +792,7 @@ class XaccCorrection(RunXacc):
             self.build_t2_TO(T2,W,D2,o,v,self.t2amps_all)
             self.get_FO_linear_energy(T2,T2.transpose(2,3,0,1),W,D1,D2,D3,o,v,self.t2amps_all,self.pccE_correction)
             self.get_newOverlap(T2,o,v,self.t2amps_all,self.pccE_correction)
-            self.get_FO_quadratic_energy(T2,W,o,v,self.t2amps_all,self.pccE_correction)
+            self.get_FO_quadratic_energy(T2,D2,W,o,v,self.t2amps_all,self.pccE_correction)
 
 
             self.finalize('pUCCD',self.pccE_correction)
@@ -800,10 +800,10 @@ class XaccCorrection(RunXacc):
             sys.exit()
         elif 'T+' in args:
             # Calculate 4th order [T] first
-            triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
+            triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction,self.t2amps_all)
 
             # Now get 5th order triples corrections
-            triples_E5,t3_TO = self.get_FIFTHO_triples(W,T1,T2,t3_SO,D3,D2,o,v)
+            triples_E5,t3_TO = self.get_FIFTHO_triples(W,T1,T2,t3_SO,D3,D2,o,v,self.pccE_correction,self.t2amps_all)
 
             # Get 6th order pure triples
 
@@ -916,7 +916,7 @@ class XaccCorrection(RunXacc):
                 pcc_base.get_WnT2_energy(t2SO_full,t2SO_full.transpose(2,3,0,1))) 
         t2_TO_mp4ladder = t2_TOorig + tmp
         t2amps_all.update({"t2TO_mp4":t2_TO_mp4ladder})
-        print('test:',pcc_base.get_WnT2_energy(t2_TO_mp4ladder,W[v,v,o,o]))
+        print('MP4 LADDER ENERGY TEST test:',pcc_base.get_WnT2_energy(t2_TO_mp4ladder,W[v,v,o,o]))
         tmp = t2amps_all["t2SO_mp3"]
         print('final t2SO_mp3 ovrlap:',pcc_base.get_WnT2_energy(tmp,tmp.transpose(2,3,0,1)))
 
@@ -1003,13 +1003,16 @@ class XaccCorrection(RunXacc):
             print('overlap element ',i,': ',storage[i])
         pccE_correction.update({"Total Overlap":overlap})
 
-    def get_FO_quadratic_energy(self,T2,W,o,v,t2amps_all,pccE_correction):
+    def get_FO_quadratic_energy(self,T2,D2,W,o,v,t2amps_all,pccE_correction):
         t2dagwnt2 = t2amps_all["t2TO_t2dagwt2"]
         quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,W[v,v,o,o])
         print('quadE ', quad_E)
-        #t2FO = t2amps_all["t2FO_full"]
-        #quad_E = -0.5*pcc_base.get_WnT2_energy(t2dagwnt2,t2FO.transpose(2,3,0,1))
-        #print(quad_E,'here')
+
+
+        t2FO = t2amps_all["t2FO_full"]
+        tmp = t2dagwnt2 / D2
+        quad_E = -0.5*pcc_base.get_WnT2_energy(tmp,t2FO.transpose(2,3,0,1))
+        print(quad_E,'new quad E **** here')
         pccE_correction.update({"-0.25*(T2^)^2WT2":quad_E})
         #sys.exit()
 
@@ -1028,50 +1031,71 @@ class XaccCorrection(RunXacc):
         return sqrBrak_T, T3
 
 
-    def get_FIFTHO_triples(self,W,T1,T2,T3SO,D3,D2,o,v):
+    def get_FIFTHO_triples(self,W,T1,T2,T3SO,D3,D2,o,v,pccE_correction,t2amps_all):
         # build Q3 [W,T3SO]
         D3T3 = build_sqrbrak_corrections.buildTO_WT3_to_T3(W,o,v,T3SO)
         D3T3 = tamps.antisym_T3(D3T3,None,None)
-        D3T3 = D3T3
         E5_t3SOdag_wnT3SO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
         print('E(5) T3SO^ Q3(WnT3SO) :',E5_t3SOdag_wnT3SO)
+        T3_TO = D3T3*D3 # store wnT3SO -> T3 object
+
 
         D3T3=0.0
-        # Build Q3 0.5*[[W,T2],T2] + [[W,T1],T2]
+        # Build Q3 0.5*[[W,T2],T2] 
         D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
         D3T3 = tamps.antisym_T3(D3T3,None,None)
-        E5_wnT3SOdag_wnt2sqr = 2.0*0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
+        E5_wnT3SOdag_wnt2sqr = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
         print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
+        T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO 
+        t2amps_all.update({"T3_TO":,T3_TO})
 
+
+######################################################################################################
+######################################################################################################
+######################################################################################################
+######################################################################################################
+        ## ** need to make a T2_FO from T3_TO above, and the following below....
+
+        # Now build <0|Hbar2 C^[3]|0> for Hbar2 == [V,T2]
+        t2_fromT3SO = self.build_sqrBrakT_T2(T2,W,o,v,D2,D3)
+        t2tmp = pcc_base.build_LCCD_T2(t2_fromT3SO,W,o,v,D2)
+        t2tmp = t2tmp/D2
+        E5_hbar2_c3_wt2 = pcc_base.get_WnT2_energy(T2,t2tmp.transpose(2,3,0,1))
+
+        #newd3t3 = build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,t2tmp)
+        #newd3t3 = tamps.antisym_T3(newd3t3,None,None)
+        #E5_hbar2dag_c5 = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,newd3t3.transpose(3,4,5,0,1,2))
+        print('E(5) Hbar2^ C3 from wnT2:',E5_hbar2_c3_wt2)
+
+
+
+        triples_E5= E5_wnT3SOdag_wnt2sqr + E5_t3SOdag_wnT3SO+ E5_hbar2_c3_wt2 + hbar2_c3_wnT1_C3
+        print('Fifth-order triples correction:',triples_E5)
+        t3_TO=T3
+        return triples_E5, t3_TO
+
+
+    def get_SIXTHO_TRIPS(self,T2,T3SO,D2,D3,W,o,v):
+        # Q2 .. Q3.. [[W,T1],T2
         D3T3 =0.0
         D3T3 = build_sqrbrak_corrections.buildTO_wnT1T2_to_T3(W,o,v,T1,T2)
         D3T3 = tamps.antisym_T3(D3T3,None,None)
         T3 = D3T3*D3
 
-        E5_wnT3SOdag_wnt1t2 = 2.0*0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
-        print('E(5) T3SO^ Q3 (WT1T2):',E5_wnT3SOdag_wnt1t2)
-
-        # Now build <0|Hbar2 C^[3]|0> + h.c.
-        t2tmp = pcc_base.build_LCCD_T2(T2,W,o,v,D2)
-        newd3t3 = build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,t2tmp)
-        newd3t3 = tamps.antisym_T3(newd3t3,None,None)
-        E5_hbar2dag_c5 = 2.0*0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,newd3t3.transpose(3,4,5,0,1,2))
-        print('E(5) Hbar2^ C3 + h.c.:',E5_hbar2dag_c5)
+        E5_wnT3SOdag_wnt1t2 = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
+        print('E(6) T3SO^ Q3 (WT1T2):',E5_wnT3SOdag_wnt1t2)
 
 
         # Finall build <0|Hbar2 C^[3]|0> + h.c. for Hbar2 == [V,T1]
         d2t2_tmp = -0.500000000 * np.einsum("ka,ijkb->ijab",T1,W[o,o,o,v],optimize="optimal")
         d2t2_tmp += -0.500000000 * np.einsum("ic,jcab->ijab",T1,W[o,v,v,v],optimize="optimal")
         d2t2_tmp = tamps.antisym_T2(d2t2_tmp,None,None)
-        
+
 
         t2_fromT3 = self.build_sqrBrakT_T2(T2,W,o,v,D2,D3)
-        hbar2_c3_wnT1_C3 = 2.0*pcc_base.get_WnT2_energy(t2_fromT3,d2t2_tmp.transpose(2,3,0,1))
-        print('E(5) Hbar2^ C3 + h.c. from wnT1:',hbar2_c3_wnT1_C3)
-        triples_E5= E5_wnT3SOdag_wnt1t2+E5_wnT3SOdag_wnt2sqr+E5_t3SOdag_wnT3SO+ E5_hbar2dag_c5 + hbar2_c3_wnT1_C3
-        print('Fifth-order triples correction:',triples_E5)
-        t3_TO=T3
-        return triples_E5, t3_TO
+        E_hbar2_c3_wnT1_C3 =pcc_base.get_WnT2_energy(t2_fromT3,d2t2_tmp.transpose(2,3,0,1))
+        print('E(6) Hbar2^ C3  from wnT1:',hbar2_c3_wnT1_C3)
+
 
     def get_SIXTHO_QUADS(self,T2,T3,D2,D3,D4,W,o,v):
         D4T4_wnt2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
