@@ -769,9 +769,13 @@ def antisym_T3SI_abb(RoOOvVV, nocc, nvir):
 
 
 def antisym_intermed(intermed):
-    antisym = intermed
-    antisym += -1.0*antisym.transpose(1,0,2,3)
-    antisym += -1.0*antisym.transpose(0,1,3,2)
-    antisym   += antisym.transpose(1,0,3,2)
+    nocc,nvirt=intermed.shape[0],intermed.shape[2]
+    antisym = np.zeros((nocc,nocc,nvirt,nvirt))
+    antisym += intermed
+    antisym -= intermed.transpose(1,0,2,3)
+    antisym -= intermed.transpose(0,1,3,2)
 
+    #antisym += -1.0*antisym.transpose(1,0,2,3)
+    #antisym += -1.0*antisym.transpose(0,1,3,2)
+    #antisym   += antisym.transpose(1,0,3,2)
     return antisym
