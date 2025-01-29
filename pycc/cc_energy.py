@@ -92,6 +92,7 @@ def perturbE_driver(CCobj,cc_type):
     D1=CCobj.denomInfo.get("D1aa",None)
     D2=CCobj.denomInfo.get("D2aa",None)
     D3=CCobj.denomInfo.get("D3aa",set_denoms.D3denomSlow(CCobj.eps,CCobj.occSliceInfo["occ_aa"],CCobj.occSliceInfo["virt_aa"],np.newaxis))
+    D4=CCobj.denomInfo.get("D4aa",set_denoms.D4denomSlow(CCobj.eps,CCobj.occSliceInfo["occ_aa"],CCobj.occSliceInfo["virt_aa"],np.newaxis))
 
     W=CCobj.integralInfo["tei"]
     if "(qf)" in cc_type: # calculate both fifth and sixth-order contributions
@@ -103,12 +104,19 @@ def perturbE_driver(CCobj,cc_type):
         print(flush=True)
         fifthOrderE_WnT3      = fifthOrderQf_wnT3(W,T3,T2,o,v,D2)
         fifthOrderQf          = fifthorderE_WnT2sqr + fifthOrderE_WnT3
+        print(T3.shape)
+        parQ = get_parQ(T2,T3,o,v,D4,D2,W)
 
         sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,T3,o,v,D2)
         sixthOrderE_wnT2cubed = sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
         sixthOrderQf          = sixthOrderE_wnT2T3 + sixthOrderE_wnT2cubed
         print(flush=True)
         totalQf               = fifthOrderQf + sixthOrderQf
+
+
+
+        parQ = get_parQ(T2,T3,o,v,D4,W)
+                
 
         return {"Fifth-order Qf from WnT2^2":fifthorderE_WnT2sqr,
                 "Fifth-order Qf from WnT3"  : fifthOrderE_WnT3,
@@ -147,6 +155,41 @@ def perturbE_driver(CCobj,cc_type):
 #
 #        sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
         return {"help":2}
+
+
+def get_parQ(T2,T3,o,v,D4,D2,W):
+    import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+    d4t4_wnT2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
+    d4t4_wnT2sqr = tamps.antisym_T4(d4t4_wnT2sqr,None,None)
+ 
+    #T3 = T3.transpose(3,4,5,0,1,2)
+    d4t4_wnT3    = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt3(T3,W,o,v)
+    d4t4_wnT3    = tamps.antisym_T4(d4t4_wnT3,None,None)
+    
+    t4_wnT3 = d4t4_wnT3*D4
+    t4_wnT2sqr = d4t4_wnT2sqr
+
+
+
+    roovv = 0.062500000 * np.einsum("ijklabcd,cdkl->ijab",t4_wnT2sqr,W[v,v,o,o],optimize="optimal")
+    roovv = tamps.antisym_T2(roovv,None,None)
+    roovv = roovv *D2
+    sqrBrakQ = 0.25*np.einsum('jiab,abji',T2,roovv.transpose(2,3,0,1))
+    print('sqrBrakQ is: ', sqrBrakQ)
+    print(flush=True)
+
+    roovv = 0.062500000 * np.einsum("ijklabcd,cdkl->ijab",t4_wnT3,W[v,v,o,o],optimize="optimal")
+    roovv = tamps.antisym_T2(roovv,None,None)
+    roovv = roovv *D2
+    sqrBrakQ_other = 0.25*np.einsum('jiab,abji',T2,roovv.transpose(2,3,0,1))
+
+    print('Other fifth-order [Q] term; from WnT3',sqrBrakQ_other)
+    print(flush=True)
+
+#def build_T4_into_energy(T4,T2,W,o,v,D4,D2):
+
+
+
 
 def fifthOrderQf_WnT2sqr(W,T2,o,v,D2):
     D2T2 = 0.5*pdag_xcc5.residQf1_aaaa(W,T2,T2.transpose(2,3,0,1),o,v)

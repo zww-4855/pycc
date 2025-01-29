@@ -44,10 +44,10 @@ def build_SIXTHOQUADS_wnt2sqr(T2,W,o,v):
     roooovvvv = -0.062500000 * np.einsum("imab,jncd,klmn->ijklabcd",T2,T2,W[o,o,o,o],optimize="optimal")
     roooovvvv += -0.250000000 * np.einsum("imab,jkce,lemd->ijklabcd",T2,T2,W[o,v,o,v],optimize="optimal")
     roooovvvv += -0.062500000 * np.einsum("ijae,klbf,efcd->ijklabcd",T2,T2,W[v,v,v,v],optimize="optimal")
-    return roooovv
+    return roooovvvv
 
 
-def build_SIXTHOQUADS_wnt3(T2,W,o,v):
+def build_SIXTHOQUADS_wnt3(T3,W,o,v):
     roooovvvv = -0.041666667 * np.einsum("ijmabc,klmd->ijklabcd",T3,W[o,o,o,v],optimize="optimal")
     roooovvvv += -0.041666667 * np.einsum("ijkabe,lecd->ijklabcd",T3,W[o,v,v,v],optimize="optimal")
     return roooovvvv
