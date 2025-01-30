@@ -97,17 +97,23 @@ def perturbE_driver(CCobj,cc_type):
     W=CCobj.integralInfo["tei"]
     if "(qf)" in cc_type: # calculate both fifth and sixth-order contributions
         if T3 is None: # If calculation is CCSD(Qf), **have not done** (T) work
-            T3=build_approxT3(W,T2,o,v)
-            T3=tamps.antisym_T3(T3,None,None)
+            D3T3=build_approxT3(W,T2,o,v)
+            D3T3=tamps.antisym_T3(D3T3,None,None)
+            T3=D3T3*D3
+
+
+            sqrBrakT= 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",T3,D3T3.transpose(3,4,5,0,1,2),optimize="optimal")
+            print('[T] correction to CCSD:', sqrBrakT)
 
         fifthorderE_WnT2sqr   = fifthOrderQf_WnT2sqr(W,T2,o,v,D2)
         print(flush=True)
-        fifthOrderE_WnT3      = fifthOrderQf_wnT3(W,T3,T2,o,v,D2)
+        fifthOrderE_WnT3      = fifthOrderQf_wnT3(W,D3T3,T2,o,v,D2)
         fifthOrderQf          = fifthorderE_WnT2sqr + fifthOrderE_WnT3
         print(T3.shape)
+        print('qf',fifthOrderQf)
         parQ = get_parQ(T2,T3,o,v,D4,D2,W)
 
-        sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,T3,o,v,D2)
+        sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,D3T3,o,v,D2)
         sixthOrderE_wnT2cubed = sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
         sixthOrderQf          = sixthOrderE_wnT2T3 + sixthOrderE_wnT2cubed
         print(flush=True)
@@ -115,7 +121,6 @@ def perturbE_driver(CCobj,cc_type):
 
 
 
-        parQ = get_parQ(T2,T3,o,v,D4,W)
                 
 
         return {"Fifth-order Qf from WnT2^2":fifthorderE_WnT2sqr,
@@ -161,31 +166,54 @@ def get_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     d4t4_wnT2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
     d4t4_wnT2sqr = tamps.antisym_T4(d4t4_wnT2sqr,None,None)
- 
+    t4_wnT2sqr = d4t4_wnT2sqr*D4
+    print(flush=True)
+    orig1 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('orig1:',orig1)
+    del d4t4_wnT2sqr
+    print(flush=True)
+
     #T3 = T3.transpose(3,4,5,0,1,2)
     d4t4_wnT3    = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt3(T3,W,o,v)
     d4t4_wnT3    = tamps.antisym_T4(d4t4_wnT3,None,None)
-    
-    t4_wnT3 = d4t4_wnT3*D4
-    t4_wnT2sqr = d4t4_wnT2sqr
+    orig2 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('orig2:',orig2)
+    print(flush=True)
+    del t4_wnT2sqr
 
+    t4_wnT3 = d4t4_wnT3*D4
+
+    #### Recent [Q] wrt UCC
+    orig = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT3,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('orig:',orig)
+    print(flush=True)
+    del t4_wnT3,d4t4_wnT3
+    print('ucc corrections:', orig, orig1, orig+orig1,orig2)
+    sqrBrakQ_ucc = orig+orig1+2.0*orig2
+    print('UCCSDT [Q] correction:',sqrBrakQ_ucc,sqrBrakQ_ucc/36.0)
 
 
     roovv = 0.062500000 * np.einsum("ijklabcd,cdkl->ijab",t4_wnT2sqr,W[v,v,o,o],optimize="optimal")
     roovv = tamps.antisym_T2(roovv,None,None)
-    roovv = roovv *D2
+    roovv = roovv 
     sqrBrakQ = 0.25*np.einsum('jiab,abji',T2,roovv.transpose(2,3,0,1))
     print('sqrBrakQ is: ', sqrBrakQ)
     print(flush=True)
 
     roovv = 0.062500000 * np.einsum("ijklabcd,cdkl->ijab",t4_wnT3,W[v,v,o,o],optimize="optimal")
     roovv = tamps.antisym_T2(roovv,None,None)
-    roovv = roovv *D2
+    roovv = roovv 
     sqrBrakQ_other = 0.25*np.einsum('jiab,abji',T2,roovv.transpose(2,3,0,1))
 
     print('Other fifth-order [Q] term; from WnT3',sqrBrakQ_other)
     print(flush=True)
-
+    #### Recent [Q] wrt UCC
+    orig = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT3,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    orig1 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)
+    orig2 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('ucc corrections:', orig, orig1, orig+orig1+2.0*orig2,orig2)
+    sqrBrakQ_ucc = orig+orig1+2.0*orig2
+    print('UCCSDT [Q] correction:',sqrBrakQ_ucc,sqrBrakQ_ucc/36.0)
 #def build_T4_into_energy(T4,T2,W,o,v,D4,D2):
 
 
