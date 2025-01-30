@@ -1038,7 +1038,7 @@ class XaccCorrection(RunXacc):
         E5_t3SOdag_wnT3SO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
         print('E(5) T3SO^ Q3(WnT3SO) :',E5_t3SOdag_wnT3SO)
         T3_TO = D3T3*D3 # store wnT3SO -> T3 object
-
+        T3_wnT3SO = T3_TO
 
         D3T3=0.0
         # Build Q3 0.5*[[W,T2],T2] 
@@ -1048,7 +1048,17 @@ class XaccCorrection(RunXacc):
         print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
         T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO 
         t2amps_all.update({"T3_TO":T3_TO})
+        
 
+        # build ((T2^)^2 W)C D3 WT3_SO
+        E5_t2dagSqrW_wt3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3_wnT3SO,D3T3.transpose(3,4,5,0,1,2)) 
+        print('E(5) ((T2^)^2 W)C D3 WT3_SO:',E5_t2dagSqrW_wt3TO)
+
+        # build ((T2^)^2 W)C D3 WT2^2
+        E5_t2dagSqrW_HC = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3*D3,D3T3.transpose(3,4,5,0,1,2))
+        print('E(5) ((T2^)^2 W)C D3 WT2^2:',E5_t2dagSqrW_HC)
+        totalE_FO = E5_t3SOdag_wnT3SO+E5_wnT3SOdag_wnt2sqr+E5_t2dagSqrW_wt3TO+E5_t2dagSqrW_HC
+        print('Total FO energy to tUCCSD:', totalE_FO)
 ######################################################################################################
 ######################################################################################################
 ######################################################################################################
