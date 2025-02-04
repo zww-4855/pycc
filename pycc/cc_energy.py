@@ -111,13 +111,15 @@ def perturbE_driver(CCobj,cc_type):
 
         fifthorderE_WnT2sqr   = fifthOrderQf_WnT2sqr(W,T2,o,v,D2)
         print(flush=True)
-        fifthOrderE_WnT3      = fifthOrderQf_wnT3(W,D3T3,T2,o,v,D2)
+        fifthOrderE_WnT3      = fifthOrderQf_wnT3(W,T3,T2,o,v,D2)
         fifthOrderQf          = fifthorderE_WnT2sqr + fifthOrderE_WnT3
         print(T3.shape)
-        print('qf',fifthOrderQf)
-        parQ = get_parQ(T2,T3,o,v,D4,D2,W)
+        print('qf',fifthOrderQf,fifthorderE_WnT2sqr,fifthOrderE_WnT3)
+        get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W)
+        print(flush=True)
+        parQ = get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W)
 
-        sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,D3T3,o,v,D2)
+        sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,T3,o,v,D2)
         sixthOrderE_wnT2cubed = sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
         sixthOrderQf          = sixthOrderE_wnT2T3 + sixthOrderE_wnT2cubed
         print(flush=True)
@@ -196,59 +198,73 @@ def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
     print('Total FO energy to tUCCSD:', totalE_FO)
 
 
-def get_parQ(T2,T3,o,v,D4,D2,W):
+def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+    # Build (t2^)^2Wn D4 WT2^2 aka Quadruples' diagram D, first
+    d4t4_wnT2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
+    d4t4_wnT2sqr = tamps.antisym_T4(d4t4_wnT2sqr,None,None)
+    t4_wnT2sqr = d4t4_wnT2sqr*D4
+
+    resid_aaaa = (1.0/16.0)*np.einsum('klcd,abcdijkl->abij',T2,t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3))#.transpose(2,3,0,1)
+    resid_aaaa = tamps.antisym_T2(resid_aaaa,None,None)
+    fifthorder_wnt2=0.5*(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v],resid_aaaa)
+    print('full (Q) uccsd T2^WnD4 WnT2^2:',fifthorder_wnt2)
+
+    # Now try T3^W D4 WT2^2
+    d4t4_wnT3 = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt3(T3,W,o,v)
+    d4t4_wnT3    = tamps.antisym_T4(d4t4_wnT3,None,None)
+    energy = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('full (Q) ccsd T3^W D4 WT2^2:',energy)
+    print(flush=True)
+    # build T3^W D4 WT3
+    t4_tmp = d4t4_wnT3*D4
+    rooovvv = -0.041666667 * np.einsum("ijlmabcd,kdlm->ijkabc",t4_tmp,W[o,v,o,o],optimize="optimal")
+    rooovvv += -0.041666667 * np.einsum("ijklabde,delc->ijkabc",t4_tmp,W[v,v,o,v],optimize="optimal")
+    rooovvv = tamps.antisym_T3(rooovvv,None,None)
+    sqrBrakT = 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",rooovvv,T3.transpose(3,4,5,0,1,2),optimize="optimal")
+
+    print('diff way to computer T3^W D4 WT3:',sqrBrakT)
+    print(flush=True)
+
+    rooovvv = 0.0
+    rooovvv = -0.041666667 * np.einsum("ijlmabcd,kdlm->ijkabc",t4_wnT2sqr,W[o,v,o,o],optimize="optimal")
+    rooovvv += -0.041666667 * np.einsum("ijklabde,delc->ijkabc",t4_wnT2sqr,W[v,v,o,v],optimize="optimal")
+    rooovvv = tamps.antisym_T3(rooovvv,None,None)
+    sqrBrakT = 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",rooovvv,T3.transpose(3,4,5,0,1,2),optimize="optimal")
+    print('diff way to compute T3^W D4 WT2^2:',sqrBrakT)
+
+def get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W):
+    import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+    # Build (t2^)^2Wn D4 WT2^2 aka Quadruples' diagram D, first
     d4t4_wnT2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
     d4t4_wnT2sqr = tamps.antisym_T4(d4t4_wnT2sqr,None,None)
     t4_wnT2sqr = d4t4_wnT2sqr*D4
     print(flush=True)
-    orig1 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)
-    print('orig1:',orig1)
+    quads_D =(1.0/36.0)* build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('[Q] contribution (t2^)^2Wn D4 WT2^2: ',quads_D)
     del d4t4_wnT2sqr
     print(flush=True)
 
-    #T3 = T3.transpose(3,4,5,0,1,2)
+    # Build (t2^)^2Wn D4 WT3 aka Quadruples' diagram C, next
     d4t4_wnT3    = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt3(T3,W,o,v)
     d4t4_wnT3    = tamps.antisym_T4(d4t4_wnT3,None,None)
-    orig2 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
-    print('orig2:',orig2)
+    quads_C = (1.0/36.0)*build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('[Q] contribution (t2^)^2Wn D4 WT3: ',quads_C)
     print(flush=True)
     del t4_wnT2sqr
 
     t4_wnT3 = d4t4_wnT3*D4
 
-    #### Recent [Q] wrt UCC
-    orig = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT3,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
-    print('orig:',orig)
+    # Build (T3^)W D4 WT3 aka Quadruples' diagram A, finally
+    quads_A = (1.0/36.0)*build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT3,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('[Q] contribution (T3^)W D4 WT3:',quads_A)
     print(flush=True)
     del t4_wnT3,d4t4_wnT3
-    print('ucc corrections:', orig, orig1, orig+orig1,orig2)
-    sqrBrakQ_ucc = orig+orig1+2.0*orig2
-    print('UCCSDT [Q] correction:',sqrBrakQ_ucc,sqrBrakQ_ucc/36.0)
-    print(flush=True)
 
-    roovv = 0.062500000 * np.einsum("ijklabcd,cdkl->ijab",t4_wnT2sqr,W[v,v,o,o],optimize="optimal")
-    roovv = tamps.antisym_T2(roovv,None,None)
-    roovv = roovv 
-    sqrBrakQ = 0.25*np.einsum('jiab,abji',T2,roovv.transpose(2,3,0,1))
-    print('sqrBrakQ is: ', sqrBrakQ)
+    sqrBrakQ_ucc = quads_A+quads_D+2.0*quads_C
+    print('Total sixth-order quadruples [Q] correction: ',sqrBrakQ_ucc)
     print(flush=True)
-
-    roovv = 0.062500000 * np.einsum("ijklabcd,cdkl->ijab",t4_wnT3,W[v,v,o,o],optimize="optimal")
-    roovv = tamps.antisym_T2(roovv,None,None)
-    roovv = roovv 
-    sqrBrakQ_other = 0.25*np.einsum('jiab,abji',T2,roovv.transpose(2,3,0,1))
-
-    print('Other fifth-order [Q] term; from WnT3',sqrBrakQ_other)
-    print(flush=True)
-    #### Recent [Q] wrt UCC
-    orig = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT3,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
-    orig1 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)
-    orig2 = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
-    print('ucc corrections:', orig, orig1, orig+orig1+2.0*orig2,orig2)
-    sqrBrakQ_ucc = orig+orig1+2.0*orig2
-    print('UCCSDT [Q] correction:',sqrBrakQ_ucc,sqrBrakQ_ucc/36.0)
-#def build_T4_into_energy(T4,T2,W,o,v,D4,D2):
+    return sqrBrakQ_ucc
 
 
 

@@ -803,7 +803,9 @@ class XaccCorrection(RunXacc):
             triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
 
             # Now get 5th order triples corrections
-            triples_E5,t3_TO = self.get_FIFTHO_triples(W,T1,T2,t3_SO,D3,D2,o,v,self.pccE_correction,self.t2amps_all)
+            import pycc.cc_energy as cc_energy
+            cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
+            #triples_E5,t3_TO = self.get_FIFTHO_triples(W,T1,T2,t3_SO,D3,D2,o,v,self.pccE_correction,self.t2amps_all)
 
             # Get 6th order pure triples
 
