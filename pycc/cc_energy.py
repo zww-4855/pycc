@@ -105,6 +105,10 @@ def perturbE_driver(CCobj,cc_type):
             sqrBrakT= 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",T3,D3T3.transpose(3,4,5,0,1,2),optimize="optimal")
             print('[T] correction to CCSD:', sqrBrakT)
 
+            # Test uccsd 5th order T3 corrections *NOT* in (T)
+            t2amps_all={}
+            get_uccsd_FIFTHO_triples(W,T2,T3,D3,D2,o,v,t2amps_all)
+
         fifthorderE_WnT2sqr   = fifthOrderQf_WnT2sqr(W,T2,o,v,D2)
         print(flush=True)
         fifthOrderE_WnT3      = fifthOrderQf_wnT3(W,D3T3,T2,o,v,D2)
@@ -161,6 +165,36 @@ def perturbE_driver(CCobj,cc_type):
 #        sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
         return {"help":2}
 
+def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
+    # build Q3 [W,T3SO]
+    import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+    D3T3 = build_sqrbrak_corrections.buildTO_WT3_to_T3(W,o,v,T3SO)
+    D3T3 = tamps.antisym_T3(D3T3,None,None)
+    E5_t3SOdag_wnT3SO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
+    print('E(5) T3SO^ Q3(WnT3SO) :',E5_t3SOdag_wnT3SO)
+    T3_TO = D3T3*D3 # store wnT3SO -> T3 object
+    T3_wnT3SO = T3_TO
+
+    D3T3=0.0
+    # Build Q3 0.5*[[W,T2],T2]
+    D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
+    D3T3 = tamps.antisym_T3(D3T3,None,None)
+    E5_wnT3SOdag_wnt2sqr = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
+    print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
+    T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO
+    t2amps_all.update({"T3_TO":T3_TO})
+
+
+    # build ((T2^)^2 W)C D3 WT3_SO
+    E5_t2dagSqrW_wt3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3_wnT3SO,D3T3.transpose(3,4,5,0,1,2))
+    print('E(5) ((T2^)^2 W)C D3 WT3_SO:',E5_t2dagSqrW_wt3TO)
+
+    # build ((T2^)^2 W)C D3 WT2^2
+    E5_t2dagSqrW_HC = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3*D3,D3T3.transpose(3,4,5,0,1,2))
+    print('E(5) ((T2^)^2 W)C D3 WT2^2:',E5_t2dagSqrW_HC)
+    totalE_FO = E5_t3SOdag_wnT3SO+E5_wnT3SOdag_wnt2sqr+E5_t2dagSqrW_wt3TO+E5_t2dagSqrW_HC
+    print('Total FO energy to tUCCSD:', totalE_FO)
+
 
 def get_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
@@ -191,7 +225,7 @@ def get_parQ(T2,T3,o,v,D4,D2,W):
     print('ucc corrections:', orig, orig1, orig+orig1,orig2)
     sqrBrakQ_ucc = orig+orig1+2.0*orig2
     print('UCCSDT [Q] correction:',sqrBrakQ_ucc,sqrBrakQ_ucc/36.0)
-
+    print(flush=True)
 
     roovv = 0.062500000 * np.einsum("ijklabcd,cdkl->ijab",t4_wnT2sqr,W[v,v,o,o],optimize="optimal")
     roovv = tamps.antisym_T2(roovv,None,None)
