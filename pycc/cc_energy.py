@@ -115,9 +115,10 @@ def perturbE_driver(CCobj,cc_type):
         fifthOrderQf          = fifthorderE_WnT2sqr + fifthOrderE_WnT3
         print(T3.shape)
         print('qf',fifthOrderQf,fifthorderE_WnT2sqr,fifthOrderE_WnT3)
-        get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W)
+        #get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W)
         print(flush=True)
         parQ = get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W)
+        print(flush=True)
 
         sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,T3,o,v,D2)
         sixthOrderE_wnT2cubed = sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
@@ -202,7 +203,7 @@ def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     # Build (t2^)^2Wn D4 WT2^2 aka Quadruples' diagram D, first
     d4t4_wnT2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
-    d4t4_wnT2sqr = tamps.antisym_T4(d4t4_wnT2sqr,None,None)
+    d4t4_wnT2sqr = tamps.antisym_T4(np.copy(d4t4_wnT2sqr),None,None)
     t4_wnT2sqr = d4t4_wnT2sqr*D4
 
     resid_aaaa = (1.0/16.0)*np.einsum('klcd,abcdijkl->abij',W[o,o,v,v],t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3))#.transpose(2,3,0,1)
@@ -214,10 +215,14 @@ def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
     # Now try T3^W D4 WT2^2
     d4t4_wnT3 = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt3(T3,W,o,v)
     d4t4_wnT3    = tamps.antisym_T4(d4t4_wnT3,None,None)
-    energy = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(5,4,6,7,0,1,2,3),o,v)
-    print('full (Q) ccsd T3^W D4 WT2^2:',energy*128,energy*1028)
+    energy = build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('full (Q) ccsd T3^W D4 WT2^2:',energy,energy/24,energy/36)
+    print(flush=True)
+    print('non zero elements:', np.count_nonzero(t4_wnT2sqr),np.count_nonzero(d4t4_wnT3))
     print(flush=True)
 
+    newE= build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(d4t4_wnT3*D4,d4t4_wnT3.transpose(4,5,6,7,0,1,2,3),o,v)
+    print('final T3^W D4 WT3:',newE,newE/24,newE/36)
 ############# intermediate step
 
 
@@ -234,16 +239,21 @@ def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
     rooovvv = tamps.antisym_T3(rooovvv,None,None)
     sqrBrakT = 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",rooovvv,T3.transpose(3,4,5,0,1,2),optimize="optimal")
 
-    print('diff way to computer T3^W D4 WT3:',9.0*sqrBrakT)
+    print('diff way to computer T3^W D4 WT3:',sqrBrakT)
     print(flush=True)
+    T4dag = d4t4_wnT3.transpose(4,5,6,7,0,1,2,3)
+    r = -0.083333333 * np.einsum("ijkabc,abdeijkl,lcde->",T3,T4dag,W[o,v,v,v],optimize="optimal")
+    r += -0.083333333 * np.einsum("ijkabc,abcdijlm,lmkd->",T3,T4dag,W[o,o,o,v],optimize="optimal")
+    print('Another way to computer T3^W D4 WT3:',r)
 
     rooovvv = 0.0
     rooovvv = -0.041666667 * np.einsum("ijlmabcd,kdlm->ijkabc",t4_wnT2sqr,W[o,v,o,o],optimize="optimal")
     rooovvv += -0.041666667 * np.einsum("ijklabde,delc->ijkabc",t4_wnT2sqr,W[v,v,o,v],optimize="optimal")
     rooovvv = tamps.antisym_T3(rooovvv,None,None)
     sqrBrakT = 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",rooovvv,T3.transpose(3,4,5,0,1,2),optimize="optimal")
-    print('diff way to compute T3^W D4 WT2^2:',9.0*sqrBrakT)
+    print('diff way to compute T3^W D4 WT2^2:',sqrBrakT)
     print(flush=True)
+
 
 def get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections

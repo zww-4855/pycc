@@ -54,7 +54,7 @@ def build_SIXTHOQUADS_wnt3(T3,W,o,v):
 
 # 1/16 -----> need to make 1/4! in total, so multiply 1/(3!)^2 == 1/36
 def build_SIXTHO_sqrBrakQuads(T4,T4dag,o,v):
-    r = 0.062500000 * np.einsum("ijklabcd,abcdijkl->",T4[o,o,o,o,v,v,v,v],T4dag[v,v,v,v,o,o,o,o],optimize="optimal")
+    r = 0.062500000 * np.einsum("ijklabcd,abcdijkl->",T4,T4dag,optimize="optimal")
     return r
 
 def build_FOsqrBrakTriples(driveCCobj,T2_aa,T2_bb,T2_ab,W_aaaa,W_bbbb,W_abab,oa,ob,va,vb):
