@@ -186,18 +186,31 @@ def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
     print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
     T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO
     t2amps_all.update({"T3_TO":T3_TO})
+    total_E5= E5_t3SOdag_wnT3SO+2.0*E5_wnT3SOdag_wnt2sqr
+    print('Total E(5) aka [T-5] correction to tUCCSD:',total_E5)
+    return total_E5, T3_TO
 
 
+def get_uccsd_SIXTHO_triples(W,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all):
+    # <(T2^)^2W R3(T3^[3])>, where T3^[3] is third-order T3
+    import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+###########################
+    # AFter this point, all these are sixth-order terms
     # build ((T2^)^2 W)C D3 WT3_SO
-    E5_t2dagSqrW_wt3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3_wnT3SO,D3T3.transpose(3,4,5,0,1,2))
-    print('E(5) ((T2^)^2 W)C D3 WT3_SO:',E5_t2dagSqrW_wt3TO)
+#    E5_t2dagSqrW_wt3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3_wnT3SO,D3T3.transpose(3,4,5,0,1,2))
+#    print('E(5) ((T2^)^2 W)C D3 WT3_SO:',E5_t2dagSqrW_wt3TO)
+#
+#    # build ((T2^)^2 W)C D3 WT2^2
+#    E5_t2dagSqrW_HC = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3*D3,D3T3.transpose(3,4,5,0,1,2))
+#    print('E(5) ((T2^)^2 W)C D3 WT2^2:',E5_t2dagSqrW_HC)
+#    totalE_FO = E5_t3SOdag_wnT3SO+E5_wnT3SOdag_wnt2sqr+E5_t2dagSqrW_wt3TO+E5_t2dagSqrW_HC
+#    print('Total FO energy to tUCCSD:', totalE_FO)
 
-    # build ((T2^)^2 W)C D3 WT2^2
-    E5_t2dagSqrW_HC = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3*D3,D3T3.transpose(3,4,5,0,1,2))
-    print('E(5) ((T2^)^2 W)C D3 WT2^2:',E5_t2dagSqrW_HC)
-    totalE_FO = E5_t3SOdag_wnT3SO+E5_wnT3SOdag_wnt2sqr+E5_t2dagSqrW_wt3TO+E5_t2dagSqrW_HC
-    print('Total FO energy to tUCCSD:', totalE_FO)
-
+    
+    D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
+    D3T3 = tamps.antisym_T3(D3T3,None,None)
+    E6_t2sqrw_t3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,D3T3.transpose(3,4,5,0,1,2))
+    print('E(6) ((T2^)^2 W)C D3 T3^[3]:',E6_t2sqrw_t3TO)
 
 def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections

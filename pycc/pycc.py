@@ -804,14 +804,12 @@ class XaccCorrection(RunXacc):
 
             # Now get 5th order triples corrections
             import pycc.cc_energy as cc_energy
-            cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
-            #triples_E5,t3_TO = self.get_FIFTHO_triples(W,T1,T2,t3_SO,D3,D2,o,v,self.pccE_correction,self.t2amps_all)
+            totalT3_E5,T3_TO = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
+            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all)
 
-            # Get 6th order pure triples
+            # Now get 6th order quads corrections:
+            totalT4_E6 = cc_energy.get_uccsd_SIXTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
 
-            # Get 6th order pure quadruples
-            #self.get_SIXTHO_QUADS(T2,T3,D2,D3,W,o,v)
-            # Get 6th order mixed T3/T4
 
     def get_SO_energy(self,T2,W,D2,o,v,t2amps_all,pccE_correction):
         fullMP2_base =  W[o,o,v,v] * D2
@@ -1050,8 +1048,11 @@ class XaccCorrection(RunXacc):
         print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
         T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO 
         t2amps_all.update({"T3_TO":T3_TO})
-        
+        totalE5= E5_t3SOdag_wnT3SO+2.0*E5_wnT3SOdag_wnt2sqr
+        print('Total E(5) to tUCCSD:',totalE5)
+        sys.exit()
 
+        ## AFTER THIS POINT, ALL THESE GO IN AT SIXTH-ORDER !!!
         # build ((T2^)^2 W)C D3 WT3_SO
         E5_t2dagSqrW_wt3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3_wnT3SO,D3T3.transpose(3,4,5,0,1,2)) 
         print('E(5) ((T2^)^2 W)C D3 WT3_SO:',E5_t2dagSqrW_wt3TO)
