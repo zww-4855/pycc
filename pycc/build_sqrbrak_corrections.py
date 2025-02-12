@@ -60,7 +60,7 @@ def buildFO_t2dagwnT3_to_T3(T2dag,T3,W,o,v):
 
 
 def buildFO_t2dagt2sqr_to_T3(T2,T2dag,W,o,v):
-    rooovvv += -0.250000000 * np.einsum("ilab,jkcd,eflm,mdef->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv = -0.250000000 * np.einsum("ilab,jkcd,eflm,mdef->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
     rooovvv += -0.250000000 * np.einsum("ilab,jkcd,demn,mnle->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
     rooovvv += 0.500000000 * np.einsum("ilab,jmcd,eflm,kdef->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
     rooovvv += -1.000000000 * np.einsum("ilab,jmcd,deln,knme->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")

@@ -191,26 +191,35 @@ def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
     return total_E5, T3_TO
 
 
-def get_uccsd_SIXTHO_triples(W,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all):
-    # <(T2^)^2W R3(T3^[3])>, where T3^[3] is third-order T3
+def get_uccsd_SIXTHO_triples(W,T1,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
-###########################
-    # AFter this point, all these are sixth-order terms
-    # build ((T2^)^2 W)C D3 WT3_SO
-#    E5_t2dagSqrW_wt3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3_wnT3SO,D3T3.transpose(3,4,5,0,1,2))
-#    print('E(5) ((T2^)^2 W)C D3 WT3_SO:',E5_t2dagSqrW_wt3TO)
-#
-#    # build ((T2^)^2 W)C D3 WT2^2
-#    E5_t2dagSqrW_HC = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3*D3,D3T3.transpose(3,4,5,0,1,2))
-#    print('E(5) ((T2^)^2 W)C D3 WT2^2:',E5_t2dagSqrW_HC)
-#    totalE_FO = E5_t3SOdag_wnT3SO+E5_wnT3SOdag_wnt2sqr+E5_t2dagSqrW_wt3TO+E5_t2dagSqrW_HC
-#    print('Total FO energy to tUCCSD:', totalE_FO)
+    # First, build fourth-order T3:
+    t3_FO_dic = build_FOURTHO_T3(W,T1,T2,T3SO,D3,o,v)
 
+    # Now build <0|T2^W T3^{[4]}|0>
+    D3T3_SO = build_approxT3(W,T2,o,v)
+    D3T3_SO = tamps.antisym_T3(D3T3_SO,None,None)
+    total_E6_T3 = term_E = 0.0
     
+    for key in t3_FO_dic:
+        value = t3_FO_dic[key]
+        term_E = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(value,D3T3_SO.transpose(3,4,5,0,1,2))
+        if key == "wnt1t2" or key =="t2dagwnt2sqr":
+            print('FOUND A KEY, WEIGHING BY EXTRA FACTOR OF 2.0',key)
+            term_E = 2.0*term_E
+        total_E6_T3 += term_E
+        print("<0| T2^W T3^{[4]} |0> portion of E(6) T3:",key,term_E)
+    print('summed value:',total_E6_T3)
+
+    # Now build 0.5* <0| (T2^)^2W R3(T3^[3]) | 0>
     D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
     D3T3 = tamps.antisym_T3(D3T3,None,None)
-    E6_t2sqrw_t3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,D3T3.transpose(3,4,5,0,1,2))
-    print('E(6) ((T2^)^2 W)C D3 T3^[3]:',E6_t2sqrw_t3TO)
+    #D3T3 = D3T3.transpose(3,4,5,0,1,2)
+
+    value = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,D3T3.transpose(3,4,5,0,1,2))
+    total_E6_T3 += value
+    print("0.5*<0|(T2^)^2W R3 (T3^[3]) | 0> portion of E(6) T3:",value)
+    return total_E6_T3
 
 def build_FOURTHO_T3(W,T1,T2,T3,D3,o,v):
     T2dag = T2.transpose(2,3,0,1)
@@ -227,10 +236,12 @@ def build_FOURTHO_T3(W,T1,T2,T3,D3,o,v):
     t2dagwnt3_T3 = tamps.antisym_T3(t2dagwnt3_T3,None,None)
     t2dagwnt3_T3 = t2dagwnt3_T3*D3
 
-    t2dagwnt2sqr_T3 = build_sqrbrak_corrections.buildFO_t2dagt2sqr_to_T3(T2,T2dag,W,o,v)
+    t2dagwnt2sqr_T3 = 0.5*build_sqrbrak_corrections.buildFO_t2dagt2sqr_to_T3(T2,T2dag,W,o,v)
     t2dagwnt2sqr_T3 = tamps.antisym_T3(t2dagwnt2sqr_T3,None,None)
     t2dagwnt2sqr_T3 = t2dagwnt2sqr_T3*D3
 
+    t3_FO_dic = {"wnt1t2":wnt1t2_T3,"wnt2t3":wnt2t3_T3,"t2dagwnt3":t2dagwnt3_T3,"t2dagwnt2sqr":t2dagwnt2sqr_T3}
+    return t3_FO_dic
 
 def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
@@ -289,13 +300,39 @@ def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
 
 
 def get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W):
+    """
+    Calculates the sixth-order quadruples [Q] correction to UCCSD/UCCSDT
+    The function computes various contributions from three main quadruples diagrams (D, C, and A):
+    - Diagram D: (t2^)^2Wn D4 WT2^2
+    - Diagram C: (t2^)^2Wn D4 WT3
+    - Diagram A: (T3^)W D4 WT3
+
+        :param T2: Amplitude tensor for T2.
+        :param T3: Amplitude tensor for T3.
+        :param o:  Occupied orbital indices slice.
+        :param v:  Virtual orbital indices slice.
+        :param D4: 8-index Fock energy denominator
+        :param W: 2e- tensor
+   
+        :return: (float) The total sixth-order quadruples correction term.
+    
+    Notes:
+        - The computation involves building specific interaction terms with `build_sqrbrak_corrections`.
+        - The antisymmetry correction is applied using `tamps.antisym_T4`.
+        - Final contributions are scaled and combined as per the theoretical model.
+
+    Example:
+        result = get_uccsd_SIXTHO_parQ(T2, T3, o, v, D4, D2, W)
+        print(result)
+    """
+
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     # Build (t2^)^2Wn D4 WT2^2 aka Quadruples' diagram D, first
     d4t4_wnT2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
     d4t4_wnT2sqr = tamps.antisym_T4(d4t4_wnT2sqr,None,None)
     t4_wnT2sqr = d4t4_wnT2sqr*D4
     print(flush=True)
-    quads_D =build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)
+    quads_D =(1.0/36.0)*build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)
     print('[Q] contribution (t2^)^2Wn D4 WT2^2: ',quads_D)
     del d4t4_wnT2sqr
     print(flush=True)
