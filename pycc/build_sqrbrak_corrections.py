@@ -30,14 +30,67 @@ def buildTO_wnT2sqr_to_T3(W,o,v,T2):
     return rooovvv
 
 
-def buildTO_wnT1T2_to_T3(W,o,v,T1,T2):
+def buildFO_wnT1T2_to_T3(W,o,v,T1,T2):
     rooovvv = -0.250000000 * np.einsum("ijlm,la,kmbc->ijkabc",W[o,o,o,o],T1,T2,optimize="optimal")
     rooovvv += -0.500000000 * np.einsum("idla,lb,jkcd->ijkabc",W[o,v,o,v],T1,T2,optimize="optimal")
     rooovvv += -0.500000000 * np.einsum("idla,jd,klbc->ijkabc",W[o,v,o,v],T1,T2,optimize="optimal")
     rooovvv += -0.250000000 * np.einsum("deab,id,jkce->ijkabc",W[v,v,v,v],T1,T2,optimize="optimal")
     return rooovvv
 
+def buildFO_wnT2T3_to_T3(T2,T3,W,o,v):
+    rooovvv = 0.125000000 * np.einsum("ilab,jkmcde,delm->ijkabc",T2,T3,W[v,v,o,o],optimize="optimal")
+    rooovvv += 0.020833333 * np.einsum("lmab,ijkcde,delm->ijkabc",T2,T3,W[v,v,o,o],optimize="optimal")
+    rooovvv += 0.125000000 * np.einsum("ijad,klmbce,delm->ijkabc",T2,T3,W[v,v,o,o],optimize="optimal")
+    rooovvv += 0.250000000 * np.einsum("ilad,jkmbce,delm->ijkabc",T2,T3,W[v,v,o,o],optimize="optimal")
+    rooovvv += 0.041666667 * np.einsum("lmad,ijkbce,delm->ijkabc",T2,T3,W[v,v,o,o],optimize="optimal")
+    rooovvv += 0.020833333 * np.einsum("ijde,klmabc,delm->ijkabc",T2,T3,W[v,v,o,o],optimize="optimal")
+    rooovvv += 0.041666667 * np.einsum("ilde,jkmabc,delm->ijkabc",T2,T3,W[v,v,o,o],optimize="optimal")
+    return rooovvv
 
+
+def buildFO_t2dagwnT3_to_T3(T2dag,T3,W,o,v):
+    rooovvv = -0.041666667 * np.einsum("delm,ijlabc,kmde->ijkabc",T2dag,T3,W[o,o,v,v],optimize="optimal")
+    rooovvv += 0.020833333 * np.einsum("delm,ilmabc,jkde->ijkabc",T2dag,T3,W[o,o,v,v],optimize="optimal")
+    rooovvv += -0.041666667 * np.einsum("delm,ijkabd,lmce->ijkabc",T2dag,T3,W[o,o,v,v],optimize="optimal")
+    rooovvv += 0.250000000 * np.einsum("delm,ijlabd,kmce->ijkabc",T2dag,T3,W[o,o,v,v],optimize="optimal")
+    rooovvv += -0.125000000 * np.einsum("delm,ilmabd,jkce->ijkabc",T2dag,T3,W[o,o,v,v],optimize="optimal")
+    rooovvv += 0.020833333 * np.einsum("delm,ijkade,lmbc->ijkabc",T2dag,T3,W[o,o,v,v],optimize="optimal")
+    rooovvv += -0.125000000 * np.einsum("delm,ijlade,kmbc->ijkabc",T2dag,T3,W[o,o,v,v],optimize="optimal")
+    return rooovvv
+
+
+def buildFO_t2dagt2sqr_to_T3(T2,T2dag,W,o,v):
+    rooovvv += -0.250000000 * np.einsum("ilab,jkcd,eflm,mdef->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("ilab,jkcd,demn,mnle->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("ilab,jmcd,eflm,kdef->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -1.000000000 * np.einsum("ilab,jmcd,deln,knme->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 1.000000000 * np.einsum("ilab,jmcd,demn,knle->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += -0.500000000 * np.einsum("ilab,mncd,delm,jkne->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("ilab,mncd,demn,jkle->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("ilab,jkde,dflm,mecf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -0.125000000 * np.einsum("ilab,jkde,demn,mnlc->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += -1.000000000 * np.einsum("ilab,jmde,dflm,kecf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -0.500000000 * np.einsum("ilab,jmde,deln,knmc->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("ilab,jmde,demn,knlc->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += -0.125000000 * np.einsum("lmab,ijcd,eflm,kdef->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("lmab,ijcd,deln,knme->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("lmab,incd,delm,jkne->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("lmab,incd,deln,jkme->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 0.250000000 * np.einsum("lmab,ijde,dflm,kecf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += 0.250000000 * np.einsum("lmab,ijde,deln,knmc->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 1.000000000 * np.einsum("ijad,klbe,eflm,mdcf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("ijad,klbe,demn,mnlc->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("ijad,lmbe,eflm,kdcf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -1.000000000 * np.einsum("ijad,lmbe,deln,knmc->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += -0.500000000 * np.einsum("ijad,klef,delm,mfbc->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("ijad,klef,eflm,mdbc->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += 1.000000000 * np.einsum("ilad,jkbe,eflm,mdcf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -2.000000000 * np.einsum("ilad,jmbe,eflm,kdcf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -2.000000000 * np.einsum("ilad,jmbe,demn,knlc->ijkabc",T2,T2,T2dag,W[o,o,o,v],optimize="optimal")
+    rooovvv += -0.500000000 * np.einsum("ilad,jkef,delm,mfbc->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += -0.250000000 * np.einsum("ilad,jkef,eflm,mdbc->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    rooovvv += 0.500000000 * np.einsum("lmad,ijbe,eflm,kdcf->ijkabc",T2,T2,T2dag,W[o,v,v,v],optimize="optimal")
+    return rooovvv
 
 ### ADDED 6th order quadruples
 def build_SIXTHOQUADS_wnt2sqr(T2,W,o,v):

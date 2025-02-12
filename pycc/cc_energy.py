@@ -212,6 +212,26 @@ def get_uccsd_SIXTHO_triples(W,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all):
     E6_t2sqrw_t3TO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,D3T3.transpose(3,4,5,0,1,2))
     print('E(6) ((T2^)^2 W)C D3 T3^[3]:',E6_t2sqrw_t3TO)
 
+def build_FOURTHO_T3(W,T1,T2,T3,D3,o,v):
+    T2dag = T2.transpose(2,3,0,1)
+    import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+    wnt1t2_T3 = build_sqrbrak_corrections.buildFO_wnT1T2_to_T3(W,o,v,T1,T2)
+    wnt1t2_T3 = tamps.antisym_T3(wnt1t2_T3,None,None)
+    wnt1t2_T3 = wnt1t2_T3*D3
+
+    wnt2t3_T3 = build_sqrbrak_corrections.buildFO_wnT2T3_to_T3(T2,T3,W,o,v)
+    wnt2t3_T3 = tamps.antisym_T3(wnt2t3_T3,None,None)
+    wnt2t3_T3 = wnt2t3_T3*D3
+
+    t2dagwnt3_T3 = build_sqrbrak_corrections.buildFO_t2dagwnT3_to_T3(T2dag,T3,W,o,v)
+    t2dagwnt3_T3 = tamps.antisym_T3(t2dagwnt3_T3,None,None)
+    t2dagwnt3_T3 = t2dagwnt3_T3*D3
+
+    t2dagwnt2sqr_T3 = build_sqrbrak_corrections.buildFO_t2dagt2sqr_to_T3(T2,T2dag,W,o,v)
+    t2dagwnt2sqr_T3 = tamps.antisym_T3(t2dagwnt2sqr_T3,None,None)
+    t2dagwnt2sqr_T3 = t2dagwnt2sqr_T3*D3
+
+
 def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     # Build (t2^)^2Wn D4 WT2^2 aka Quadruples' diagram D, first

@@ -558,7 +558,7 @@ class RunXacc(SetupCC):
             self.denomInfo.update({'D1aa':  set_denoms.D1denomSlow(eps,o,v,n)})
             self.denomInfo.update({'D2aa':set_denoms.D2denomSlow(eps,o,v,n)})        
             self.denomInfo.update({'D3aa':set_denoms.D3denomSlow(eps,o,v,n)})
-        
+
     def ccd_energyTest(self):
         """
         Performs a test energy calculation for the CCD method using T2 amplitudes and two-electron integrals. 
@@ -806,7 +806,14 @@ class XaccCorrection(RunXacc):
             import pycc.cc_energy as cc_energy
             totalT3_E5,T3_TO = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
             totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all)
-
+            print('Done with sixth-order T3')
+            print(flush=True)
+            eps_a = np.asarray(self.mo_energies)
+            eps_b = np.asarray(self.mo_energies)
+            eps = np.append(eps_a, eps_b)
+            eps=np.sort(eps)
+            n=np.newaxis
+            D4 = set_denoms.D4denomSlow(eps,o,v,n)
             # Now get 6th order quads corrections:
             totalT4_E6 = cc_energy.get_uccsd_SIXTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
 
