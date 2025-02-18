@@ -176,22 +176,22 @@ def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
     E5_t3SOdag_wnT3SO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
     print('E(5) T3SO^ Q3(WnT3SO) :',E5_t3SOdag_wnT3SO)
     T3_TO = D3T3*D3 # store wnT3SO -> T3 object
-    T3_wnT3SO = T3_TO
+    #T3_wnT3SO = T3_TO
 
     D3T3=0.0
     # Build Q3 0.5*[[W,T2],T2]
     D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
-    D3T3 = tamps.antisym_T3(D3T3,None,None)
+    D3T3 = tamps.antisym_T3(np.copy(D3T3),None,None)
     E5_wnT3SOdag_wnt2sqr = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
     print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
     T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO
     t2amps_all.update({"T3_TO":T3_TO})
     total_E5= E5_t3SOdag_wnT3SO+2.0*E5_wnT3SOdag_wnt2sqr
     print('Total E(5) aka [T-5] correction to tUCCSD:',total_E5)
-    return total_E5, T3_TO
+    return total_E5, T3_TO, D3T3
 
 
-def get_uccsd_SIXTHO_triples(W,T1,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all):
+def get_uccsd_SIXTHO_triples(W,T1,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all,wnT2sqr_to_T3,self=None):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     # First, build fourth-order T3:
     t3_FO_dic = build_FOURTHO_T3(W,T1,T2,T3SO,D3,o,v)
@@ -204,20 +204,36 @@ def get_uccsd_SIXTHO_triples(W,T1,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all):
     for key in t3_FO_dic:
         value = t3_FO_dic[key]
         term_E = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(value,D3T3_SO.transpose(3,4,5,0,1,2))
-        if key == "wnt1t2" or key =="t2dagwnt2sqr":
+        if key == "wnt1t2": #or key =="t2dagwnt2sqr":
             print('FOUND A KEY, WEIGHING BY EXTRA FACTOR OF 2.0',key)
             term_E = 2.0*term_E
         total_E6_T3 += term_E
         print("<0| T2^W T3^{[4]} |0> portion of E(6) T3:",key,term_E)
-    print('summed value:',total_E6_T3)
+    print('Total E(6) from T2^WT3^{[4]}:',total_E6_T3)
+    
+    # Now build <0|T2^[3]WnT3^{[2]}|0>
+    if self is not None:
+        T2_TO = self.build_sqrBrakT_T2(T2,W,o,v,D2,D3) 
+        T3_tmp =  build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,T2_TO)
+        T3_tmp = tamps.antisym_T3(T3_tmp,None,None)
+        t3_so = D3T3_SO*D3
+        t2TOwnT3_E = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(t3_so,T3_tmp.transpose(3,4,5,0,1,2))
+        print('<0| T2^{[3]}W T3^{[2]} |0> portion of E(6) T3:',t2TOwnT3_E)
+        total_E6_T3 += t2TOwnT3_E
+
+    # Finally, build 0.5*<0|(T2^)^2WnnT3^{[3]}|0>   
+    t2dagsqrwnT3_E = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,wnT2sqr_to_T3.transpose(3,4,5,0,1,2))
+    print('0.5*<0|(T2^)^2WnnT3^{[3]}|0> portion of E(6) T3:',t2dagsqrwnT3_E)
+    total_E6_T3 += t2dagsqrwnT3_E
+    print('Total E(6) from *pure* triples excitations:', total_E6_T3)
 
     # Now build 0.5* <0| (T2^)^2W R3(T3^[3]) | 0>
     D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
     D3T3 = tamps.antisym_T3(D3T3,None,None)
-    #D3T3 = D3T3.transpose(3,4,5,0,1,2)
+#    #D3T3 = D3T3.transpose(3,4,5,0,1,2)
 
     value = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,D3T3.transpose(3,4,5,0,1,2))
-    total_E6_T3 += value
+   # total_E6_T3 += value
     print("0.5*<0|(T2^)^2W R3 (T3^[3]) | 0> portion of E(6) T3:",value)
     return total_E6_T3
 
@@ -227,20 +243,28 @@ def build_FOURTHO_T3(W,T1,T2,T3,D3,o,v):
     wnt1t2_T3 = build_sqrbrak_corrections.buildFO_wnT1T2_to_T3(W,o,v,T1,T2)
     wnt1t2_T3 = tamps.antisym_T3(wnt1t2_T3,None,None)
     wnt1t2_T3 = wnt1t2_T3*D3
-
-    wnt2t3_T3 = build_sqrbrak_corrections.buildFO_wnT2T3_to_T3(T2,T3,W,o,v)
+    
+    # Q3 0.5* wnT2T3
+    wnt2t3_T3 = 0.5*build_sqrbrak_corrections.buildFO_wnT2T3_to_T3(T2,T3,W,o,v)
     wnt2t3_T3 = tamps.antisym_T3(wnt2t3_T3,None,None)
     wnt2t3_T3 = wnt2t3_T3*D3
 
-    t2dagwnt3_T3 = build_sqrbrak_corrections.buildFO_t2dagwnT3_to_T3(T2dag,T3,W,o,v)
+    # Q3 0.5*(T2^ Wn T3)
+    t2dagwnt3_T3 = 0.5*build_sqrbrak_corrections.buildFO_t2dagwnT3_to_T3(T2dag,T3,W,o,v)
     t2dagwnt3_T3 = tamps.antisym_T3(t2dagwnt3_T3,None,None)
     t2dagwnt3_T3 = t2dagwnt3_T3*D3
+    t3_FO_dic = {"wnt1t2":wnt1t2_T3,"wnt2t3":wnt2t3_T3,"t2dagwnt3":t2dagwnt3_T3}
 
-    t2dagwnt2sqr_T3 = 0.5*build_sqrbrak_corrections.buildFO_t2dagt2sqr_to_T3(T2,T2dag,W,o,v)
-    t2dagwnt2sqr_T3 = tamps.antisym_T3(t2dagwnt2sqr_T3,None,None)
-    t2dagwnt2sqr_T3 = t2dagwnt2sqr_T3*D3
 
-    t3_FO_dic = {"wnt1t2":wnt1t2_T3,"wnt2t3":wnt2t3_T3,"t2dagwnt3":t2dagwnt3_T3,"t2dagwnt2sqr":t2dagwnt2sqr_T3}
+#    t2dagwnt3_T3 = build_sqrbrak_corrections.buildFO_t2dagwnT3_to_T3(T2dag,T3,W,o,v)
+#    t2dagwnt3_T3 = tamps.antisym_T3(t2dagwnt3_T3,None,None)
+#    t2dagwnt3_T3 = t2dagwnt3_T3*D3
+#
+#    t2dagwnt2sqr_T3 = 0.5*build_sqrbrak_corrections.buildFO_t2dagt2sqr_to_T3(T2,T2dag,W,o,v)
+#    t2dagwnt2sqr_T3 = tamps.antisym_T3(t2dagwnt2sqr_T3,None,None)
+#    t2dagwnt2sqr_T3 = t2dagwnt2sqr_T3*D3
+
+    #t3_FO_dic = {"wnt1t2":wnt1t2_T3,"wnt2t3":wnt2t3_T3,"t2dagwnt3":t2dagwnt3_T3,"t2dagwnt2sqr":t2dagwnt2sqr_T3}
     return t3_FO_dic
 
 def get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W):
@@ -318,8 +342,8 @@ def get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W):
     
     Notes:
         - The computation involves building specific interaction terms with `build_sqrbrak_corrections`.
-        - The antisymmetry correction is applied using `tamps.antisym_T4`.
-        - Final contributions are scaled and combined as per the theoretical model.
+        - The prefactor of 1/36 is to ensure the overall [Q] correction 
+          prefactor of 1/(4!)^2
 
     Example:
         result = get_uccsd_SIXTHO_parQ(T2, T3, o, v, D4, D2, W)
@@ -329,7 +353,7 @@ def get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W):
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     # Build (t2^)^2Wn D4 WT2^2 aka Quadruples' diagram D, first
     d4t4_wnT2sqr = build_sqrbrak_corrections.build_SIXTHOQUADS_wnt2sqr(T2,W,o,v)
-    d4t4_wnT2sqr = tamps.antisym_T4(d4t4_wnT2sqr,None,None)
+    d4t4_wnT2sqr = tamps.antisym_T4(np.copy(d4t4_wnT2sqr),None,None)
     t4_wnT2sqr = d4t4_wnT2sqr*D4
     print(flush=True)
     quads_D =(1.0/36.0)*build_sqrbrak_corrections.build_SIXTHO_sqrBrakQuads(t4_wnT2sqr,d4t4_wnT2sqr.transpose(4,5,6,7,0,1,2,3),o,v)

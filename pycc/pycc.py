@@ -704,7 +704,7 @@ class RunXacc(SetupCC):
 
         #print('t1:',self.t1amps)
         #print('t2:',self.t2amps)
-        self.t2amps=self.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
+        self.t2amps=-1.0*self.t2amps.transpose(2,3,0,1)  #self.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
         self.t1amps=self.t1amps.transpose(1,0)
 
     def convert_t2_spatial(self,t2_spin):
@@ -804,9 +804,14 @@ class XaccCorrection(RunXacc):
 
             # Now get 5th order triples corrections
             import pycc.cc_energy as cc_energy
-            totalT3_E5,T3_TO = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
-            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all)
+            totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
+            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
             print('Done with sixth-order T3')
+
+            triples_t_dash_5 = triples_E4+totalT3_E5
+            triples_t_dash_6 = triples_t_dash_5 + totalT3_E6
+            finalE = {"E(4) [T] correction: ",triples_E4,"E(5) [T-5] correction:",triples_t_dash_5,"E(6) [T-6] correction: ", triples_t_dash_6 }
+
             print(flush=True)
             eps_a = np.asarray(self.mo_energies)
             eps_b = np.asarray(self.mo_energies)
@@ -816,15 +821,16 @@ class XaccCorrection(RunXacc):
             D4 = set_denoms.D4denomSlow(eps,o,v,n)
             # Now get 6th order quads corrections:
             totalT4_E6 = cc_energy.get_uccsd_SIXTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
+            tq6_correction = totalT4_E6 + triples_t_dash_6
+            finalE.append({"E(6) [TQ-6] correction: ", tq6_correction})
 
             print('Check Q correction, **KILL THIS LATER**:')
             cc_energy.get_CC_FOURTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
             print('\n\n\n\n ***********************************************')
             print('******** Final perturbative corrections *********')
-            print('E(4) [T] correction:',triples_E4)
-            print('E(5) [T-5] correction:',totalT3_E5+triples_E4)
-            thruE5 = totalT3_E5+triples_E4
-            print('E(6) [TQ-6] correction:',thruE5+totalT3_E6+totalT4_E6)
+            for key in finalE:
+                print(key,finalE[key])
+
             print('\n\n')
 
     def get_SO_energy(self,T2,W,D2,o,v,t2amps_all,pccE_correction):
