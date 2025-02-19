@@ -169,6 +169,42 @@ def perturbE_driver(CCobj,cc_type):
         return {"help":2}
 
 def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
+    """
+    Computes the fifth-order correction terms (E(5)) for [T-5] using UCCSD/CCSD 
+    amplitudes.
+    
+    :param W: Tensor
+        Coulomb tensor W.
+    
+    :param T2: Tensor
+        Converged T2 tensor, harvested elsewhere.
+    
+    :param T3SO: Tensor
+        Second-order approximation to T3, T3SO.
+    
+    :param D3: Tensor
+        6-index Fock energy denominator. 
+    
+    :param D2: Tensor
+        4-index Fock energy denominator
+    
+    :param o: Array
+        Array of parameters, based on occupied spin-orbs, used in tensor contractions.
+    
+    :param v: Array
+        Array of parameters, based on unoccupied spin-orbs, used in tensor contractions.
+    
+    :param t2amps_all: Dictionary
+        A dictionary storing T2 amplitudes. The function updates this dictionary with the computed T3 tensor.
+    
+    :returns: tuple
+        A tuple containing the following:
+        - `total_E5`: The total fifth-order energy correction (E(5)), [T-5].
+        - `T3_TO`: The updated, third-order approximation to T3 tensor.
+        - `D3T3`: The Q3 0.5*(T2^)^2W_N residual 
+                  "cap" used in the expressions at sixth-order.
+    """
+    
     # build Q3 [W,T3SO]
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     D3T3 = build_sqrbrak_corrections.buildTO_WT3_to_T3(W,o,v,T3SO)
@@ -192,6 +228,43 @@ def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
 
 
 def get_uccsd_SIXTHO_triples(W,T1,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all,wnT2sqr_to_T3,self=None):
+    """
+    Computes the sixth-order correction terms (E(6)), [T-6], for the tUCCSD/CCSD method
+    to incorporate triples excitation effects.
+
+    :param W : Coloumb tensor
+        An input tensor.
+    :param T1 : Tensor
+        T1 amplitudes from a UCC/CC calculation used to build wnt1t2_T3 term.
+    :param T2 : Tensor
+        T2 amplitudes from a UCC/CC calculation used to  build wnt2t3_T3
+        and t2dagwnt3_T3 terms.
+    :param T3SO: Tensor
+        Approximation to T3, correct thru second-order
+    :param T3TO: Tensor
+        Approximation to T3, correct thru  third-order T3TO
+    :param D3 : Tensor
+        6-index Fock energy denominator.
+    :param D2: Tensor
+        4-index Fock energy denominator.
+    :param o : Array
+        Array of parameters, based on the occupied # of spin-orbitals,
+        required for the tensor contractions.
+    :param v : Array
+        Array of parameters, based on the virtual # of spin-orbitals,
+        required for the tensor contractions.
+
+    :param wnT2sqr_to_T3: Tensor
+        A tensor representing the square of T2 (T2^2) used in the last term of the energy correction.
+    
+    :param self: Object, optional
+        An optional object used to call the build_sqrBrakT_T2 method for the second term.
+    
+    :returns: float 
+        - `total_E6_T3`: The total sixth-order energy correction representing [T-6]
+           (E(6)) from all terms.
+    """
+
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     # First, build fourth-order T3:
     t3_FO_dic = build_FOURTHO_T3(W,T1,T2,T3SO,D3,o,v)
@@ -228,16 +301,55 @@ def get_uccsd_SIXTHO_triples(W,T1,T2,T3SO,T3TO,D3,D2,o,v,t2amps_all,wnT2sqr_to_T
     print('Total E(6) from *pure* triples excitations:', total_E6_T3)
 
     # Now build 0.5* <0| (T2^)^2W R3(T3^[3]) | 0>
-    D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
-    D3T3 = tamps.antisym_T3(D3T3,None,None)
+#    D3T3 = build_sqrbrak_corrections.buildTO_wnT2sqr_to_T3(W,o,v,T2)
+#    D3T3 = tamps.antisym_T3(D3T3,None,None)
 #    #D3T3 = D3T3.transpose(3,4,5,0,1,2)
 
-    value = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,D3T3.transpose(3,4,5,0,1,2))
+#    value = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3TO,D3T3.transpose(3,4,5,0,1,2))
    # total_E6_T3 += value
-    print("0.5*<0|(T2^)^2W R3 (T3^[3]) | 0> portion of E(6) T3:",value)
+#    print("0.5*<0|(T2^)^2W R3 (T3^[3]) | 0> portion of E(6) T3:",value)
     return total_E6_T3
 
 def build_FOURTHO_T3(W,T1,T2,T3,D3,o,v):
+    """
+    Builds T3 terms correct thru fourth-order.
+    
+    The following terms serve as temporary data structs storing individual approx. T3 
+    tensors:
+    - wnt1t2_T3: Uses the T1 and T2 tensors
+    - wnt2t3_T3: Uses the tensors T2 and T3, scaled by 0.5, to obey theory.
+    - t2dagwnt3_T3: A third term involving the transposed T2 (T2dag) and T3, 
+                    scaled by 0.5, also to obey theory.
+    
+    The function uses external methods from the `build_sqrbrak_corrections` module to 
+    calculate the necessary terms. All terms are then scaled by the D3 denominator
+    and returned as a dictionary for further use in the calculation.
+    
+    Parameters:
+    -----------
+    :param W : Coloumb tensor 
+        An input tensor.
+    :param T1 : Tensor
+        T1 amplitudes from a UCC/CC calculation used to build wnt1t2_T3 term.
+    :param T2 : Tensor
+        T2 amplitudes from a UCC/CC calculation used to  build wnt2t3_T3
+        and t2dagwnt3_T3 terms.
+    :param T3 : Tensor
+        An approximation to T3, correct thru second-order, used as input and in 
+        constructing wnt2t3_T3 and t2dagwnt3_T3.
+    :param D3 : Tensor
+        6-index Fock energy denominator.
+    :param o : Array
+        Array of parameters, based on the occupied # of spin-orbitals, 
+        required for the tensor contractions.
+    :param v : Array
+        Array of parameters, based on the virtual # of spin-orbitals, 
+        required for the tensor contractions.
+    
+    :return: t3_FO_dic Dictionary
+        A dictionary containing the computed terms: 'wnt1t2', 'wnt2t3', and 't2dagwnt3'.
+    """
+
     T2dag = T2.transpose(2,3,0,1)
     import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
     wnt1t2_T3 = build_sqrbrak_corrections.buildFO_wnT1T2_to_T3(W,o,v,T1,T2)
