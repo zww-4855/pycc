@@ -799,39 +799,41 @@ class XaccCorrection(RunXacc):
             print('Shutting down....')
             sys.exit()
         elif 'T+' in args:
+            # Calculate [T], [T-5], and [T-6] corrections using T1,T2 amplitudes
+
             # Calculate 4th order [T] first
             triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
 
-            # Now get 5th order triples corrections
+
+            # Now get 5th and 6th order triples corrections, [T-5] and [T-6]
             import pycc.cc_energy as cc_energy
             totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
             totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
-            print('Done with sixth-order T3')
 
-            triples_t_dash_5 = triples_E4+totalT3_E5
-            triples_t_dash_6 = triples_t_dash_5 + totalT3_E6
-            finalE = {"E(4) [T] correction: ",triples_E4,"E(5) [T-5] correction:",triples_t_dash_5,"E(6) [T-6] correction: ", triples_t_dash_6 }
+            finalE = {"E(4) [T] correction: ":triples_E4,
+                    "E(5) [T-5] correction:":triples_E4+totalT3_E5,
+                    "E(6) [T-6] correction: ":triples_E4+totalT3_E5+totalT3_E6}
 
-            print(flush=True)
+            # Now, get 6th order quadruples' corrections --- revise this code?
             eps_a = np.asarray(self.mo_energies)
             eps_b = np.asarray(self.mo_energies)
             eps = np.append(eps_a, eps_b)
             eps=np.sort(eps)
             n=np.newaxis
             D4 = set_denoms.D4denomSlow(eps,o,v,n)
-            # Now get 6th order quads corrections:
             totalT4_E6 = cc_energy.get_uccsd_SIXTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
-            tq6_correction = totalT4_E6 + triples_t_dash_6
+            tq6_correction = totalT4_E6 + triples_E4+totalT3_E5+totalT3_E6
             finalE.append({"E(6) [TQ-6] correction: ", tq6_correction})
-
-            print('Check Q correction, **KILL THIS LATER**:')
-            cc_energy.get_CC_FOURTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
             print('\n\n\n\n ***********************************************')
             print('******** Final perturbative corrections *********')
             for key in finalE:
                 print(key,finalE[key])
 
             print('\n\n')
+
+            # FOR VERIFICATION PURPOSES; DELETE LATER
+            print('Check Q correction, **KILL THIS LATER**:')
+            cc_energy.get_CC_FOURTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
 
     def get_SO_energy(self,T2,W,D2,o,v,t2amps_all,pccE_correction):
         fullMP2_base =  W[o,o,v,v] * D2

@@ -7,6 +7,7 @@ import pycc.cc_energy as cc_energy
 
 def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
     energy = 0.0
+    F=driveCCobj.integralInfo["oei"]
     if calcType == "UCCD3":
         return 0.250000000 * np.einsum("ijab,abij->",T2,W[v,v,o,o],optimize="optimal")
 
@@ -28,7 +29,7 @@ def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
 
     elif "UCCSD4" in calcType or "UCCD4" in calcType:
         D2 = driveCCobj.denomInfo["D2aa"]
-        energy = uccsd4_energy(W,T2,o,v,D2)
+        energy = uccsd4_energy(W,T1,T2,o,v,D2,F)
 
 
     if "UCCSD5" in calcType or "UCCD5" in calcType:
@@ -48,36 +49,46 @@ def ucc_energyDriver(calcType,W,T1,T2,o,v,driveCCobj):
 
 
 
-def uccsd4_energy(W,T2,o,v,D2):
+def uccsd4_energy(W,T1,T2,o,v,D2,F):
     # <0|WnT2|0>
     energyA = 0.250000000 * np.einsum("ijab,abij->",T2,W[v,v,o,o],optimize="optimal")
 
-    D2T2 = ucc_eqns.uccsd_T2dagWnT2(W,T2,o,v)
-    nocc=nvir=None
-    D2T2=tamps.antisym_T2(D2T2,nocc,nvir)
-    T2dag = T2.transpose(2,3,0,1) 
-    energyB = 0.250000000 * np.einsum("ijab,abij->",D2T2,T2dag,optimize="optimal")
-    print('energy A/B:',energyA,energyB)
+    import pycc.test_ucc4_eqns as test_ucc4_eqns
 
-
-    # Now build 0.25*<0|(T2^)^2WnT2|0>, as in Watts papers
-
-    # 0/5* [T2^,[T2^,Wn]],T2]
-    r = 1.000000000 * np.einsum("ijab,acik,bdjl,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    r += 0.500000000 * np.einsum("ijab,cdjk,abil,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    r += 0.125000000 * np.einsum("ijab,abkl,cdij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    r += 0.500000000 * np.einsum("ijab,bckl,adij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    oldr=r/4
-    print('r vs B:',r, energyB)
-
-    # (1/3!) * [[[H,tau2],tau2],tau2]
-    r = 0
-    r = 0.333333333 * np.einsum("ijab,acik,bdjl,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    r += 0.166666667 * np.einsum("ijab,cdjk,abil,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    r += 0.041666667 * np.einsum("ijab,abkl,cdij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    r += 0.166666667 * np.einsum("ijab,bckl,adij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
-    print('newr/oldr', r,(6.0/4.0)*r,oldr,(3.0/4.0)*r)
-    return energyA-oldr #+energyB
+    energyB = test_ucc4_eqns.wnt2commE_portionUCCSD4(W,T2,o,v)
+    energyC = test_ucc4_eqns.fockE_portionUCCSD4(F,T2,o,v)
+    energy_t1 = test_ucc4_eqns.t1coupledE_portionUCCSD4(F,W,T1,T2,o,v)
+    print('wnt2comm portion of uccsd4 energy:',energyB)
+    print('Fock operator portion of uccsd4 energy:',energyC)
+    energy=energyA+energyB+energyC+energy_t1
+    print('total uccsd4 E:',energy)
+    print('T1 energy component:', energy_t1)
+#    D2T2 = ucc_eqns.uccsd_T2dagWnT2(W,T2,o,v)
+#    nocc=nvir=None
+#    D2T2=tamps.antisym_T2(D2T2,nocc,nvir)
+#    T2dag = (T2*D2).transpose(2,3,0,1) 
+#    energyB = 0.250000000 * np.einsum("ijab,abij->",D2T2,T2dag,optimize="optimal")
+#    print('energy A/B:',energyA,energyB)
+#
+#
+#    # Now build 0.25*<0|(T2^)^2WnT2|0>, as in Watts papers
+#
+#    # 0/5* [T2^,[T2^,Wn]],T2]
+#    r = 1.000000000 * np.einsum("ijab,acik,bdjl,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    r += 0.500000000 * np.einsum("ijab,cdjk,abil,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    r += 0.125000000 * np.einsum("ijab,abkl,cdij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    r += 0.500000000 * np.einsum("ijab,bckl,adij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    oldr=r/4
+#    print('r vs B:',r, energyB)
+#
+#    # (1/3!) * [[[H,tau2],tau2],tau2]
+#    r = 0
+#    r = 0.333333333 * np.einsum("ijab,acik,bdjl,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    r += 0.166666667 * np.einsum("ijab,cdjk,abil,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    r += 0.041666667 * np.einsum("ijab,abkl,cdij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    r += 0.166666667 * np.einsum("ijab,bckl,adij,klcd->",T2,T2dag,T2dag,W[o,o,v,v],optimize="optimal")
+#    print('newr/oldr', r,(6.0/4.0)*r,oldr,(3.0/4.0)*r)
+    return energy #energyA-oldr 
 
 def uccsd5_energy(W,T1,T2,o,v):
     T2dag = T2.transpose(2,3,0,1)

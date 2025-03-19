@@ -93,13 +93,16 @@ def uccsd4_t2resid(Fock,W,T1,T2,o,v):
     roovv = -0.500000000 * np.einsum("ka,ijkb->ijab",T1,W[o,o,o,v],optimize="optimal")
     roovv += -0.500000000 * np.einsum("ic,jcab->ijab",T1,W[o,v,v,v],optimize="optimal")
     roovv += ucc3_t2resid(Fock,W,T2,o,v)
+    import pycc.test_ucc4_eqns as test_ucc4_eqns
 
+    roovv += test_ucc4_eqns.wntau2comm_UCCSD4_t2resid(W,T2,o,v)
+    roovv += test_ucc4_eqns.focktau2comm_UCCSD4_t2resid(Fock,T2,o,v)
     # terms quadratic in T2
-    tmp_wnT2sqr=0.5*uccsd_wnT2sqr(W,T2,o,v)
-    roovv += tmp_wnT2sqr
+#    tmp_wnT2sqr=0.5*uccsd_wnT2sqr(W,T2,o,v)
+#    roovv += tmp_wnT2sqr
 
     # T2dagWnT2, 0.5*Q2[[W,tau2],tau2], or 0.5*[[T2dag,W],T2]
-    roovv += 0.5*uccsd_T2dagWnT2(W,T2,o,v)
+#    roovv += 0.5*uccsd_T2dagWnT2(W,T2,o,v)
     return roovv
 
 
