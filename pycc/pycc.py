@@ -875,6 +875,28 @@ class XaccCorrection(RunXacc):
             print('\n\n')
 
 
+        elif 'T-5' in args:
+            # Calculate [T], [T-5], and [T-6] corrections using T1,T2 amplitudes
+
+            # Calculate 4th order [T] first
+            triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
+
+
+            # Now get 5th and 6th order triples corrections, [T-5] and [T-6]
+            import pycc.cc_energy as cc_energy
+            totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
+#            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
+
+            finalE = {"E(4) [T] correction: ":triples_E4,
+                    "E(5) [T-5] correction:":triples_E4+totalT3_E5}
+
+            print('\n\n\n\n ***********************************************')
+            print('******** Final perturbative corrections *********')
+            for key in finalE:
+                print(key,finalE[key])
+
+            print('\n\n')
+
         elif 'T+' in args:
             # Calculate [T], [T-5], and [T-6] corrections using T1,T2 amplitudes
 
@@ -885,7 +907,7 @@ class XaccCorrection(RunXacc):
             # Now get 5th and 6th order triples corrections, [T-5] and [T-6]
             import pycc.cc_energy as cc_energy
             totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
-            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
+#            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
 
             finalE = {"E(4) [T] correction: ":triples_E4,
                     "E(5) [T-5] correction:":triples_E4+totalT3_E5,
