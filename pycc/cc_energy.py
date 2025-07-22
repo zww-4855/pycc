@@ -92,39 +92,43 @@ def perturbE_driver(CCobj,cc_type):
     D1=CCobj.denomInfo.get("D1aa",None)
     D2=CCobj.denomInfo.get("D2aa",None)
     D3=CCobj.denomInfo.get("D3aa",set_denoms.D3denomSlow(CCobj.eps,CCobj.occSliceInfo["occ_aa"],CCobj.occSliceInfo["virt_aa"],np.newaxis))
-    D4=CCobj.denomInfo.get("D4aa",set_denoms.D4denomSlow(CCobj.eps,CCobj.occSliceInfo["occ_aa"],CCobj.occSliceInfo["virt_aa"],np.newaxis))
+    #D4=CCobj.denomInfo.get("D4aa",set_denoms.D4denomSlow(CCobj.eps,CCobj.occSliceInfo["occ_aa"],CCobj.occSliceInfo["virt_aa"],np.newaxis))
 
     W=CCobj.integralInfo["tei"]
-    if "(qf)" in cc_type: # calculate both fifth and sixth-order contributions
-        if T3 is None: # If calculation is CCSD(Qf), **have not done** (T) work
-            D3T3=build_approxT3(W,T2,o,v)
-            D3T3=tamps.antisym_T3(D3T3,None,None)
-            T3=D3T3*D3
+    if "(Tqf)" in cc_type: # calculate both fifth and sixth-order contributions
+        #if T3: #is None: # If calculation is CCSD(Qf), **have not done** (T) work
+        D3T3=build_approxT3(W,T2,o,v)
+        D3T3=tamps.antisym_T3(D3T3,None,None)
+        T3=D3T3*D3
 
 
-            sqrBrakT= 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",T3,D3T3.transpose(3,4,5,0,1,2),optimize="optimal")
-            print('[T] correction to CCSD:', sqrBrakT)
+        sqrBrakT= 0.25*0.111111111 * np.einsum("ijkabc,abcijk->",T3,D3T3.transpose(3,4,5,0,1,2),optimize="optimal")
+        print('[T] correction to CCSD:', sqrBrakT)
+        parT = 0.250000000000000 * np.einsum('kjbc,ia,bcaikj', W[o, o, v, v], T1, T3.transpose(3,4,5,0,1,2), optimize=['einsum_path', (0, 2), (0, 1)])
+        # Test uccsd 5th order T3 corrections *NOT* in (T)
+        print("(T) contribution to energy: ", sqrBrakT+parT)
 
-            # Test uccsd 5th order T3 corrections *NOT* in (T)
-            t2amps_all={}
-            get_uccsd_FIFTHO_triples(W,T2,T3,D3,D2,o,v,t2amps_all)
+        #t2amps_all={}
+        #get_uccsd_FIFTHO_triples(W,T2,T3,D3,D2,o,v,t2amps_all)
 
         fifthorderE_WnT2sqr   = fifthOrderQf_WnT2sqr(W,T2,o,v,D2)
         print(flush=True)
         fifthOrderE_WnT3      = fifthOrderQf_wnT3(W,T3,T2,o,v,D2)
         fifthOrderQf          = fifthorderE_WnT2sqr + fifthOrderE_WnT3
-        print(T3.shape)
-        print('qf',fifthOrderQf,fifthorderE_WnT2sqr,fifthOrderE_WnT3)
+        print('(Qf) contribution: ',fifthOrderQf)
+        print("Total (TQf) correction to CCSD:", sqrBrakT+parT+fifthOrderQf)
+        #print(T3.shape)
+        #print('qf',fifthOrderQf,fifthorderE_WnT2sqr,fifthOrderE_WnT3)
         #get_CC_FOURTHO_parQ(T2,T3,o,v,D4,D2,W)
         print(flush=True)
-        parQ = get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W)
+        #parQ = get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W)
         print(flush=True)
 
-        sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,T3,o,v,D2)
-        sixthOrderE_wnT2cubed = sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
-        sixthOrderQf          = sixthOrderE_wnT2T3 + sixthOrderE_wnT2cubed
-        print(flush=True)
-        totalQf               = fifthOrderQf + sixthOrderQf
+        #sixthOrderE_wnT2T3    = sixthOrderQf_wnT2T3(W,T2,T3,o,v,D2)
+        #sixthOrderE_wnT2cubed = sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
+        #sixthOrderQf          = sixthOrderE_wnT2T3 + sixthOrderE_wnT2cubed
+        #print(flush=True)
+        #totalQf               = fifthOrderQf + sixthOrderQf
 
 
 
@@ -132,11 +136,11 @@ def perturbE_driver(CCobj,cc_type):
 
         return {"Fifth-order Qf from WnT2^2":fifthorderE_WnT2sqr,
                 "Fifth-order Qf from WnT3"  : fifthOrderE_WnT3,
-                "Total fifth-order Qf:"     : fifthOrderQf,
-                "Sixth-order Qf from WnT2T3":sixthOrderE_wnT2T3,
-                "Sixth-order Qf from WnT2^3":sixthOrderE_wnT2cubed,
-                "Total sixth-order Qf:"     : sixthOrderQf,
-                "Complete Qf correction thru sixth order:": totalQf}
+                "Total fifth-order Qf:"     : fifthOrderQf}#,
+          #      "Sixth-order Qf from WnT2T3":sixthOrderE_wnT2T3,
+          #      "Sixth-order Qf from WnT2^3":sixthOrderE_wnT2cubed,
+          #      "Total sixth-order Qf:"     : sixthOrderQf,
+         #       "Complete Qf correction thru sixth order:": totalQf}
 
         
         
@@ -498,9 +502,15 @@ def get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W):
 
 
 def fifthOrderQf_WnT2sqr(W,T2,o,v,D2):
-    D2T2 = 0.5*pdag_xcc5.residQf1_aaaa(W,T2,T2.transpose(2,3,0,1),o,v)
-    teste=0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2)
-    print('pdagq WnT2^2 5th order energy:',teste)
+    #Test T2 part
+    t2test=0.5*qf.WnT2sqr_toT2(W,T2,o,v)
+    t2test=t2test.transpose(2,3,0,1)
+    wnt2sqr_qf=(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,t2test)
+    print('test WnT2^2 scaling faster:',wnt2sqr_qf)
+
+#    D2T2 = 0.5*pdag_xcc5.residQf1_aaaa(W,T2,T2.transpose(2,3,0,1),o,v)
+#   teste=0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2)
+#    print('pdagq WnT2^2 5th order energy:',teste)
 
     # slow version where Q4(WnT2^2) -> T4, then T4->T2
     # will comment this out in the future ??7/25
@@ -522,18 +532,18 @@ def fifthOrderQf_WnT2sqr(W,T2,o,v,D2):
 #    fifthorder_wnt2=0.5*(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,resid_aaaa)
 #    print('WnT2^2 contribution to (Qf):',fifthorder_wnt2)
     #############
-    return teste
+    return wnt2sqr_qf
 
 def fifthOrderQf_wnT3(W,T3,T2,o,v,D2):
-    # pdagq version
-    D2T2 = 0.5*qf.wnT3_pdagq(W,T2,T3.transpose(3,4,5,0,1,2),o,v)
-    teste=0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2)
-    print('pdagq WnT3 5th order energy:',teste)
-
     # Test fast-wicked T3 part
-#    D2T2=0.5*qf.WnT3_toT2(W,T3,T2,o,v)
-#    D2T2=D2T2.transpose(2,3,0,1)
-#    teste=(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,D2T2)
+    D2T2=0.5*qf.WnT3_toT2(W,T3,T2,o,v)
+    D2T2=D2T2.transpose(2,3,0,1)
+    trips_qf=(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,D2T2)
+    # pdagq version
+#    D2T2 = 0.5*qf.wnT3_pdagq(W,T2,T3.transpose(3,4,5,0,1,2),o,v)
+#    teste=0.25*np.einsum('jiab,abji',W[o,o,v,v]*D2,D2T2)
+#    print('pdagq WnT3 5th order energy:',teste)
+
 
 
     # slow version where Q4(WnT3) -> T4, then T4->T2
@@ -551,7 +561,7 @@ def fifthOrderQf_wnT3(W,T3,T2,o,v,D2):
 #    resid_aaaa = tamps.antisym_T2(resid_aaaa,None,None)
 #    fifthorder_wnt3=0.5*(1.0/4.0)*np.einsum("ijab,abij",W[o,o,v,v]*D2,resid_aaaa)
 #    print('WnT3 contribution to (Qf):',fifthorder_wnt3)
-    return teste
+    return trips_qf 
 
 
 def sixthOrderQf_wnT2cubed(W,T2,o,v,D2):
