@@ -519,8 +519,11 @@ class RunXacc(SetupCC):
 
         self.o=slice(None,self.nocc)
         self.v=slice(self.nocc,None)
+        print('nocc nvirt:',self.nocc,self.nvirt)
         self.t2amps=np.zeros((self.nvirt,self.nvirt,self.nocc,self.nocc))
         self.t1amps=np.zeros((self.nvirt,self.nocc))
+        self.t3amps=np.zeros((self.nvirt,self.nvirt,self.nvirt,self.nocc,self.nocc,self.nocc))
+
         self.read_tamps(tamp_infile,ref)
         if ref == 'spin-orbital':
             self.denomInfo={}
@@ -669,6 +672,7 @@ class RunXacc(SetupCC):
         t2amp={}
         t1amp={}
         read_amps=False
+        print('reading tamp file:',tamp_infile)
         with open(tamp_infile,'r') as f:
             for line in f:
                 if read_amps:#have to uncomment 109,13 for nospace
@@ -679,22 +683,79 @@ class RunXacc(SetupCC):
                     index_list.append('|')
                     index_list.append(amp_key)
                     operator_list=[]
-                    for operator in range(4): # max T2, min T1
+                    for operator in range(6): # max T2, min T1
                         if index_list[operator] == '|':
                             break
                         operator_list.append(int(index_list[operator].strip('^')))
-                    #print('op list:',operator_list,'amp key:',amp_key)
+                    print('op list:',operator_list,'amp key:',amp_key)
                     if len(operator_list)==4: #dealing with t2amp
 #                        t2amp.update({amp_key:operator_list})
                         a=operator_list[0]-self.nocc
                         b=operator_list[1]-self.nocc
                         i=operator_list[2]
                         j=operator_list[3]
+                        print('op list:',operator_list[0],operator_list[1],operator_list[2],operator_list[3])
+                        print('t2 dim:',np.shape(self.t2amps))
                         self.t2amps[a,b,i,j]=amp_key
                         self.t2amps[b,a,i,j]= -1.0* amp_key
                         self.t2amps[a,b,j,i]= -1.0*amp_key
                         self.t2amps[b,a,j,i]=amp_key
+                    elif len(operator_list)==6:
+                        a=operator_list[0]-self.nocc
+                        b=operator_list[1]-self.nocc
+                        c=operator_list[2]-self.nocc
+                        i=operator_list[3]
+                        j=operator_list[4]
+                        k=operator_list[5]
+                        #self.t3amps[a,b,c,i,j,k]=amp_key
+                        #tmpt3 = tamps.antisym_T3(self.t3amps.transpose(3,4,5,0,1,2),None,None)
+                        
+                        self.t3amps[a,b,c,i,j,k]=amp_key
+                        self.t3amps[a,b,c,i,k,j]= -1.0 *amp_key
+                        self.t3amps[a,b,c,j,i,k]= -1.0 *amp_key
+                        self.t3amps[a,b,c,j,k,i]= amp_key
+                        self.t3amps[a,b,c,k,j,i]= -1.0 *amp_key
+                        self.t3amps[a,b,c,k,i,j]= amp_key
+
+                        self.t3amps[a,c,b,i,j,k]= -1.0*amp_key
+                        self.t3amps[a,c,b,i,k,j]= amp_key
+                        self.t3amps[a,c,b,j,i,k]= amp_key
+                        self.t3amps[a,c,b,j,k,i]= -1.0*amp_key
+                        self.t3amps[a,c,b,k,j,i]= amp_key
+                        self.t3amps[a,c,b,k,i,j]= -1.0*amp_key
+
+                        self.t3amps[b,a,c,i,j,k]= -1.0*amp_key
+                        self.t3amps[b,a,c,i,k,j]= amp_key
+                        self.t3amps[b,a,c,j,i,k]= amp_key
+                        self.t3amps[b,a,c,j,k,i]= -1.0*amp_key
+                        self.t3amps[b,a,c,k,j,i]= amp_key
+                        self.t3amps[b,a,c,k,i,j]= -1.0*amp_key
+
+                        self.t3amps[b,c,a,i,j,k]=amp_key
+                        self.t3amps[b,c,a,i,k,j]= -1.0 *amp_key
+                        self.t3amps[b,c,a,j,i,k]= -1.0 *amp_key
+                        self.t3amps[b,c,a,j,k,i]= amp_key
+                        self.t3amps[b,c,a,k,j,i]= -1.0 *amp_key
+                        self.t3amps[b,c,a,k,i,j]= amp_key
+
+                        self.t3amps[c,a,b,i,j,k]=amp_key
+                        self.t3amps[c,a,b,i,k,j]= -1.0 *amp_key
+                        self.t3amps[c,a,b,j,i,k]= -1.0 *amp_key
+                        self.t3amps[c,a,b,j,k,i]= amp_key
+                        self.t3amps[c,a,b,k,j,i]= -1.0 *amp_key
+                        self.t3amps[c,a,b,k,i,j]= amp_key
+
+                        self.t3amps[c,b,a,i,j,k]= -1.0*amp_key
+                        self.t3amps[c,b,a,i,k,j]= amp_key
+                        self.t3amps[c,b,a,j,i,k]= amp_key
+                        self.t3amps[c,b,a,j,k,i]= -1.0*amp_key
+                        self.t3amps[c,b,a,k,j,i]= amp_key
+                        self.t3amps[c,b,a,k,i,j]= -1.0*amp_key
+
+                        #sys.exit()
                     else: # dealing with t1amp
+                        print('operator list t1:',operator_list)
+                        print('t1shape:',np.shape(self.t1amps))
                         a=operator_list[0]-self.nocc
                         i=operator_list[1]
                         self.t1amps[a,i]=amp_key
@@ -706,7 +767,7 @@ class RunXacc(SetupCC):
         #print('t2:',self.t2amps)
         self.t2amps=-1.0*self.t2amps.transpose(2,3,0,1)  #self.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
         self.t1amps=self.t1amps.transpose(1,0)
-
+        self.t3amps=-1.0*self.t3amps.transpose(3,4,5,0,1,2) #-1.0*tmpt3.transpose(3,4,5,0,1,2)
     def convert_t2_spatial(self,t2_spin):
         nvirt_spin=np.shape(t2_spin)[0]
         nocc_spin=np.shape(t2_spin)[3]
@@ -742,6 +803,7 @@ class RunXacc(SetupCC):
             lines=f.readlines()
         self.nocc=2*int(lines[1].strip().split()[-1])
         self.nvirt=2*int(lines[2].strip().split()[-1])
+        print('FXN read_bkgrd info:',self.nocc,self.nvirt)
         tmp_energies=lines[3].strip().split()[-1]
         mo_energies=[]
         for element in tmp_energies.split(','):
@@ -752,7 +814,7 @@ class RunXacc(SetupCC):
         eps = np.append(mo_energies,mo_energies)
         eps = np.sort(eps)
         self.oei=np.diag(eps)
-
+        print('eps and mo_energies:',self.mo_energies,self.nocc,self.nvirt)
 #        if ref == "spatial": # defines nocc/nvirt w.r.t. # spatial orbs
 #            self.nocc = self.nocc - int(lines[1].strip().split()[-1])
 #            self.nvirt = self.nvirt - int(lines[2].strip().split()[-1])
@@ -798,6 +860,43 @@ class XaccCorrection(RunXacc):
             self.finalize('pUCCD',self.pccE_correction)
             print('Shutting down....')
             sys.exit()
+        elif 'Q+' in args:
+            import pycc.cc_energy as cc_energy
+            # Now, get 6th order quadruples' corrections --- revise this code?
+            eps_a = np.asarray(self.mo_energies)
+            eps_b = np.asarray(self.mo_energies)
+            eps = np.append(eps_a, eps_b)
+            eps=np.sort(eps)
+            n=np.newaxis
+            T3=self.t3amps
+            D4 = set_denoms.D4denomSlow(eps,o,v,n)
+            totalT4_E6 = cc_energy.get_uccsd_SIXTHO_parQ(T2,T3,o,v,D4,D2,W)
+            print('Quadruples correction to UCC:', totalT4_E6)
+            print('\n\n')
+
+
+        elif 'T-5' in args:
+            # Calculate [T], [T-5], and [T-6] corrections using T1,T2 amplitudes
+
+            # Calculate 4th order [T] first
+            triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
+
+
+            # Now get 5th and 6th order triples corrections, [T-5] and [T-6]
+            import pycc.cc_energy as cc_energy
+            totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
+#            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
+
+            finalE = {"E(4) [T] correction: ":triples_E4,
+                    "E(5) [T-5] correction:":triples_E4+totalT3_E5}
+
+            print('\n\n\n\n ***********************************************')
+            print('******** Final perturbative corrections *********')
+            for key in finalE:
+                print(key,finalE[key])
+
+            print('\n\n')
+
         elif 'T+' in args:
             # Calculate [T], [T-5], and [T-6] corrections using T1,T2 amplitudes
 
@@ -808,7 +907,7 @@ class XaccCorrection(RunXacc):
             # Now get 5th and 6th order triples corrections, [T-5] and [T-6]
             import pycc.cc_energy as cc_energy
             totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
-            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
+#            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
 
             finalE = {"E(4) [T] correction: ":triples_E4,
                     "E(5) [T-5] correction:":triples_E4+totalT3_E5,
@@ -835,6 +934,7 @@ class XaccCorrection(RunXacc):
             print('Check Q correction, **KILL THIS LATER**:')
             cc_energy.get_CC_FOURTHO_parQ(T2,t3_SO,o,v,D4,D2,W)
 
+    
     def get_SO_energy(self,T2,W,D2,o,v,t2amps_all,pccE_correction):
         fullMP2_base =  W[o,o,v,v] * D2
         tmpfullMP2_base = np.copy(fullMP2_base)
