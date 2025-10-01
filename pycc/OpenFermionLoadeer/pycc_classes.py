@@ -239,24 +239,6 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
 
 
-    def restrict_sz(self):
-        ## NOTE:: ONLY CODED FOR SINGLETS
-        sz_target = (self.n_alpha - self.n_beta) / 2
-        new_psi0, new_basis = jw_sz_restrict_state(self.psi0, self.sparse_basis, self.n_spin_orbitals, sz=sz_target)
-
-        # Restrict Hamiltonian to this new basis
-        mask = [i for i, state in enumerate(self.sparse_basis) if state in new_basis]
-        H_restricted = H_sparse[mask][:, mask]
-        print("Basis size after Sz restriction =", H_restricted.shape[0])
-        # --- Step 5: Diagonalize restricted Hamiltonian ---
-        eigvals, eigvecs = np.linalg.eigh(H_restricted.toarray())
-        fci_energy_openfermion = eigvals[0]
-        print("\nLowest eigenvalue (OpenFermion restricted diagonalization) =", fci_energy_openfermion)
-
-        # Now, overwrite psi0 and H with Sz constrained quantities
-        self.psi0= new_psi0
-        self.Hdef = H_restricted
-
     def spin_block_tei(self,I):
         """
         Function that spin blocks two-electron integrals
@@ -441,7 +423,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
                             continue
                         #print("a^b^ji:",a,b,i,j)
                         doubles.append((a,b,i,j))
-
+        #print("doubles:",doubles)
             # Now, add the pure spin amps to the list
         occ = list(range(self.n_electrons))
         virt = list(range(self.n_electrons, self.n_qubits))
@@ -456,8 +438,8 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         # interleave them
         doubles_alt = [x for pair in zip(alpha, beta) for x in pair]
     
-        print("doubles_alt:",doubles_alt)
-        doubles.append(doubles_alt)
+        #print("doubles_alt:",doubles_alt)
+        doubles.extend(doubles_alt)
 
 #        occ_so = occ_spin_idxs
 #        virt_so = virt_spin_idxs
@@ -651,7 +633,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         theta0 = np.zeros(self.n_params)
         E0 = self.energy_from_theta(theta0, reps=1)
         print(f"Energy at theta=0 (should be HF energy): {E0:.12f}  PySCF RHF energy: {self.E_scf:.12f},{self.energy_from_theta(theta0):.12f}")
-        opts = {"maxiter": 500, "disp": True}
+        opts = {"maxiter": 500, "disp": True, "gtol":10E-5}
         print("Starting optimization... (this may take some time for larger ansatz sizes)")
         t_start = time.time()
         res = minimize(self.energy_from_theta, x0=theta0, method="BFGS", options=opts, callback=self.callback)
@@ -694,7 +676,6 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         # get openfermion molecular Hamiltonian and HF initial state
         self.get_molecular_H(pyscf_mol)
         self.build_hf_state()
-        #self.restrict_sz()
 
 
 
