@@ -1,0 +1,250 @@
+two body coeff: [[[[0.6264025  0.         0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.19679058 0.        ]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.6264025  0.         0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.19679058 0.        ]]
+
+  [[0.         0.         0.19679058 0.        ]
+   [0.         0.         0.         0.        ]
+   [0.62170676 0.         0.         0.        ]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.         0.         0.19679058 0.        ]
+   [0.         0.         0.         0.        ]
+   [0.62170676 0.         0.         0.        ]]]
+
+
+ [[[0.         0.6264025  0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.         0.19679058]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.         0.6264025  0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.         0.19679058]]
+
+  [[0.         0.         0.         0.19679058]
+   [0.         0.         0.         0.        ]
+   [0.         0.62170676 0.         0.        ]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.         0.         0.         0.19679058]
+   [0.         0.         0.         0.        ]
+   [0.         0.62170676 0.         0.        ]]]
+
+
+ [[[0.         0.         0.62170676 0.        ]
+   [0.         0.         0.         0.        ]
+   [0.19679058 0.         0.         0.        ]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.         0.         0.62170676 0.        ]
+   [0.         0.         0.         0.        ]
+   [0.19679058 0.         0.         0.        ]]
+
+  [[0.19679058 0.         0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.65307075 0.        ]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.19679058 0.         0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.65307075 0.        ]]]
+
+
+ [[[0.         0.         0.         0.62170676]
+   [0.         0.         0.         0.        ]
+   [0.         0.19679058 0.         0.        ]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.         0.         0.         0.62170676]
+   [0.         0.         0.         0.        ]
+   [0.         0.19679058 0.         0.        ]]
+
+  [[0.         0.19679058 0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.         0.65307075]
+   [0.         0.         0.         0.        ]]
+
+  [[0.         0.         0.         0.        ]
+   [0.         0.19679058 0.         0.        ]
+   [0.         0.         0.         0.        ]
+   [0.         0.         0.         0.65307075]]]] <class 'numpy.ndarray'> (4, 4, 4, 4)
+converged SCF energy = -1.06610864931794
+['_TemporaryMoleContext', '__add__', '__call__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_add_suffix', '_atm', '_atom', '_bas', '_basis', '_build_symmetry', '_built', '_ctx_lock', '_ecp', '_ecpbas', '_enuc', '_env', '_keys', '_libcint_ctr_coeff', '_nao', '_nelectron', '_pseudo', '_symm_axes', '_symm_orig', 'ao2mo', 'ao_labels', 'ao_loc', 'ao_loc_2c', 'ao_loc_nr', 'ao_rotation_matrix', 'aoslice_2c_by_atom', 'aoslice_by_atom', 'aoslice_nr_by_atom', 'apply', 'atom', 'atom_charge', 'atom_charges', 'atom_coord', 'atom_coords', 'atom_mass_list', 'atom_nelec_core', 'atom_nshells', 'atom_pure_symbol', 'atom_shell_ids', 'atom_symbol', 'bas_angular', 'bas_atom', 'bas_coord', 'bas_ctr_coeff', 'bas_exp', 'bas_exps', 'bas_kappa', 'bas_len_cart', 'bas_len_spinor', 'bas_nctr', 'bas_nprim', 'basis', 'build', 'cart', 'cart2sph_coeff', 'cart_labels', 'charge', 'check_sanity', 'condense_to_shell', 'copy', 'decontract_basis', 'dump_input', 'dumps', 'ecp', 'elements', 'energy_nuc', 'enuc', 'etbs', 'eval_ao', 'eval_gto', 'expand_etb', 'expand_etbs', 'format_atom', 'format_basis', 'format_ecp', 'format_pseudo', 'fromfile', 'fromstring', 'get_ao_indices', 'get_enuc', 'get_overlap_cond', 'groupname', 'gto_norm', 'has_ecp', 'has_ecp_soc', 'incore_anyway', 'inertia_moment', 'intor', 'intor_asymmetric', 'intor_by_shell', 'intor_symmetric', 'irrep_id', 'irrep_name', 'kernel', 'loads', 'loads_', 'magmom', 'make_atm_env', 'make_bas_env', 'make_ecp_env', 'make_env', 'max_memory', 'ms', 'multiplicity', 'nao', 'nao_2c', 'nao_2c_range', 'nao_cart', 'nao_nr', 'nao_nr_range', 'natm', 'nbas', 'nelec', 'nelectron', 'npgto_nr', 'nucmod', 'nucprop', 'offset_2c_by_atom', 'offset_ao_by_atom', 'offset_nr_by_atom', 'omega', 'output', 'pack', 'post_kernel', 'pre_kernel', 'pseudo', 'run', 'search_ao_label', 'search_ao_nr', 'search_ao_r', 'search_shell_id', 'set', 'set_common_orig', 'set_common_orig_', 'set_common_origin', 'set_common_origin_', 'set_f12_zeta', 'set_geom_', 'set_nuc_mod', 'set_nuc_mod_', 'set_range_coulomb', 'set_range_coulomb_', 'set_rinv_orig', 'set_rinv_orig_', 'set_rinv_origin', 'set_rinv_origin_', 'set_rinv_zeta', 'set_rinv_zeta_', 'sph2spinor_coeff', 'sph_labels', 'spheric_labels', 'spin', 'spinor_labels', 'stdout', 'symm_orb', 'symmetry', 'symmetry_subgroup', 'time_reversal_map', 'tmap', 'to_cell', 'to_uncontracted_cartesian_basis', 'tofile', 'topgroup', 'tostring', 'tot_electrons', 'unit', 'unpack', 'unpack_', 'update', 'update_from_chk', 'verbose', 'view', 'with_common_orig', 'with_common_origin', 'with_integral_screen', 'with_long_range_coulomb', 'with_range_coulomb', 'with_rinv_as_nucleus', 'with_rinv_at_nucleus', 'with_rinv_orig', 'with_rinv_origin', 'with_rinv_zeta', 'with_short_range_coulomb']
+(1, 1)
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:  -0.02721124
+h1!!! [[5.62181262e-01 5.69993472e-17]
+ [2.06348397e-16 1.11057269e+00]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:  -0.02721124
+h1!!! [[5.62181262e-01 5.69993472e-17]
+ [2.06348397e-16 1.11057269e+00]]
+SCF energy pycc: -1.0661086493179366 -1.0661086493179366
+n_mo=2, n_spin_orbitals=4, n_electrons=2
+[-0.48444168 -0.48444168  0.45750194  0.45750194]
+<class 'numpy.ndarray'> (4, 4, 4, 4) (4, 4) 0.52917721092
+converged SCF energy = -1.06610864931794
+['_TemporaryMoleContext', '__add__', '__call__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattr__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_add_suffix', '_atm', '_atom', '_bas', '_basis', '_build_symmetry', '_built', '_ctx_lock', '_ecp', '_ecpbas', '_enuc', '_env', '_keys', '_libcint_ctr_coeff', '_nao', '_nelectron', '_pseudo', '_symm_axes', '_symm_orig', 'ao2mo', 'ao_labels', 'ao_loc', 'ao_loc_2c', 'ao_loc_nr', 'ao_rotation_matrix', 'aoslice_2c_by_atom', 'aoslice_by_atom', 'aoslice_nr_by_atom', 'apply', 'atom', 'atom_charge', 'atom_charges', 'atom_coord', 'atom_coords', 'atom_mass_list', 'atom_nelec_core', 'atom_nshells', 'atom_pure_symbol', 'atom_shell_ids', 'atom_symbol', 'bas_angular', 'bas_atom', 'bas_coord', 'bas_ctr_coeff', 'bas_exp', 'bas_exps', 'bas_kappa', 'bas_len_cart', 'bas_len_spinor', 'bas_nctr', 'bas_nprim', 'basis', 'build', 'cart', 'cart2sph_coeff', 'cart_labels', 'charge', 'check_sanity', 'condense_to_shell', 'copy', 'decontract_basis', 'dump_input', 'dumps', 'ecp', 'elements', 'energy_nuc', 'enuc', 'etbs', 'eval_ao', 'eval_gto', 'expand_etb', 'expand_etbs', 'format_atom', 'format_basis', 'format_ecp', 'format_pseudo', 'fromfile', 'fromstring', 'get_ao_indices', 'get_enuc', 'get_overlap_cond', 'groupname', 'gto_norm', 'has_ecp', 'has_ecp_soc', 'incore_anyway', 'inertia_moment', 'intor', 'intor_asymmetric', 'intor_by_shell', 'intor_symmetric', 'irrep_id', 'irrep_name', 'kernel', 'loads', 'loads_', 'magmom', 'make_atm_env', 'make_bas_env', 'make_ecp_env', 'make_env', 'max_memory', 'ms', 'multiplicity', 'nao', 'nao_2c', 'nao_2c_range', 'nao_cart', 'nao_nr', 'nao_nr_range', 'natm', 'nbas', 'nelec', 'nelectron', 'npgto_nr', 'nucmod', 'nucprop', 'offset_2c_by_atom', 'offset_ao_by_atom', 'offset_nr_by_atom', 'omega', 'output', 'pack', 'post_kernel', 'pre_kernel', 'pseudo', 'run', 'search_ao_label', 'search_ao_nr', 'search_ao_r', 'search_shell_id', 'set', 'set_common_orig', 'set_common_orig_', 'set_common_origin', 'set_common_origin_', 'set_f12_zeta', 'set_geom_', 'set_nuc_mod', 'set_nuc_mod_', 'set_range_coulomb', 'set_range_coulomb_', 'set_rinv_orig', 'set_rinv_orig_', 'set_rinv_origin', 'set_rinv_origin_', 'set_rinv_zeta', 'set_rinv_zeta_', 'sph2spinor_coeff', 'sph_labels', 'spheric_labels', 'spin', 'spinor_labels', 'stdout', 'symm_orb', 'symmetry', 'symmetry_subgroup', 'time_reversal_map', 'tmap', 'to_cell', 'to_uncontracted_cartesian_basis', 'tofile', 'topgroup', 'tostring', 'tot_electrons', 'unit', 'unpack', 'unpack_', 'update', 'update_from_chk', 'verbose', 'view', 'with_common_orig', 'with_common_origin', 'with_integral_screen', 'with_long_range_coulomb', 'with_range_coulomb', 'with_rinv_as_nucleus', 'with_rinv_at_nucleus', 'with_rinv_orig', 'with_rinv_origin', 'with_rinv_zeta', 'with_short_range_coulomb']
+(1, 1)
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:  -0.02721124
+h1!!! [[5.62181262e-01 5.69993472e-17]
+ [2.06348397e-16 1.11057269e+00]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:  -0.02721124
+h1!!! [[5.62181262e-01 5.69993472e-17]
+ [2.06348397e-16 1.11057269e+00]]
+SCF energy pycc: -1.0661086493179366 -1.0661086493179366
+n_mo=2, n_spin_orbitals=4, n_electrons=2
+[-0.48444168 -0.48444168  0.45750194  0.45750194]
+<class 'numpy.ndarray'> (4, 4, 4, 4) (4, 4) 0.52917721092
+original H: (2, 2, 2, 2) [[5.62181262e-01 5.69993472e-17]
+ [2.06348397e-16 1.11057269e+00]]
+now H: () 0.562181262399747 [0^ 0] +
+0.31320124976475894 [0^ 0^ 0 0] +
+0.09839529174273515 [0^ 0^ 2 2] +
+0.31320124976475894 [0^ 1^ 1 0] +
+0.09839529174273515 [0^ 1^ 3 2] +
+0.09839529174273515 [0^ 2^ 0 2] +
+0.3108533815598566 [0^ 2^ 2 0] +
+0.09839529174273515 [0^ 3^ 1 2] +
+0.3108533815598566 [0^ 3^ 3 0] +
+0.31320124976475894 [1^ 0^ 0 1] +
+0.09839529174273515 [1^ 0^ 2 3] +
+0.562181262399747 [1^ 1] +
+0.31320124976475894 [1^ 1^ 1 1] +
+0.09839529174273515 [1^ 1^ 3 3] +
+0.09839529174273515 [1^ 2^ 0 3] +
+0.3108533815598566 [1^ 2^ 2 1] +
+0.09839529174273515 [1^ 3^ 1 3] +
+0.3108533815598566 [1^ 3^ 3 1] +
+0.31085338155985665 [2^ 0^ 0 2] +
+0.09839529174273512 [2^ 0^ 2 0] +
+0.31085338155985665 [2^ 1^ 1 2] +
+0.09839529174273512 [2^ 1^ 3 0] +
+1.1105726859904468 [2^ 2] +
+0.09839529174273509 [2^ 2^ 0 0] +
+0.3265353734712869 [2^ 2^ 2 2] +
+0.09839529174273509 [2^ 3^ 1 0] +
+0.3265353734712869 [2^ 3^ 3 2] +
+0.31085338155985665 [3^ 0^ 0 3] +
+0.09839529174273512 [3^ 0^ 2 1] +
+0.31085338155985665 [3^ 1^ 1 3] +
+0.09839529174273512 [3^ 1^ 3 1] +
+0.09839529174273509 [3^ 2^ 0 1] +
+0.3265353734712869 [3^ 2^ 2 3] +
+1.1105726859904468 [3^ 3] +
+0.09839529174273509 [3^ 3^ 1 1] +
+0.3265353734712869 [3^ 3^ 3 3]
+compare against g [[[[ 4.07561523e-34  0.00000000e+00  1.52209803e-17  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [-1.52209803e-17  0.00000000e+00 -3.17169853e-34  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]]
+
+  [[ 0.00000000e+00  6.26402500e-01  0.00000000e+00  3.80796343e-17]
+   [-6.26402500e-01  0.00000000e+00 -2.61072214e-17  0.00000000e+00]
+   [ 0.00000000e+00  5.38627970e-17  0.00000000e+00  1.96790583e-01]
+   [-5.30402779e-17  0.00000000e+00 -1.96790583e-01  0.00000000e+00]]
+
+  [[ 1.32598928e-17  0.00000000e+00  4.24916180e-01  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [-4.24916180e-01  0.00000000e+00 -9.75234870e-18  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]]
+
+  [[ 0.00000000e+00  3.33064520e-17  0.00000000e+00  6.21706763e-01]
+   [-6.80009215e-17  0.00000000e+00 -1.96790583e-01  0.00000000e+00]
+   [ 0.00000000e+00  1.96790583e-01  0.00000000e+00  7.02069302e-17]
+   [-6.21706763e-01  0.00000000e+00 -7.02069302e-17  0.00000000e+00]]]
+
+
+ [[[ 0.00000000e+00 -6.26402500e-01  0.00000000e+00 -2.61072214e-17]
+   [ 6.26402500e-01  0.00000000e+00  3.80796343e-17  0.00000000e+00]
+   [ 0.00000000e+00 -5.30402779e-17  0.00000000e+00 -1.96790583e-01]
+   [ 5.38627970e-17  0.00000000e+00  1.96790583e-01  0.00000000e+00]]
+
+  [[ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00  4.07561523e-34  0.00000000e+00  1.52209803e-17]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00 -1.52209803e-17  0.00000000e+00 -3.17169853e-34]]
+
+  [[ 0.00000000e+00 -6.80009215e-17  0.00000000e+00 -1.96790583e-01]
+   [ 3.33064520e-17  0.00000000e+00  6.21706763e-01  0.00000000e+00]
+   [ 0.00000000e+00 -6.21706763e-01  0.00000000e+00 -7.02069302e-17]
+   [ 1.96790583e-01  0.00000000e+00  7.02069302e-17  0.00000000e+00]]
+
+  [[ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00  1.32598928e-17  0.00000000e+00  4.24916180e-01]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00 -4.24916180e-01  0.00000000e+00 -9.75234870e-18]]]
+
+
+ [[[-1.32598928e-17  0.00000000e+00 -4.24916180e-01  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 4.24916180e-01  0.00000000e+00  9.75234870e-18  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]]
+
+  [[ 0.00000000e+00  1.56381682e-16  0.00000000e+00  1.96790583e-01]
+   [-1.56381682e-16  0.00000000e+00 -6.21706763e-01  0.00000000e+00]
+   [ 0.00000000e+00  6.21706763e-01  0.00000000e+00  7.46175164e-17]
+   [-1.96790583e-01  0.00000000e+00 -7.46175164e-17  0.00000000e+00]]
+
+  [[ 4.35987441e-34  0.00000000e+00 -1.48179683e-17  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 1.48179683e-17  0.00000000e+00 -4.00420225e-34  0.00000000e+00]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]]
+
+  [[ 0.00000000e+00  1.96790583e-01  0.00000000e+00 -5.07374648e-17]
+   [-1.96790583e-01  0.00000000e+00 -1.92034231e-17  0.00000000e+00]
+   [ 0.00000000e+00 -6.37721300e-17  0.00000000e+00  6.53070747e-01]
+   [ 1.61759767e-16  0.00000000e+00 -6.53070747e-01  0.00000000e+00]]]
+
+
+ [[[ 0.00000000e+00 -1.56381682e-16  0.00000000e+00 -6.21706763e-01]
+   [ 1.56381682e-16  0.00000000e+00  1.96790583e-01  0.00000000e+00]
+   [ 0.00000000e+00 -1.96790583e-01  0.00000000e+00 -7.46175164e-17]
+   [ 6.21706763e-01  0.00000000e+00  7.46175164e-17  0.00000000e+00]]
+
+  [[ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00 -1.32598928e-17  0.00000000e+00 -4.24916180e-01]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00  4.24916180e-01  0.00000000e+00  9.75234870e-18]]
+
+  [[ 0.00000000e+00 -1.96790583e-01  0.00000000e+00 -1.92034231e-17]
+   [ 1.96790583e-01  0.00000000e+00 -5.07374648e-17  0.00000000e+00]
+   [ 0.00000000e+00  1.61759767e-16  0.00000000e+00 -6.53070747e-01]
+   [-6.37721300e-17  0.00000000e+00  6.53070747e-01  0.00000000e+00]]
+
+  [[ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00  4.35987441e-34  0.00000000e+00 -1.48179683e-17]
+   [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00]
+   [ 0.00000000e+00  1.48179683e-17  0.00000000e+00 -4.00420225e-34]]]]
+sparseop: <Compressed Sparse Column sparse matrix of dtype 'complex128'
+	with 15 stored elements and shape (16, 16)>
+  Coords	Values
+  (3, 3)	(0.6530707469425738+0j)
+  (12, 3)	(0.1967905834854703+0j)
+  (5, 5)	(0.424916179634243+0j)
+  (6, 6)	(0.6217067631197133+0j)
+  (9, 6)	(-0.19679058348547027+0j)
+  (7, 7)	(1.69969368969653+0j)
+  (6, 9)	(-0.19679058348547027+0j)
+  (9, 9)	(0.6217067631197133+0j)
+  (10, 10)	(0.424916179634243+0j)
+  (11, 11)	(1.69969368969653+0j)
+  (3, 12)	(0.19679058348547018+0j)
+  (12, 12)	(0.6264024995295179+0j)
+  (13, 13)	(1.6730254422834743+0j)
+  (14, 14)	(1.6730254422834743+0j)
+  (15, 15)	(3.3727191319800047+0j)
