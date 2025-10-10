@@ -362,7 +362,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
         self.n_spin_virts = self.n_spin_orbitals - self.n_electrons + dc #overcounted
         self.occInfo={"nocc_aa":self.n_electrons,"nvirt_aa":self.n_spin_virts}
-
+        self.doubles_ordering = None
 
     def get_molecular_H(self,pyscf_mol):
         print("geo:",pyscf_mol.atom)
@@ -440,6 +440,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
     
         #print("doubles_alt:",doubles_alt)
         doubles.extend(doubles_alt)
+        self.doubles_ordering = doubles
 
 #        occ_so = occ_spin_idxs
 #        virt_so = virt_spin_idxs
@@ -579,27 +580,6 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
 
 
-    def uccsd_FO_triples_corrections(self,theta):
-        # separate T2
-        len_T1 = len(self.singles)
-        len_T2 = len(self.doubles)
-        print("length:",len_T1,len_T2)
-        print("Final T1:", theta[:len_T1])
-        print("Final T2:",theta[len_T1:len_T1+len_T2])
-        T2 = theta[len_T1:len_T1+len_T2]
-        W = self.g
-        o = self.occSliceInfo["occ_aa"]
-        v = self.occSliceInfo["virt_aa"]
-
-
-        D3T3 = pycc.build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,T2)
-        D3T3 = pycc.tamps.antisym_T3(D3T3,None,None)
-        T3 = D3T3*D3.transpose(3,4,5,0,1,2)
-        sqrBrak_T =0.25* pycc.build_sqrbrak_corrections.sqr_brakT_spin(D3T3,T3.transpose(3,4,5,0,1,2))
-
-        total_FO_trples = 2.0*sqrBrak_T -  pycc.build_sqrbrak_corrections.build_T3dag_fn_T3(T3,F)
-        print("Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is:",total_FO_trples,total_FO_trples**2)
-        return total_FO_trples
     
     def energy_from_theta(self, theta, reps=1):
         """
@@ -617,6 +597,46 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         E = np.vdot(psi, H_dense.dot(psi)).real  #+ self.uccsd_FO_triples_corrections(theta)
         return E
 
+    def cost_function(self,theta,reps=1):
+        #H_dense = self.Hdef
+        #psi = self.prepare_state(theta,reps=1)
+        E0 = self.energy_from_theta(theta, reps=1)
+
+        #separate lambda
+        lamb = 1.0 # for now just set this as a constant #theta[-1]
+        # separate T2
+        len_T1 = len(self.singles)
+        len_T2 = len(self.doubles)
+        print("length:",len_T1,len_T2)
+        print("Final T1:", theta[:len_T1])
+        print("Final T2:",theta[len_T1:len_T1+len_T2])
+        nv = self.occInfo["nvirt_aa"]
+        no = self.occInfo["nocc_aa"]
+        print("size of no nv:",no,nv)
+        T2 = np.zeros((nv,nv,no,no))
+        for op_order, amp in zip(self.doubles_ordering, theta[len_T1:len_T1+len_T2]):
+            a=op_order[0]-no
+            b=op_order[1]-no
+            j=op_order[2]
+            i=op_order[3]
+            print("a,b,i,j",a,b,j,i)
+            T2[a,b,j,i]=amp
+            T2[b,a,j,i]=-1.0*amp
+            T2[a,b,i,j]=-1.0*amp
+            T2[b,a,i,j]=amp
+
+        T2 = T2*0.25
+        W = self.g
+        F = self.fock
+        o = self.occSliceInfo["occ_aa"]
+        v = self.occSliceInfo["virt_aa"]
+        D3 = self.denomInfo["D3aa"]
+        T2=T2.transpose(2,3,0,1)
+        import pycc.OpenFermionLoadeer.pt_helpers
+        t3_penalty = pycc.OpenFermionLoadeer.pt_helpers.uccsd_FO_triples_corrections(F,W,T2,o,v,D3)
+        #print("t3_penalty:",t3_penalty,t3_penalty**2)
+        print("total cost:",E0 + lamb*t3_penalty)
+        return E0 + lamb*t3_penalty
 
     def callback(self,xk):
         e = self.energy_from_theta(xk, reps=1)
@@ -636,7 +656,8 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         opts = {"maxiter": 500, "disp": True, "gtol":10E-5}
         print("Starting optimization... (this may take some time for larger ansatz sizes)")
         t_start = time.time()
-        res = minimize(self.energy_from_theta, x0=theta0, method="BFGS", options=opts, callback=self.callback)
+        #res = minimize(self.energy_from_theta, x0=theta0, method="BFGS", options=opts, callback=self.callback)
+        res = minimize(self.cost_function, x0=theta0, method="BFGS", options=opts, callback=self.callback)
         t_end = time.time()
         print("Optimization finished in %.2f s" % (t_end - t_start))
         print("Success:", res.success)
