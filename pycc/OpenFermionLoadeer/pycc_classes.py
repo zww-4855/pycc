@@ -391,15 +391,26 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
 
     def generate_singles(self,occ_spin_idxs,virt_spin_idxs):
-        singles = []
-        for i in occ_spin_idxs:
-            for a in virt_spin_idxs:
+        occ = list(range(self.n_electrons))
+        virt = list(range(self.n_electrons, self.n_qubits))
+        alpha=[]
+        beta=[]
+        total=[]
+        for i in occ:
+            for a in virt:
                 if (a % 2) != (i % 2):
                     # spin mismatch => would flip spin, skip
                     continue
-                singles.append((a, i))
+                #print("a^ i",a,i)
+                total.append((a,i))
     
-        return singles
+        alpha = [d for d in total if d[0] % 2 == 0]  # i is alpha
+        beta = [d for d in total if d[0] % 2 == 1]
+        # interleave them
+        singles_alt = [x for pair in zip(alpha, beta) for x in pair]
+        print("singles alt:",singles_alt)
+
+        return singles_alt
     
     def generate_doubles(self,occ_spin_idxs,virt_spin_idxs):
         # --- Doubles: use unique pairs (i<j, a<b) and enforce S_z conservation ---
@@ -409,22 +420,22 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         nvirt = int(self.n_mo - nocc)
         #print("nocc, nvirt:",nocc,nvirt)
         # This handles the mixed spin abab amps; must also do pure alpha/beta cases as well
-        for I in range(nocc):
-            i=2*I
-            for J in range(nocc):
-                j=2*J+1
-                for A in range(nvirt):
-                    a=2*nocc+2*A
-                    for B in range(nvirt):
-                        b=2*nocc+2*B+1
-                        if (i % 2) != (a % 2):
+        for A in range(nvirt):
+            a=2*nocc+2*A
+            for B in range(nvirt):
+                b=2*nocc+2*B+1
+                for J in range(nocc):
+                    j=2*J
+                    for I in range(nocc):
+                        i=2*I+1
+                        if (i % 2) != (b % 2):
                             continue
-                        if (j % 2) != (b % 2):
+                        if (j % 2) != (a % 2):
                             continue
-                        #print("a^b^ji:",a,b,i,j)
-                        doubles.append((a,b,i,j))
-        #print("doubles:",doubles)
-            # Now, add the pure spin amps to the list
+                        #print("a^b^ji:",a,b,j,i)
+                        doubles.append((a,b,j,i))
+
+        # Now, add the pure spin amps to the list
         occ = list(range(self.n_electrons))
         virt = list(range(self.n_electrons, self.n_qubits))
         same_spin_doubles = [(a, b, i,j)
@@ -442,42 +453,6 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         doubles.extend(doubles_alt)
         self.doubles_ordering = doubles
 
-#        occ_so = occ_spin_idxs
-#        virt_so = virt_spin_idxs
-#        for idx_i in range(len(occ_so)):
-#            i = occ_so[idx_i]
-#            for idx_a in range(len(virt_so)):
-#                a = virt_so[idx_a]
-#                if (i % 2) != 0:
-#                for idx_j in range(idx_i+1 , len(occ_so)):
-#                    j = occ_so[idx_j]
-#                    for idx_b in range(idx_a, len(virt_so)):
-#                        b = virt_so[idx_b]
-#                        # --- New condition: match spin channels individually ---
-#                        #if (i % 2) != (a % 2):
-#                        #    continue
-#                        #if (j % 2) != (b % 2):
-#                        #    continue
-#                        print("a^b^ji:",a,b,i,j)
-#                        doubles.append((a,b,i,j))
-                        # count alpha (even-index) electrons created vs annihilated
-                        #n_alpha_ann = int((i % 2 == 0)) + int((j % 2 == 0))
-                        #n_alpha_cre = int((a % 2 == 0)) + int((b % 2 == 0))
-    
-                        # enforce S_z conservation: number of alpha annihilated == number of alpha created
-                        #if n_alpha_ann != n_alpha_cre:
-                        #    continue
-
-#        doubles = []
-#        for r_idx in range(len(occ_spin_idxs)):
-#            for s_idx in range(r_idx + 1, len(occ_spin_idxs)):
-#                r = occ_spin_idxs[r_idx]
-#                s = occ_spin_idxs[s_idx]
-#                for p_idx in range(len(virt_spin_idxs)):
-#                    for q_idx in range(p_idx + 1, len(virt_spin_idxs)):
-#                        p = virt_spin_idxs[p_idx]
-#                        q_ = virt_spin_idxs[q_idx]
-#                        doubles.append((p, q_, r, s))
         return doubles
 
 
@@ -503,13 +478,15 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         self.doubles = self.generate_doubles(occ_spin_idxs,virt_spin_idxs)
         # Build list of FermionOperators for generator terms
         gen_fermion_terms = []
-        for (p, q) in self.singles:
-            gen_fermion_terms.append(self.single_excitation_op(p, q))
         # doubles
-        for (p, q, r, s) in self.doubles:
-            gen_fermion_terms.append(self.double_excitation_op(p, q, r, s))
+        for (a, b, j, i) in self.doubles:
+            gen_fermion_terms.append(self.double_excitation_op(a, b, j, i))
         
-        
+        for (a, i) in self.singles:
+            gen_fermion_terms.append(self.single_excitation_op(a, i))
+
+        self.gen_fermion_terms = gen_fermion_terms
+
         # Convert each fermion term to qubit operator (JW)
         gen_qubit_terms = [jordan_wigner(term) for term in gen_fermion_terms]
         
@@ -535,12 +512,14 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
         self.singles = self.generate_singles(occ_spin_idxs,virt_spin_idxs)
         self.doubles = self.generate_doubles(occ_spin_idxs,virt_spin_idxs)
+
+        # COMMENTED OUT FOR REDUNDANCY ZWW 10/10/25
         # Build list of FermionOperators for generator terms
-        for (p, q) in self.singles:
-            self.gen_fermion_terms.append(self.single_excitation_op(p, q))
+        #for (p, q) in self.singles:
+        #    self.gen_fermion_terms.append(self.single_excitation_op(p, q))
         # doubles
-        for (p, q, r, s) in self.doubles:
-            self.gen_fermion_terms.append(self.double_excitation_op(p, q, r, s))
+        #for (p, q, r, s) in self.doubles:
+        #    self.gen_fermion_terms.append(self.double_excitation_op(p, q, r, s))
 
     def prepare_state(self,theta,reps=1):
         self.prepare_state_ops()
@@ -608,18 +587,18 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         len_T1 = len(self.singles)
         len_T2 = len(self.doubles)
         print("length:",len_T1,len_T2)
-        print("Final T1:", theta[:len_T1])
-        print("Final T2:",theta[len_T1:len_T1+len_T2])
+        #print("Final T1:", theta[:len_T1])
+        #print("Final T2:",theta[len_T1:len_T1+len_T2])
         nv = self.occInfo["nvirt_aa"]
         no = self.occInfo["nocc_aa"]
-        print("size of no nv:",no,nv)
         T2 = np.zeros((nv,nv,no,no))
-        for op_order, amp in zip(self.doubles_ordering, theta[len_T1:len_T1+len_T2]):
+        #for op_order, amp in zip(self.doubles_ordering, theta[len_T1:len_T1+len_T2]):
+        for op_order, amp in zip(self.doubles_ordering, theta[:len_T2]):
             a=op_order[0]-no
             b=op_order[1]-no
             j=op_order[2]
             i=op_order[3]
-            print("a,b,i,j",a,b,j,i)
+            #print("a,b,i,j",a,b,j,i)
             T2[a,b,j,i]=amp
             T2[b,a,j,i]=-1.0*amp
             T2[a,b,i,j]=-1.0*amp
@@ -662,29 +641,20 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         print("Optimization finished in %.2f s" % (t_end - t_start))
         print("Success:", res.success)
         print("Final energy:", res.fun)
-        print("Final parameters (first 10):", res.x[:10])
         len_T1 = len(self.singles)
         len_T2 = len(self.doubles)
-        print("length:",len_T1,len_T2)
-        print("Final T1:", res.x[:len_T1])
-        print("Final T2:",res.x[len_T1:len_T1+len_T2])
-        nocc = int(self.n_electrons/2)
-        nvirt = int(self.n_mo - nocc)
-        print("nocc, nvirt:",nocc,nvirt)
-        # this is the mixed abab T2 amps
-        for I in range(nocc):
-            i=2*I
-            for J in range(nocc):
-                j=2*J+1
-                for A in range(nvirt):
-                    a=2*nocc+2*A
-                    for B in range(nvirt):
-                        b=2*nocc+2*B+1
-                        if (i % 2) != (a % 2):
-                            continue
-                        if (j % 2) != (b % 2):
-                            continue
-                        print("a^b^ji:",a,b,i,j)
+        self.print_final_amps(res,len_T1,len_T2)
+        # **NEED TO EVALUATE ORIGINAL, UNBIASED <H> fot energy
+        final_E = self.energy_from_theta(res.x, reps=1)
+        print("Final evaluation of (unbiased) <H>:",final_E)
+
+
+    def print_final_amps(self,res,len_T1,len_T2):
+        for op, t2amp in zip(self.doubles,res.x[:len_T2]):
+            print(f"{op!s:<12} | {t2amp:.16f}")
+
+        for op, t1amp in zip(self.singles,res.x[len_T2:len_T1+len_T2]):
+            print(f"{op!s:<14} | {t1amp:.16f}")
 
 
 
