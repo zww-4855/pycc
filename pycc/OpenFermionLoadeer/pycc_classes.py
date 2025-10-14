@@ -24,6 +24,8 @@ from openfermion.linalg import (
 )
 from openfermionpyscf import run_pyscf
 from openfermionpyscf import generate_molecular_hamiltonian
+from openfermion.chem import MolecularData
+from itertools import product
 import openfermion
 
 # SciPy / NumPy for exponentiation and optimization
@@ -37,8 +39,25 @@ import pyscf
 from pyscf import lib
 import pycc
 
+# ---------------------------------------------------------------------
+# Outer optimization (Nelder–Mead over lambda)
+# ---------------------------------------------------------------------
 
-def run_pyscf():
+class MetaVQE:
+    def __init__(self, theta0):
+        self.theta_opt = np.copy(theta0)
+
+    def outer_objective(self, lam_vec):
+        lam = lam_vec[0]  # scalar λ
+        E_min, theta_star = run_vqe(lam, self.theta_opt)
+        self.theta_opt = theta_star  # warm start next inner VQE
+        S2_val = expectation(theta_star, S2)
+        print(f"λ = {lam:8.4f}  E = {E_min:8.5f}  <S^2> = {S2_val:6.3f}")
+        return E_min
+
+
+
+def run_pyscf22():
     mol = gto.Mole()
     mol.atom = [
         ["H", (0.0, 0.0, 0.0)],
@@ -156,6 +175,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         cc_info = {"slowSOcalc":"T"}
         self.pycc_obj = pycc.pycc.SetupCC(pyscf_mf,pyscf_mol,cc_info)
         self.gen_fermion_terms = []
+        self.init_theta = None
 
     def export_FermionOperator(self, shift=0):
         """
@@ -340,6 +360,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
             self.denomInfo.update({"D2aa":set_denoms.D2denomSlow(epsaa,occ_aa,virt_aa,n)})
         if "T" in cc_calc: #Get T3 denoms
             self.denomInfo.update({"D3aa":set_denoms.D3denomSlow(epsaa,occ_aa,virt_aa,n)})
+            self.denomInfo.update({"D2aa":set_denoms.D2denomSlow(epsaa,occ_aa,virt_aa,n)})
         if "UT2" in cc_calc or "X" in cc_calc or "Qdebug" in cc_calc or "Q" in cc_calc:
             self.denomInfo.update({"D4aa":set_denoms.D4denomSlow(epsaa,occ_aa,virt_aa,n)})
 
@@ -376,6 +397,14 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         
         # So I start with a Fermionic operator
         H_ferm = get_fermion_operator(generate_molecular_hamiltonian(geometry,basis,multiplicity,charge))
+#       **** THIS SECTION WAS SUPPOSED TO INITIALIZE THETA WITH CCSD AMPS, BUT DOESNT APPEAR TO WORK VERY WELL
+#        pyscf_obj = run_pyscf(MolecularData(geometry, basis, multiplicity, charge),run_ccsd=True)
+#        H_ferm = get_fermion_operator(pyscf_obj.get_molecular_hamiltonian())
+#
+#        ccsd_t1 = pyscf_obj.ccsd_single_amps
+#        ccsd_t2 = pyscf_obj.ccsd_double_amps
+#        self.init_theta = np.concatenate(( ccsd_t2.flatten(),ccsd_t1.flatten()))
+
         # This should return (H_sparse, basis) in your version
         H_sparse = get_number_preserving_sparse_operator(
             H_ferm,
@@ -463,8 +492,8 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         return FermionOperator(((p, 1), (q, 0)), 1.0)
     
     # Helper for double excitation E_pqrs = a_p^\dag a_q^\dag a_r a_s
-    def double_excitation_op(self,p, q, r, s):
-        return FermionOperator(((p, 1), (q, 1), (r, 0), (s, 0)), 1.0)
+    def double_excitation_op(self,p, q, r, s, coeff = 1.0):
+        return FermionOperator(((p, 1), (q, 1), (r, 0), (s, 0)), coeff)
 
 
 
@@ -559,7 +588,11 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
 
 
-    
+    def compute_expectation_value(self,operator,theta,reps=1):
+        psi = self.prepare_state(theta,reps=1)
+        return np.vdot(psi, operator.dot(psi)).real
+
+
     def energy_from_theta(self, theta, reps=1):
         """
         Compute energy expectation <psi(theta)| H |psi(theta)> where
@@ -576,19 +609,8 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         E = np.vdot(psi, H_dense.dot(psi)).real  #+ self.uccsd_FO_triples_corrections(theta)
         return E
 
-    def cost_function(self,theta,reps=1):
-        #H_dense = self.Hdef
-        #psi = self.prepare_state(theta,reps=1)
-        E0 = self.energy_from_theta(theta, reps=1)
-
-        #separate lambda
-        lamb = 1.0 # for now just set this as a constant #theta[-1]
-        # separate T2
-        len_T1 = len(self.singles)
+    def extract_current_T2(self,theta):
         len_T2 = len(self.doubles)
-        print("length:",len_T1,len_T2)
-        #print("Final T1:", theta[:len_T1])
-        #print("Final T2:",theta[len_T1:len_T1+len_T2])
         nv = self.occInfo["nvirt_aa"]
         no = self.occInfo["nocc_aa"]
         T2 = np.zeros((nv,nv,no,no))
@@ -604,18 +626,51 @@ class MeanFieldToJWspin(SpatialOrbInfo):
             T2[a,b,i,j]=-1.0*amp
             T2[b,a,i,j]=amp
 
-        T2 = T2*0.25
-        W = self.g
-        F = self.fock
-        o = self.occSliceInfo["occ_aa"]
-        v = self.occSliceInfo["virt_aa"]
-        D3 = self.denomInfo["D3aa"]
+        T2 = T2#*0.25
+        return T2
+
+    def get_modified_VQE_op(self,theta,gamma=1.0,reps=1):
+        T2 = self.extract_current_T2(theta)
+        #T2=T2.transpose(2,3,0,1)
+        import pycc.OpenFermionLoadeer.pt_helpers as pt_helper
+        T2eff = pt_helper.build_penalty_op(
+                        self.fock, self.g, T2.transpose(2,3,0,1), 
+                        self.occSliceInfo["occ_aa"], self.occSliceInfo["virt_aa"],
+                        self.denomInfo["D2aa"],self.denomInfo["D3aa"]
+                )
+        T2eff = T2eff.transpose(2,3,0,1)
+        nv, no = range(self.occInfo["nvirt_aa"]) , range(self.occInfo["nocc_aa"])
+        A = FermionOperator('', 0.0)
+        for a, b, i, j in product(nv, nv, no, no):
+            print(T2eff[a, b, j, i],type(self.double_excitation_op(a, b, j, i, T2eff[a, b, j, i])))
+            A += self.double_excitation_op(a, b, j, i, T2eff[a, b, j, i])
+        from openfermion.utils import hermitian_conjugated
+        P_fermion = hermitian_conjugated(A) * A
+        P_qubit = jordan_wigner(P_fermion) #.compress()
+        return gamma * get_sparse_operator(P_qubit) 
+
+    def modified_cost_function(self,theta,reps=1):
+        print(type(self.Hdef),type(self.get_modified_VQE_op(theta)))
+        H_mods = self.Hdef + self.get_modified_VQE_op(theta)
+        E0 = self.compute_expectation_value(H_mods,theta)
+        print('total cost:',E0)
+        return E0
+
+    def cost_function(self,theta,reps=1):
+        #H_dense = self.Hdef
+        #psi = self.prepare_state(theta,reps=1)
+        E0 = self.energy_from_theta(theta, reps=1)
+
+        #separate lambda
+        lamb0 = 0.0001  # for now just set this as a constant #theta[-1]
+        lamb1 = 0.1
+        T2=self.extract_current_T2(theta)
         T2=T2.transpose(2,3,0,1)
         import pycc.OpenFermionLoadeer.pt_helpers
-        t3_penalty = pycc.OpenFermionLoadeer.pt_helpers.uccsd_FO_triples_corrections(F,W,T2,o,v,D3)
+        t3_penalty, variance = pycc.OpenFermionLoadeer.pt_helpers.uccsd_FO_triples_corrections(F,W,T2,o,v,D3)
         #print("t3_penalty:",t3_penalty,t3_penalty**2)
-        print("total cost:",E0 + lamb*t3_penalty)
-        return E0 + lamb*t3_penalty
+        print("total cost:",E0 + lamb0*t3_penalty)
+        return E0 + (1- lamb0*t3_penalty) #+ lamb1*variance
 
     def callback(self,xk):
         e = self.energy_from_theta(xk, reps=1)
@@ -630,13 +685,15 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
         # Quick test: zero parameters should give HF energy (within numerical error)
         theta0 = np.zeros(self.n_params)
+        #theta0 = self.init_theta
         E0 = self.energy_from_theta(theta0, reps=1)
         print(f"Energy at theta=0 (should be HF energy): {E0:.12f}  PySCF RHF energy: {self.E_scf:.12f},{self.energy_from_theta(theta0):.12f}")
         opts = {"maxiter": 500, "disp": True, "gtol":10E-5}
         print("Starting optimization... (this may take some time for larger ansatz sizes)")
         t_start = time.time()
         #res = minimize(self.energy_from_theta, x0=theta0, method="BFGS", options=opts, callback=self.callback)
-        res = minimize(self.cost_function, x0=theta0, method="BFGS", options=opts, callback=self.callback)
+        #res = minimize(self.cost_function, x0=theta0, method="BFGS", options=opts, callback=self.callback)
+        res = minimize(self.modified_cost_function, x0=theta0, method="CG", options=opts, callback=self.callback)
         t_end = time.time()
         print("Optimization finished in %.2f s" % (t_end - t_start))
         print("Success:", res.success)
@@ -657,7 +714,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
             print(f"{op!s:<14} | {t1amp:.16f}")
 
 
-
+        print(self.init_theta)
     def collect_data(self, pyscf_mol,pyscf_mf,cc_info):
         self.get_orb_info(pyscf_mol,pyscf_mf,cc_info)
         self.spin_block_C_eps(pyscf_mf)
@@ -671,7 +728,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
 
 
 def generate_mf_data():
-    pyscf_mol, pyscf_mf = run_pyscf()
+    pyscf_mol, pyscf_mf = run_pyscf22()
     cc_info = {"dropcore":0}
     obj = MeanFieldData(pyscf_mol,pyscf_mf,cc_info)
     obj.collect_data(pyscf_mol,pyscf_mf,cc_info)
