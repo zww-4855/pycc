@@ -1,0 +1,144 @@
+converged SCF energy = -1.33245230292587
+[[ 6.22913044e-01  3.42875607e-01 -9.08616701e-06  7.07298984e-01]
+ [ 4.50459421e-01 -5.01286381e-01 -7.07806230e-01 -2.16242550e-01]
+ [ 3.66496167e-01  6.26711800e-01 -2.37574708e-05 -6.89104566e-01]
+ [ 4.50475324e-01 -5.01254445e-01  7.07815272e-01 -2.16253852e-01]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:  -0.65754770
+h1!!! [[ 7.78555060e-01  2.91657535e-02 -3.59100448e-07  6.59722588e-02]
+ [ 2.91657535e-02  7.82580750e-01 -4.54432313e-07  5.28042264e-02]
+ [-3.59100448e-07 -4.54432313e-07  7.58273719e-01 -1.02026219e-06]
+ [ 6.59722588e-02  5.28042264e-02 -1.02026219e-06  8.72520797e-01]]
+SCF energy pycc: -1.332452302925874 -1.332452302925874
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=4, n_spin_orbitals=8, n_electrons=4
+[-0.21507644 -0.21507644 -0.14417602 -0.14417602 -0.0423578  -0.0423578
+  0.07169358  0.07169358]
+geo: [['H', [0, 0, 0]], ['H', [1.5, 1.5, 1.5]], ['H', [1.5, -1.5, -1.5]], ['H', [-1.5, 1.5, -1.5]]]
+Original Hamiltonian shape: (256, 256)
+Restricted Hamiltonian shape: (36, 36)
+hf_index: 240
+restrict sz: (36,)
+e cmp: -1.887105837780774
+<1100|H|1100> = (-1.0078950909794808+0j)
+
+nelectrons: 4
+Energy at theta=0 (should be HF energy): -1.007895090979  PySCF RHF energy: -1.332452302926,-1.007895090979
+Starting optimization... (this may take some time for larger ansatz sizes)
+callback: energy=-1.265704829279
+callback: energy=-1.605201252230
+callback: energy=-1.629681612978
+callback: energy=-1.807636731733
+callback: energy=-1.851394600092
+callback: energy=-1.862861643911
+callback: energy=-1.870085623668
+callback: energy=-1.872247167966
+callback: energy=-1.872983207169
+callback: energy=-1.874107195572
+callback: energy=-1.876070088841
+callback: energy=-1.877639059493
+callback: energy=-1.880298098520
+callback: energy=-1.882017598979
+callback: energy=-1.882650087023
+callback: energy=-1.883118382093
+callback: energy=-1.883595884700
+callback: energy=-1.883883879458
+callback: energy=-1.884101315100
+callback: energy=-1.884294287370
+callback: energy=-1.884358747448
+callback: energy=-1.884383690613
+callback: energy=-1.884422478240
+callback: energy=-1.884445997721
+callback: energy=-1.884461147349
+callback: energy=-1.884468893602
+callback: energy=-1.884477677305
+callback: energy=-1.884489859592
+callback: energy=-1.884509840813
+callback: energy=-1.884522264576
+callback: energy=-1.884527354207
+callback: energy=-1.884529888821
+callback: energy=-1.884530388501
+callback: energy=-1.884530844425
+callback: energy=-1.884531264837
+callback: energy=-1.884531728917
+callback: energy=-1.884532127974
+callback: energy=-1.884532554459
+callback: energy=-1.884533278543
+callback: energy=-1.884534067356
+callback: energy=-1.884535876628
+callback: energy=-1.884537795413
+callback: energy=-1.884539083785
+callback: energy=-1.884540011338
+callback: energy=-1.884540828183
+callback: energy=-1.884541857383
+callback: energy=-1.884543124545
+callback: energy=-1.884544201187
+callback: energy=-1.884544780124
+callback: energy=-1.884545550574
+callback: energy=-1.884546469224
+callback: energy=-1.884546917872
+callback: energy=-1.884547200199
+callback: energy=-1.884547368237
+callback: energy=-1.884547534514
+callback: energy=-1.884547892471
+callback: energy=-1.884548999340
+callback: energy=-1.884550424723
+callback: energy=-1.884552124675
+callback: energy=-1.884553096475
+callback: energy=-1.884553644711
+callback: energy=-1.884553968418
+callback: energy=-1.884554134751
+callback: energy=-1.884554240835
+callback: energy=-1.884554447781
+callback: energy=-1.884554605882
+callback: energy=-1.884554746824
+callback: energy=-1.884554912381
+callback: energy=-1.884555067638
+callback: energy=-1.884555183848
+callback: energy=-1.884555299628
+callback: energy=-1.884555465727
+callback: energy=-1.884555697014
+callback: energy=-1.884555920601
+callback: energy=-1.884556254027
+callback: energy=-1.884556458636
+callback: energy=-1.884556639634
+callback: energy=-1.884556733759
+callback: energy=-1.884556772982
+Optimization terminated successfully.
+         Current function value: -1.884557
+         Iterations: 79
+         Function evaluations: 2997
+         Gradient evaluations: 111
+Optimization finished in 507.05 s
+Success: True
+Final energy: -1.884556772982116
+(4, 5, 0, 1) | 0.2751456337473633
+(4, 5, 0, 3) | 0.2346763656952975
+(4, 5, 2, 1) | 0.2288146716195781
+(4, 5, 2, 3) | 0.4955679689924910
+(4, 7, 0, 1) | -0.1124157897201529
+(4, 7, 0, 3) | 0.2373078257306240
+(4, 7, 2, 1) | 0.2179023175233852
+(4, 7, 2, 3) | 0.0655846001282720
+(6, 5, 0, 1) | -0.1256873504267072
+(6, 5, 0, 3) | 0.2226826721099898
+(6, 5, 2, 1) | 0.2127010947811030
+(6, 5, 2, 3) | 0.0925471063503591
+(6, 7, 0, 1) | 0.5084166745328342
+(6, 7, 0, 3) | -0.2736155157452790
+(6, 7, 2, 1) | -0.3034979349323640
+(6, 7, 2, 3) | 0.3174606784517938
+(4, 6, 0, 2) | 0.1974762576734524
+(5, 7, 1, 3) | 0.1975013157464585
+(4, 0)         | -0.2023736603479714
+(5, 1)         | -0.2033176184680377
+(6, 0)         | 0.5945521334506545
+(7, 1)         | 0.6006416435134688
+(4, 2)         | 0.1456002676439522
+(5, 3)         | 0.1497435360215758
+(6, 2)         | -0.3677604151627966
+(7, 3)         | -0.3705379498851141
+None
+Final evaluation of (unbiased) <H>: -1.884556772982116

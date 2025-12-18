@@ -171,7 +171,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         self.doubles = None
         self.n_params = None
         self.gen_unitary_mats = None
-
+        self.H_ferm = None
         cc_info = {"slowSOcalc":"T"}
         self.pycc_obj = pycc.pycc.SetupCC(pyscf_mf,pyscf_mol,cc_info)
         self.gen_fermion_terms = []
@@ -397,6 +397,8 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         
         # So I start with a Fermionic operator
         H_ferm = get_fermion_operator(generate_molecular_hamiltonian(geometry,basis,multiplicity,charge))
+
+        self.H_ferm = H_ferm
 #       **** THIS SECTION WAS SUPPOSED TO INITIALIZE THETA WITH CCSD AMPS, BUT DOESNT APPEAR TO WORK VERY WELL
 #        pyscf_obj = run_pyscf(MolecularData(geometry, basis, multiplicity, charge),run_ccsd=True)
 #        H_ferm = get_fermion_operator(pyscf_obj.get_molecular_hamiltonian())
@@ -437,7 +439,7 @@ class MeanFieldToJWspin(SpatialOrbInfo):
         beta = [d for d in total if d[0] % 2 == 1]
         # interleave them
         singles_alt = [x for pair in zip(alpha, beta) for x in pair]
-        print("singles alt:",singles_alt)
+        #print("singles alt:",singles_alt)
 
         return singles_alt
     
@@ -640,20 +642,39 @@ class MeanFieldToJWspin(SpatialOrbInfo):
                 )
         T2eff = T2eff.transpose(2,3,0,1)
         nv, no = range(self.occInfo["nvirt_aa"]) , range(self.occInfo["nocc_aa"])
-        A = FermionOperator('', 0.0)
-        for a, b, i, j in product(nv, nv, no, no):
-            print(T2eff[a, b, j, i],type(self.double_excitation_op(a, b, j, i, T2eff[a, b, j, i])))
-            A += self.double_excitation_op(a, b, j, i, T2eff[a, b, j, i])
+        nocc=self.occInfo["nvirt_aa"]
+        nvirt=self.occInfo["nocc_aa"]
+        A = FermionOperator()
+
+        for a, b, i, j in product(nv,nv,no,no):
+            t2amp = T2eff[a,b,j,i]
+            #print(a,b,i,j,nocc,nvirt)
+            term = FermionOperator(((a+nocc,1),(b+nocc,1),(j,0),(i,0)),t2amp)
+            A += term
+
+        #A = FermionOperator('', 0.0)
+        #for a, b, i, j in product(nv, nv, no, no):
+        #    A += self.double_excitation_op(a, b, j, i, T2eff[a, b, j, i])
         from openfermion.utils import hermitian_conjugated
-        P_fermion = hermitian_conjugated(A) * A
-        P_qubit = jordan_wigner(P_fermion) #.compress()
-        return gamma * get_sparse_operator(P_qubit) 
+        P_fermion = A * hermitian_conjugated(A) 
+#        for term, coeff in A.terms.items():
+#            print(term, coeff)
+
+        #P_qubit = jordan_wigner(P_fermion) #.compress()
+        return gamma *P_fermion#gamma * get_sparse_operator(P_fermion)#P_qubit) 
 
     def modified_cost_function(self,theta,reps=1):
-        print(type(self.Hdef),type(self.get_modified_VQE_op(theta)))
-        H_mods = self.Hdef + self.get_modified_VQE_op(theta)
-        E0 = self.compute_expectation_value(H_mods,theta)
-        print('total cost:',E0)
+        #print("type",type(self.H_ferm),type(self.get_modified_VQE_op(theta)))
+        #print(self.H_ferm.shape, self.get_modified_VQE_op(theta))
+        H_mods = self.H_ferm + self.get_modified_VQE_op(theta,10)
+        H_sparse = get_number_preserving_sparse_operator(
+            H_mods,
+            self.n_spin_orbitals,
+            self.n_electrons,
+            spin_preserving=True
+        )
+        E0 = self.compute_expectation_value(H_sparse,theta)
+        #print('total cost:',E0)
         return E0
 
     def cost_function(self,theta,reps=1):

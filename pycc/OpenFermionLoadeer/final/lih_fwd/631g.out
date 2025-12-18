@@ -1,0 +1,2757 @@
+converged SCF energy = -1.09480796286051
+[[ 0.28733229  0.16786366  0.86728736 -0.982068  ]
+ [ 0.3317256   1.22798068 -0.69846715  1.20594857]
+ [ 0.28733229 -0.16786366  0.86728736  0.982068  ]
+ [ 0.3317256  -1.22798068 -0.69846715 -1.20594857]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:   9.29233832
+h1!!! [[ 2.19137972e+00  5.78776302e-16  4.61849522e-01 -5.50066772e-17]
+ [ 6.18281647e-16  2.14720519e+00 -2.19157085e-15 -4.33620060e-01]
+ [ 4.61849522e-01 -2.29492631e-15  3.03364972e+00 -2.59551702e-15]
+ [-3.40391251e-16 -4.33620060e-01 -2.47426496e-15  3.50121583e+00]]
+SCF energy pycc: -1.0948079628605116 -1.0948079628605116
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=4, n_spin_orbitals=8, n_electrons=2
+[-0.52754402 -0.52754402  0.1677071   0.1677071   0.90427723  0.90427723
+  1.16226834  1.16226834]
+geo: [['H', [0, 0, 0]], ['H', [0, 0, 1]]]
+Original Hamiltonian shape: (256, 256)
+Restricted Hamiltonian shape: (16, 16)
+hf_index: 192
+restrict sz: (16,)
+e cmp: -1.1267783526183097
+<1100|H|1100> = (-1.0948079628605123+0j)
+
+nelectrons: 2
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+Energy at theta=0 (should be HF energy): -1.094807962861  PySCF RHF energy: -1.094807962861,-1.094807962861
+Starting optimization... (this may take some time for larger ansatz sizes)
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.119664534867
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126225481743
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126770677016
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126777229728
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126777528407
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126778018812
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126778351132
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126778351574
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126778352252
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126778352591
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+nocc, nvirt: 1 3
+a^b^ji: 2 3 0 1
+a^b^ji: 2 5 0 1
+a^b^ji: 2 7 0 1
+a^b^ji: 4 3 0 1
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 6 3 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+callback: energy=-1.126778352610
+Optimization terminated successfully.
+         Current function value: -1.126778
+         Iterations: 11
+         Function evaluations: 256
+         Gradient evaluations: 16
+Optimization finished in 2.71 s
+Success: True
+Final energy: -1.1267783526101867
+Final parameters (first 10): [-7.08357401e-08  1.30232255e-02  1.86130950e-07 -6.18350762e-08
+  1.30231073e-02  3.25525104e-07  1.36369762e-01  3.06962463e-08
+ -5.79587236e-02 -2.44332842e-08]
+length: 6 9
+Final T1: [-7.08357401e-08  1.30232255e-02  1.86130950e-07 -6.18350762e-08
+  1.30231073e-02  3.25525104e-07]
+Final T2: [ 1.36369762e-01  3.06962463e-08 -5.79587236e-02 -2.44332842e-08
+  3.71336248e-02 -1.43771007e-06 -5.80953713e-02 -9.22632339e-07
+  3.93577794e-02]

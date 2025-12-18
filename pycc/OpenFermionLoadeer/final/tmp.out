@@ -1,0 +1,34 @@
+converged SCF energy = -1.06610864931794
+[[ 0.57802798  0.99650312]
+ [ 0.57802798 -0.99650312]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:  -0.02721124
+h1!!! [[5.62181262e-01 5.69993472e-17]
+ [2.06348397e-16 1.11057269e+00]]
+SCF energy pycc: -1.0661086493179366 -1.0661086493179366
+n_mo=2, n_spin_orbitals=4, n_electrons=2
+[-0.48444168 -0.48444168  0.45750194  0.45750194]
+geo: [['H', [0, 0, 0]], ['H', [0, 0, 1]]]
+hf_index: 12
+e cmp: -1.1011503302326207
+<1100|H|1100> = (-1.0661086493179366+0j)
+
+nelectrons: 2
+Energy at theta=0 (should be HF energy): -1.066108649318  PySCF RHF energy: -1.066108649318,-1.066108649318
+Starting optimization... (this may take some time for larger ansatz sizes)
+callback: energy=-1.101150009865
+callback: energy=-1.101150330090
+callback: energy=-1.101150330233
+Optimization terminated successfully.
+         Current function value: -1.101150
+         Iterations: 3
+         Function evaluations: 30
+         Gradient evaluations: 5
+Optimization finished in 0.01 s
+Success: True
+Final energy: -1.1011503302326187
+Final parameters (first 10): [-6.62676823e-09 -6.62676823e-09 -6.62676823e-09 -6.62676823e-09
+  1.76218837e-01]
+length: 4 1
+Final T1: [-6.62676823e-09 -6.62676823e-09 -6.62676823e-09 -6.62676823e-09]
+Final T2: [0.17621884]

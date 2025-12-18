@@ -16,7 +16,7 @@ from scipy.optimize import minimize
 def run_pyscf2():
     geometry = [
         ['H', [0,0,0]],
-        ['Li', [0,0,1]]
+        ['H', [0,0,1]]
     ]
     basis = 'sto-3g'
     multiplicity = 1
@@ -52,21 +52,7 @@ H1=build_H_way2(molecule)
 
 
 print("H:", H)
-#print("H1:",H1)
-from openfermionpyscf import generate_molecular_hamiltonian
-def test():
-    geometry = [
-        ['H', [0,0,0]],
-        ['Li', [0,0,1]]
-    ]
-    basis = 'sto-3g'
-    multiplicity = 1
-    charge = 0
-    hdef = generate_molecular_hamiltonian(geometry,basis,multiplicity, charge)
-    return hdef
-
-Hdef = test()
-print('Hdef:',get_sparse_operator(Hdef))
+print("H1:",H1)
 ########################################################################################
 ########################################################################################
 ########################################################################################
@@ -100,35 +86,7 @@ HHH = obj2.export_FermionOperator()
 obj = obj2
 
 
-print("HHH",get_sparse_operator(jordan_wigner(HHH)))
-print("HHH new", HHH)
-
-
-
-
-
-
-
-
-
-
-
-
-from scipy.sparse import linalg
-## Compute ground energy
-eigs, _ = linalg.eigsh(H, k=1, which="SA")
-ground_energy = eigs[0]
-
-eigs, _ = linalg.eigsh(H1, k=1, which="SA")
-groundE = eigs[0]
-
-eigs, _ = linalg.eigsh(HHH, k=1, which="SA")
-tmpE = eigs[0]
-
-print("e cmp:",ground_energy,groundE,tmpE)
-
-
-
+print("HHH",get_sparse_operator(HHH))
 sys.exit()
 
 

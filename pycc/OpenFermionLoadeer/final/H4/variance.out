@@ -1,0 +1,2691 @@
+converged SCF energy = -1.48441916608102
+[[ 0.41439662 -0.54223889  0.57520193  0.45697229]
+ [ 0.52509416 -0.43099948 -0.43876794 -0.59739753]
+ [ 0.52509416  0.43099948 -0.43876794  0.59739753]
+ [ 0.41439662  0.54223889  0.57520193 -0.45697229]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:  -0.63943937
+h1!!! [[ 7.55586815e-01 -7.80436267e-16 -6.39611071e-02 -3.50976993e-16]
+ [-7.44430280e-16  7.58775603e-01 -6.02529260e-16  8.63466304e-02]
+ [-6.39611071e-02 -6.25130756e-16  8.10699317e-01  9.32656917e-16]
+ [-4.65055198e-16  8.63466304e-02  9.91811589e-16  8.99782493e-01]]
+SCF energy pycc: -1.4844191660810249 -1.4844191660810249
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=4, n_spin_orbitals=8, n_electrons=4
+[-0.26607577 -0.26607577 -0.21449634 -0.21449634  0.03457395  0.03457395
+  0.09692458  0.09692458]
+geo: [['H', [0, 0, 0]], ['H', [0, 0, 2.3]], ['H', [0, 0, 4.6]], ['H', [0, 0, 6.8999999999999995]]]
+Original Hamiltonian shape: (256, 256)
+Restricted Hamiltonian shape: (36, 36)
+hf_index: 240
+restrict sz: (36,)
+e cmp: -1.8958939439802436
+<1100|H|1100> = (-1.4844191660810255+0j)
+
+nelectrons: 4
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+Energy at theta=0 (should be HF energy): -1.484419166081  PySCF RHF energy: -1.484419166081,-1.484419166081
+Starting optimization... (this may take some time for larger ansatz sizes)
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810255
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -8.004522857582983e-20 1.600904576319311e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 8.004522905610127e-20 6.407238694643719e-39
+Fifth-order contribution to this: -4.176694056857163e-20
+total cost: -1.4844191701331189
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.0941221671579479e-20 2.188244340880628e-20
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.0941221737226802e-20 1.1971033310316428e-40
+Fifth-order contribution to this: -7.698146435862596e-21
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.0941221671579479e-20 2.1882443408806284e-20
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.0941221737226805e-20 1.1971033310316435e-40
+Fifth-order contribution to this: -7.698146435862596e-21
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -4.0778986368472685e-20 8.155797298161924e-20
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 4.0778986613146557e-20 1.662925749195186e-39
+Fifth-order contribution to this: -2.5813770575553614e-20
+total cost: -1.4844191704893108
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -8.587724279083909e-20 1.717544860969415e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 8.587724330610242e-20 7.374900917855513e-39
+Fifth-order contribution to this: -5.844326599049344e-20
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -2.0933328643374482e-52 4.2721176502080915e-52
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 2.1787847858706433e-52 4.747103143141385e-104
+Fifth-order contribution to this: 1.0433002534717643e-69
+total cost: -1.484419170185149
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.1207874441660387e-23 2.241574895056803e-23
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.1207874508907644e-23 1.2561645100742176e-46
+Fifth-order contribution to this: -7.917974253845881e-24
+total cost: -1.4844191695511415
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.0364331407512274e-20 2.072866287721054e-20
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.0364331469698265e-20 1.074193668137778e-40
+Fifth-order contribution to this: -7.486203914057883e-21
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -8.587724279083908e-20 1.7175448609694153e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 8.587724330610245e-20 7.374900917855518e-39
+Fifth-order contribution to this: -5.844326599049347e-20
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.120787444166039e-23 2.241574895056803e-23
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.1207874508907641e-23 1.256164510074217e-46
+Fifth-order contribution to this: -7.91797425384588e-24
+total cost: -1.4844191695511415
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -2.0933328643374482e-52 4.2721176502080915e-52
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 2.1787847858706433e-52 4.747103143141385e-104
+Fifth-order contribution to this: 1.0866114176388194e-69
+total cost: -1.484419170185149
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.0364331407512274e-20 2.0728662877210536e-20
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.0364331469698262e-20 1.0741936681377774e-40
+Fifth-order contribution to this: -7.486203914057881e-21
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -2.368094740846369e-19 4.736189495901307e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 2.368094755054938e-19 5.607872768918708e-38
+Fifth-order contribution to this: -1.4988160644293172e-19
+total cost: -1.4844191699584108
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -9.552004584448389e-20 1.910400922620881e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 9.55200464176042e-20 9.12407926762126e-39
+Fifth-order contribution to this: -6.452201891833575e-20
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -9.552004584448389e-20 1.910400922620881e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 9.55200464176042e-20 9.12407926762126e-39
+Fifth-order contribution to this: -6.452201891833575e-20
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -8.248220520966288e-20 1.6496441091421886e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 8.248220570455598e-20 6.803314257888687e-39
+Fifth-order contribution to this: -4.303937862993747e-20
+total cost: -1.4844191702582472
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.3874594733799906e-19 2.77491895508474e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.3874594817047496e-19 1.9250438133724122e-38
+Fifth-order contribution to this: -8.784167691393221e-20
+total cost: -1.4844191667150328
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -1.3874594733799906e-19 2.77491895508474e-19
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 1.3874594817047496e-19 1.9250438133724122e-38
+Fifth-order contribution to this: -8.784167691393223e-20
+total cost: -1.4844191667150328
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810253
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810255
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: 0.0 0.0
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+Fifth-order contribution to this: 0.0
+total cost: -1.4844191660810255
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802635849668
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445997493427 0.0006502892014495533
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251446017002106 1.0571901201478857e-07
+Fifth-order contribution to this: -0.00020581979607620893
+total cost: -1.865080263950759
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958706 0.0006502891869426088
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673823 1.0571900729793388e-07
+Fifth-order contribution to this: -0.00020581979149331562
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00032514459249587043 0.0006502891869426088
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251445944467384 1.0571900729793399e-07
+Fifth-order contribution to this: -0.00020581979149331562
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00032514459977838324 0.0006502892015076343
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251446017292511 1.0571901203367332e-07
+Fifth-order contribution to this: -0.00020581979610326265
+total cost: -1.865080265312731
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958704 0.0006502891869426084
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000325144594446738 1.0571900729793374e-07
+Fifth-order contribution to this: -0.0002058197914933156
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802644540632
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445925205035 0.0006502891869918753
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251445944713718 1.0571900731395281e-07
+Fifth-order contribution to this: -0.00020581979150881077
+total cost: -1.8650802644689242
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958706 0.0006502891869426088
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673823 1.0571900729793388e-07
+Fifth-order contribution to this: -0.00020581979149331562
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958702 0.0006502891869426082
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673796 1.057190072979337e-07
+Fifth-order contribution to this: -0.00020581979149331554
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00032514459252050356 0.0006502891869918753
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459447137174 1.0571900731395278e-07
+Fifth-order contribution to this: -0.00020581979150881077
+total cost: -1.8650802644689233
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802644736835
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00032514459249587043 0.0006502891869426088
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251445944467384 1.0571900729793399e-07
+Fifth-order contribution to this: -0.00020581979149331562
+total cost: -1.8650802635849675
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000325144610043424 0.0006502892220377165
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251446119942925 1.0571901870891903e-07
+Fifth-order contribution to this: -0.00020581980260076985
+total cost: -1.8650802645658597
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958704 0.0006502891869426082
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251445944467378 1.0571900729793359e-07
+Fifth-order contribution to this: -0.0002058197914933156
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958702 0.0006502891869426082
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673796 1.057190072979337e-07
+Fifth-order contribution to this: -0.00020581979149331554
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445997800946 0.000650289201511057
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514460173096245 1.0571901203478619e-07
+Fifth-order contribution to this: -0.00020581979611315578
+total cost: -1.8650802640407151
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000325144580083287 0.0006502891621174425
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251445820341555 1.0571899922616568e-07
+Fifth-order contribution to this: -0.00020581978363581245
+total cost: -1.8650802636053938
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445800832871 0.0006502891621174424
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003251445820341553 1.0571899922616553e-07
+Fifth-order contribution to this: -0.00020581978363581245
+total cost: -1.8650802636053943
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802644038824
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802644038826
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.865080263584967
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802635849675
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.8650802635849673
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.865080262804286
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003251445924958707 0.000650289186942609
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00032514459444673834 1.0571900729793395e-07
+Fifth-order contribution to this: -0.00020581979149331603
+total cost: -1.865080262804286
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.865405408179
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181814935523
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719135648346 0.0012071438307511026
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000603571917186268 3.642990592159072e-07
+Fifth-order contribution to this: -0.00038206983891410796
+total cost: -1.88851818164381
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062923 0.0012071438110340174
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277251 3.64299047315228e-07
+Fifth-order contribution to this: -0.00038206983267992774
+total cost: -1.8885181814935519
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062929 0.0012071438110340177
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277248 3.642990473152276e-07
+Fifth-order contribution to this: -0.00038206983267992763
+total cost: -1.8885181814935517
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719136285709 0.001207143830878574
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719172500031 3.6429905929284457e-07
+Fifth-order contribution to this: -0.00038206983896089096
+total cost: -1.8885181809359315
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062936 0.0012071438110340185
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.00038206983267992796
+total cost: -1.888518181493552
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181811809242
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037395803 0.0012071438111005924
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073610122 3.642990473554103e-07
+Fifth-order contribution to this: -0.000382069832700926
+total cost: -1.8885181808451401
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062923 0.0012071438110340174
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277251 3.64299047315228e-07
+Fifth-order contribution to this: -0.00038206983267992774
+total cost: -1.888518181493552
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062935 0.001207143811034019
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277254 3.642990473152284e-07
+Fifth-order contribution to this: -0.00038206983267992785
+total cost: -1.8885181814935523
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037395795 0.0012071438111005924
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073610129 3.642990473554112e-07
+Fifth-order contribution to this: -0.000382069832700926
+total cost: -1.888518180845462
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.888518181073421
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062922 0.0012071438110340174
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277252 3.642990473152281e-07
+Fifth-order contribution to this: -0.00038206983267992763
+total cost: -1.8885181814935526
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719276132932 0.0012071438588480187
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719312347255 3.6429907617441624e-07
+Fifth-order contribution to this: -0.0003820698478131291
+total cost: -1.8885181812302867
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062936 0.0012071438110340185
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.000382069832679928
+total cost: -1.8885181814935517
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062935 0.001207143811034019
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277254 3.642990473152284e-07
+Fifth-order contribution to this: -0.00038206983267992785
+total cost: -1.888518181493552
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719136554597 0.0012071438309323513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719172768916 3.6429905932530287e-07
+Fifth-order contribution to this: -0.00038206983898445257
+total cost: -1.8885181810063205
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035718867940024 0.0012071437772094382
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035718904154358 3.642990268996629e-07
+Fifth-order contribution to this: -0.0003820698219740701
+total cost: -1.888518181585256
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035718867940029 0.0012071437772094387
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035718904154357 3.6429902689966277e-07
+Fifth-order contribution to this: -0.0003820698219740697
+total cost: -1.8885181815850776
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181817715093
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.888518181772541
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.888518181493552
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181814935517
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181814935517
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181814935519
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181811744545
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0006035719037062921 0.001207143811034017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0006035719073277249 3.6429904731522774e-07
+Fifth-order contribution to this: -0.0003820698326799274
+total cost: -1.8885181811755571
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.889121753401
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.892629754733411
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518720986968 0.001081303747441306
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518753426091 2.9230445031148015e-07
+Fifth-order contribution to this: -0.00034218104982845006
+total cost: -1.8926297543749904
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297547334114
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518625891367 0.0010813037284221844
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.00034218104385516814
+total cost: -1.8926297547334119
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518719777725 0.0010813037471994575
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000540651875221685 2.9230445018072447e-07
+Fifth-order contribution to this: -0.0003421810497983069
+total cost: -1.8926297544231165
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221842
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330481 2.9230444002875624e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297547334103
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.892629754794813
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518626226907 0.0010813037284892937
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000540651865866603 2.9230444006503927e-07
+Fifth-order contribution to this: -0.0003421810438758819
+total cost: -1.892629754764875
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297547334103
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518625891371 0.0010813037284221852
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330481 2.9230444002875624e-07
+Fifth-order contribution to this: -0.0003421810438551687
+total cost: -1.8926297547334106
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518626226908 0.0010813037284892932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658666024 2.923044400650387e-07
+Fifth-order contribution to this: -0.0003421810438758822
+total cost: -1.892629754763839
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297548484106
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518625891367 0.0010813037284221844
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.00034218104385516814
+total cost: -1.89262975473341
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518852193041 0.0010813037736825204
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518884632164 2.9230446449884214e-07
+Fifth-order contribution to this: -0.0003421810581780944
+total cost: -1.8926297547415563
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221842
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330481 2.9230444002875624e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297547334112
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518625891371 0.0010813037284221852
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330481 2.9230444002875624e-07
+Fifth-order contribution to this: -0.0003421810438551687
+total cost: -1.892629754733411
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518718190708 0.0010813037468820534
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518750629826 2.92304450009119e-07
+Fifth-order contribution to this: -0.0003421810497449959
+total cost: -1.8926297547762372
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005406518465893869 0.0010813036964226865
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518498332996 2.9230442272816875e-07
+Fifth-order contribution to this: -0.00034218103372635113
+total cost: -1.8926297547699051
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651846589335 0.0010813036964225828
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518498332478 2.923044227281127e-07
+Fifth-order contribution to this: -0.00034218103372631796
+total cost: -1.8926297547705195
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297549087931
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297549062496
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.892629754733411
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297547334103
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.892629754733411
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.892629754733411
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297546126982
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000540651862589136 0.0010813037284221837
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005406518658330477 2.923044400287558e-07
+Fifth-order contribution to this: -0.0003421810438551681
+total cost: -1.8926297546098807
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893170406599
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.893085053896894
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117528532064 0.000993623508687284
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117558340776 2.4682192073493916e-07
+Fifth-order contribution to this: -0.000314478079597786
+total cost: -1.8930850541261834
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.0009936234906665125
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236918 2.46821911782008e-07
+Fifth-order contribution to this: -0.00031447807391471493
+total cost: -1.8930850538968942
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.0009936234906665134
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236926 2.4682191178200885e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538968944
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117528444847 0.000993623508669841
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117558253563 2.4682192072627343e-07
+Fifth-order contribution to this: -0.0003144780796129069
+total cost: -1.8930850542055657
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428202 0.000993623490666512
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236919 2.468219117820081e-07
+Fifth-order contribution to this: -0.0003144780739147147
+total cost: -1.8930850538968962
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538248032
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438737754 0.0009936234907284216
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468546462 2.46821911812765e-07
+Fifth-order contribution to this: -0.0003144780739340751
+total cost: -1.8930850538669084
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.0009936234906665127
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000496811746823692 2.468219117820082e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538968955
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.0009936234906665138
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000496811746823693 2.468219117820093e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538968949
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438737757 0.0009936234907284229
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468546471 2.46821911812766e-07
+Fifth-order contribution to this: -0.00031447807393407575
+total cost: -1.8930850538672979
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.893085053851809
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.0009936234906665134
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236926 2.4682191178200885e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.893085053896895
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117655349505 0.000993623534050772
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117685158215 2.4682193333581824e-07
+Fifth-order contribution to this: -0.0003144780876451487
+total cost: -1.8930850539102249
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428202 0.000993623490666512
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236919 2.468219117820081e-07
+Fifth-order contribution to this: -0.0003144780739147147
+total cost: -1.8930850538968935
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.0009936234906665138
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000496811746823693 2.468219117820093e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.893085053896894
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000496811752801266 0.0009936235085834023
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117557821363 2.4682192068332907e-07
+Fifth-order contribution to this: -0.00031447807960652166
+total cost: -1.8930850539068977
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117285006865 0.0009936234599822436
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117314815571 2.468218965377028e-07
+Fifth-order contribution to this: -0.00031447806420257336
+total cost: -1.893085053909436
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117285008647 0.0009936234599825994
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117314817348 2.4682189653787935e-07
+Fifth-order contribution to this: -0.0003144780642026861
+total cost: -1.8930850539090605
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538966266
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538956316
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538968946
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538968955
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.893085053896895
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538968944
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538375608
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004968117438428208 0.000993623490666513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004968117468236922 2.4682191178200843e-07
+Fifth-order contribution to this: -0.0003144780739147153
+total cost: -1.8930850538366184
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893581865644
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.893334258093477
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392403097209 0.0010280784837036776
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392433939567 2.642363437490314e-07
+Fifth-order contribution to this: -0.00032537259315519395
+total cost: -1.8933342580978072
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113414 0.001028078465306918
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955765 2.642363342923748e-07
+Fifth-order contribution to this: -0.0003253725873609293
+total cost: -1.893334258093476
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113412 0.0010280784653069184
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955772 2.642363342923755e-07
+Fifth-order contribution to this: -0.00032537258736092963
+total cost: -1.893334258093476
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392402673481 0.0010280784836189322
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392433515841 2.642363437054691e-07
+Fifth-order contribution to this: -0.000325372593156819
+total cost: -1.8933342581084922
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113415 0.001028078465306919
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955775 2.642363342923758e-07
+Fifth-order contribution to this: -0.00032537258736092985
+total cost: -1.8933342580934762
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342581044494
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311432063 0.0010280784653706487
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392342274423 2.642363343251353e-07
+Fifth-order contribution to this: -0.00032537258738077763
+total cost: -1.8933342581079957
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113414 0.001028078465306918
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955765 2.642363342923748e-07
+Fifth-order contribution to this: -0.0003253725873609293
+total cost: -1.893334258093477
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000514039231111342 0.0010280784653069195
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955775 2.642363342923758e-07
+Fifth-order contribution to this: -0.0003253725873609298
+total cost: -1.8933342580934769
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311432065 0.0010280784653706493
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392342274429 2.642363343251359e-07
+Fifth-order contribution to this: -0.0003253725873807779
+total cost: -1.8933342581086
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342581027703
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113412 0.0010280784653069184
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955772 2.642363342923755e-07
+Fifth-order contribution to this: -0.00032537258736092963
+total cost: -1.893334258093477
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392531770576 0.0010280785094383517
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392562612941 2.642363569776644e-07
+Fifth-order contribution to this: -0.00032537260132745527
+total cost: -1.893334258103233
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113415 0.001028078465306919
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955775 2.642363342923758e-07
+Fifth-order contribution to this: -0.0003253725873609299
+total cost: -1.893334258093477
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000514039231111342 0.0010280784653069195
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392341955775 2.642363342923758e-07
+Fifth-order contribution to this: -0.0003253725873609298
+total cost: -1.893334258093477
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392401893478 0.001028078483462932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392432735842 2.642363436252791e-07
+Fifth-order contribution to this: -0.0003253725931363484
+total cost: -1.893334258088932
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000514039215506725 0.0010280784340976875
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392185909625 2.642363182496073e-07
+Fifth-order contribution to this: -0.0003253725774825131
+total cost: -1.893334258112224
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392155068372 0.0010280784340979104
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005140392185910732 2.642363182497211e-07
+Fifth-order contribution to this: -0.0003253725774825842
+total cost: -1.8933342581118622
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.89333425811127
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.893334258111308
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342580934764
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342580934764
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342580934762
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342580934767
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342580926928
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005140392311113408 0.0010280784653069178
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000514039234195577 2.6423633429237526e-07
+Fifth-order contribution to this: -0.00032537258736092903
+total cost: -1.8933342580928996
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893848297328
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205611184
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179167018513 0.0010268358364842114
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00051341791978236 2.635979603536459e-07
+Fifth-order contribution to this: -0.0003249767140995062
+total cost: -1.8933420205488243
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.00102683581808455
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825293 2.6359795090693e-07
+Fifth-order contribution to this: -0.00032497670830588843
+total cost: -1.8933420205611193
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000513417907502021 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825295 2.6359795090693023e-07
+Fifth-order contribution to this: -0.0003249767083058886
+total cost: -1.8933420205611184
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179166523924 0.0010268358363852933
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179197329009 2.6359796030285945e-07
+Fifth-order contribution to this: -0.00032497671409820997
+total cost: -1.8933420205619216
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020205 0.0010268358180845496
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000513417910582529 2.635979509069298e-07
+Fifth-order contribution to this: -0.0003249767083058884
+total cost: -1.8933420205611178
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205588187
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075339479 0.0010268358181484039
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000513417910614456 2.635979509397135e-07
+Fifth-order contribution to this: -0.0003249767083257581
+total cost: -1.8933420205655838
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.00102683581808455
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825293 2.6359795090693e-07
+Fifth-order contribution to this: -0.00032497670830588843
+total cost: -1.8933420205611173
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000513417907502021 0.0010268358180845513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825303 2.6359795090693113e-07
+Fifth-order contribution to this: -0.00032497670830588875
+total cost: -1.8933420205611176
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075339474 0.0010268358181484037
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179106144563 2.6359795093971384e-07
+Fifth-order contribution to this: -0.0003249767083257581
+total cost: -1.8933420205656109
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205591964
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000513417907502021 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825295 2.6359795090693023e-07
+Fifth-order contribution to this: -0.0003249767083058886
+total cost: -1.8933420205611173
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179295545067 0.001026835862189522
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179326350154 2.635979735512132e-07
+Fifth-order contribution to this: -0.00032497672226396054
+total cost: -1.8933420205630809
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020205 0.0010268358180845496
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000513417910582529 2.635979509069298e-07
+Fifth-order contribution to this: -0.0003249767083058884
+total cost: -1.8933420205611184
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000513417907502021 0.0010268358180845513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825303 2.6359795090693113e-07
+Fifth-order contribution to this: -0.00032497670830588875
+total cost: -1.8933420205611182
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179165672136 0.0010268358362149357
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179196477221 2.6359796021539483e-07
+Fifth-order contribution to this: -0.00032497671407478497
+total cost: -1.8933420205599982
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134178919071954 0.0010268357868949002
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134178949877048 2.6359793489360586e-07
+Fifth-order contribution to this: -0.00032497669843364614
+total cost: -1.893342020578882
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134178919071669 0.0010268357868948432
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134178949876763 2.635979348935766e-07
+Fifth-order contribution to this: -0.00032497669843362814
+total cost: -1.893342020578968
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.89334202055211
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205521239
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205611184
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205611189
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.893342020561119
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205611189
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205506597
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005134179075020207 0.0010268358180845504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005134179105825297 2.6359795090693044e-07
+Fifth-order contribution to this: -0.00032497670830588854
+total cost: -1.8933420205507199
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893855438472
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780255222
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442098360574 0.00101948842273058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442128945226 2.5983916257945636e-07
+Fifth-order contribution to this: -0.00032265097557173425
+total cost: -1.8933471780152162
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442006681439 0.0010194884043947517
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266078 2.598391532328734e-07
+Fifth-order contribution to this: -0.00032265096979845097
+total cost: -1.8933471780255218
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668143 0.0010194884043947519
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266088 2.598391532328745e-07
+Fifth-order contribution to this: -0.0003226509697984514
+total cost: -1.8933471780255213
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442097857036 0.0010194884226298725
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000509744212844169 2.5983916252812145e-07
+Fifth-order contribution to this: -0.0003226509755700026
+total cost: -1.8933471780223345
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442006681428 0.0010194884043947497
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266069 2.598391532328725e-07
+Fifth-order contribution to this: -0.0003226509697984505
+total cost: -1.8933471780255227
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.893347178014892
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442006999685 0.0010194884044584017
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037584332 2.5983915326531907e-07
+Fifth-order contribution to this: -0.0003226509698182546
+total cost: -1.8933471780223707
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442006681439 0.0010194884043947519
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000509744203726608 2.5983915323287363e-07
+Fifth-order contribution to this: -0.00032265096979845097
+total cost: -1.8933471780255227
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668143 0.0010194884043947504
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266073 2.5983915323287294e-07
+Fifth-order contribution to this: -0.00032265096979845065
+total cost: -1.8933471780255229
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442006999684 0.0010194884044584013
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037584329 2.5983915326531875e-07
+Fifth-order contribution to this: -0.0003226509698182546
+total cost: -1.893347178022063
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780155042
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668143 0.0010194884043947519
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266088 2.598391532328745e-07
+Fifth-order contribution to this: -0.0003226509697984514
+total cost: -1.8933471780255224
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442226416057 0.001019488448341677
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442257000713 2.598391756345652e-07
+Fifth-order contribution to this: -0.0003226509837064934
+total cost: -1.8933471780246902
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442006681427 0.0010194884043947495
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266068 2.598391532328724e-07
+Fifth-order contribution to this: -0.0003226509697984505
+total cost: -1.8933471780255215
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442006681429 0.0010194884043947501
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266072 2.5983915323287284e-07
+Fifth-order contribution to this: -0.00032265096979845065
+total cost: -1.8933471780255218
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097442096997403 0.0010194884224579465
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442127582061 2.5983916244048334e-07
+Fifth-order contribution to this: -0.00032265097554621413
+total cost: -1.8933471780224242
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097441851292767 0.0010194883733170186
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097441881877419 2.5983913739118e-07
+Fifth-order contribution to this: -0.00032265095996162897
+total cost: -1.8933471780429072
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005097441851292077 0.0010194883733168805
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097441881876728 2.598391373911096e-07
+Fifth-order contribution to this: -0.00032265095996158555
+total cost: -1.893347178043121
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780255602
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780256097
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.893347178025523
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780255229
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780255222
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780255224
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780378126
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000509744200668144 0.0010194884043947527
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005097442037266087 2.5983915323287437e-07
+Fifth-order contribution to this: -0.00032265096979845146
+total cost: -1.8933471780377993
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893856922229
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566725878699
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560304464698 0.0010027120639010748
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000501356033454605 2.5135787228133496e-07
+Fifth-order contribution to this: -0.0003173416017951978
+total cost: -1.8933566725836743
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544637 0.0010027120457170634
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243625997 2.513578631646717e-07
+Fifth-order contribution to this: -0.0003173415960696799
+total cost: -1.8933566725878703
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544637 0.0010027120457170634
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243625997 2.513578631646717e-07
+Fifth-order contribution to this: -0.0003173415960696799
+total cost: -1.8933566725878717
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000501356030396698 0.0010027120638015324
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560334048345 2.5135787223142947e-07
+Fifth-order contribution to this: -0.00031734160179354876
+total cost: -1.893356672579864
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544615 0.0010027120457170588
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243625973 2.513578631646693e-07
+Fifth-order contribution to this: -0.0003173415960696786
+total cost: -1.893356672587873
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566725749407
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213860244 0.0010027120457801852
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243941608 2.513578631963184e-07
+Fifth-order contribution to this: -0.00031734159608931935
+total cost: -1.8933566725813478
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544637 0.0010027120457170636
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243625999 2.513578631646719e-07
+Fifth-order contribution to this: -0.00031734159606967995
+total cost: -1.893356672587872
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544619 0.0010027120457170595
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243625976 2.5135786316466953e-07
+Fifth-order contribution to this: -0.0003173415960696789
+total cost: -1.8933566725878719
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000501356021386024 0.0010027120457801846
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243941605 2.5135786319631807e-07
+Fifth-order contribution to this: -0.00031734159608931935
+total cost: -1.893356672580857
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566725748572
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544642 0.0010027120457170636
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243625994 2.513578631646714e-07
+Fifth-order contribution to this: -0.0003173415960696799
+total cost: -1.8933566725878717
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560431463808 0.0010027120893008976
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560461545168 2.5135788501569e-07
+Fifth-order contribution to this: -0.0003173416098628149
+total cost: -1.89335667258723
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544614 0.0010027120457170584
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000501356024362597 2.5135786316466895e-07
+Fifth-order contribution to this: -0.00031734159606967854
+total cost: -1.8933566725878699
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544617 0.001002712045717059
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243625973 2.513578631646693e-07
+Fifth-order contribution to this: -0.0003173415960696787
+total cost: -1.893356672587871
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560303116145 0.0010027120636313656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000501356033319751 2.513578721461153e-07
+Fifth-order contribution to this: -0.0003173416017700267
+total cost: -1.893356672579713
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560059439642 0.001002712014896065
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560089521009 2.513578477123791e-07
+Fifth-order contribution to this: -0.00031734158631412096
+total cost: -1.8933566726050548
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560059439119 0.0010027120148959597
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560089520478 2.5135784771232577e-07
+Fifth-order contribution to this: -0.0003173415863140875
+total cost: -1.8933566726052145
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566725821414
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.893356672582261
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.89335667258787
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566725878692
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566725878692
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566725878699
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.8933566726052615
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0005013560213544647 0.0010027120457170656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0005013560243626008 2.5135786316467276e-07
+Fifth-order contribution to this: -0.00031734159606968066
+total cost: -1.893356672605214
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893858028612
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746832014313
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536557201093203 0.000970731146934058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00048536557492312595 2.3557974132045658e-07
+Fifth-order contribution to this: -0.0003072191292138023
+total cost: -1.8933746832017455
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536556306231495 0.000970731129036823
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000485365565974508 2.3557973263375447e-07
+Fifth-order contribution to this: -0.0003072191235791984
+total cost: -1.8933746832014318
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536556306231414 0.0009707311290368227
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745086 2.3557973263375506e-07
+Fifth-order contribution to this: -0.00030721912357919827
+total cost: -1.8933746832014349
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655719591407 0.0009707311468304744
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00048536557487133367 2.355797412701802e-07
+Fifth-order contribution to this: -0.0003072191292110213
+total cost: -1.8933746831906588
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623128 0.000970731129036819
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00048536556597450617 2.355797326337527e-07
+Fifth-order contribution to this: -0.0003072191235791969
+total cost: -1.893374683201433
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746831853429
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630934 0.0009707311290989933
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655660055933 2.3557973266392992e-07
+Fifth-order contribution to this: -0.000307219123598535
+total cost: -1.8933746831909908
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000485365563062315 0.000970731129036823
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00048536556597450795 2.3557973263375442e-07
+Fifth-order contribution to this: -0.0003072191235791985
+total cost: -1.893374683201434
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536556306231224 0.0009707311290368193
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00048536556597450703 2.3557973263375355e-07
+Fifth-order contribution to this: -0.0003072191235791973
+total cost: -1.8933746832014338
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536556309339935 0.0009707311290989932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655660055938 2.3557973266393045e-07
+Fifth-order contribution to this: -0.0003072191235985355
+total cost: -1.893374683190335
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746831849705
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536556306231414 0.0009707311290368227
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745086 2.3557973263375506e-07
+Fifth-order contribution to this: -0.00030721912357919827
+total cost: -1.893374683201433
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536558450393345 0.0009707311719200614
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655874161279 2.3557975344780292e-07
+Fifth-order contribution to this: -0.00030721913715058203
+total cost: -1.8933746831995433
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623126 0.0009707311290368186
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000485365565974506 2.3557973263375254e-07
+Fifth-order contribution to this: -0.0003072191235791968
+total cost: -1.8933746832014333
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536556306231224 0.000970731129036819
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745067 2.3557973263375323e-07
+Fifth-order contribution to this: -0.0003072191235791971
+total cost: -1.8933746832014333
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536557187255856 0.0009707311466573116
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000485365574784753 2.3557974118613367e-07
+Fifth-order contribution to this: -0.00030721912918670063
+total cost: -1.8933746831902485
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536554789967433 0.0009707310987115422
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655508118678 2.3557971791490784e-07
+Fifth-order contribution to this: -0.000307219113980536
+total cost: -1.8933746832178275
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00048536554789963015 0.0009707310987114534
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655508118232 2.3557971791486454e-07
+Fifth-order contribution to this: -0.0003072191139805081
+total cost: -1.8933746832179597
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746831920995
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746831922746
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746832014318
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.893374683201431
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746832014309
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.893374683201431
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746832244072
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004853655630623154 0.0009707311290368248
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004853655659745094 2.3557973263375585e-07
+Fifth-order contribution to this: -0.000307219123579199
+total cost: -1.8933746832243097
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893860048767
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.8934080777115307
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475058704547584 0.0009095011768194556
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505897739798 2.0679809889978243e-07
+Fifth-order contribution to this: -0.0002878385791709808
+total cost: -1.893408077717013
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505783774439 0.000909501159483392
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00045475058110594816 2.0679809101619753e-07
+Fifth-order contribution to this: -0.0002878385737144394
+total cost: -1.8934080777115287
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744427 0.000909501159483392
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059478 2.0679809101619718e-07
+Fifth-order contribution to this: -0.00028783857371443946
+total cost: -1.8934080777115305
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505869890142 0.0009095011767065318
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505897175176 2.0679809884843006e-07
+Fifth-order contribution to this: -0.0002878385791656904
+total cost: -1.8934080776966191
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744264 0.0009095011594833891
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059465 2.06798091016196e-07
+Fifth-order contribution to this: -0.0002878385737144385
+total cost: -1.8934080777115339
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.893408077692357
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505784076044 0.0009095011595437122
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811361078 2.0679809104362776e-07
+Fifth-order contribution to this: -0.0002878385737331856
+total cost: -1.8934080776966307
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505783774439 0.000909501159483392
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00045475058110594816 2.0679809101619753e-07
+Fifth-order contribution to this: -0.00028783857371443946
+total cost: -1.893408077711534
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505783774435 0.000909501159483391
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00045475058110594745 2.067980910161969e-07
+Fifth-order contribution to this: -0.0002878385737144392
+total cost: -1.8934080777115327
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505784076044 0.000909501159543712
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811361076 2.0679809104362755e-07
+Fifth-order contribution to this: -0.0002878385737331856
+total cost: -1.8934080776958266
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.893408077691584
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744427 0.000909501159483392
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059478 2.0679809101619718e-07
+Fifth-order contribution to this: -0.00028783857371443946
+total cost: -1.8934080777115336
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475059913190085 0.0009095012009923047
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547506018604038 2.0679810989239952e-07
+Fifth-order contribution to this: -0.0002878385868508151
+total cost: -1.8934080777077298
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744264 0.0009095011594833888
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00045475058110594615 2.067980910161957e-07
+Fifth-order contribution to this: -0.00028783857371443827
+total cost: -1.893408077711528
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505783774435 0.0009095011594833907
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00045475058110594724 2.067980910161967e-07
+Fifth-order contribution to this: -0.00028783857371443913
+total cost: -1.8934080777115294
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505868987761 0.0009095011765260558
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505896272797 2.0679809876635855e-07
+Fifth-order contribution to this: -0.0002878385791395082
+total cost: -1.893408077696289
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475056370105564 0.0009095011301306136
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00045475056642955796 2.067980776680038e-07
+Fifth-order contribution to this: -0.0002878385644235755
+total cost: -1.8934080777261686
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0004547505637010232 0.0009095011301305492
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00045475056642952597 2.0679807766797472e-07
+Fifth-order contribution to this: -0.0002878385644235549
+total cost: -1.8934080777262605
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.89340807769823
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.8934080776984623
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.8934080777115272
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.893408077711528
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.8934080777115279
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.893408077711528
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.8934080777393005
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00045475057837744486 0.0009095011594833932
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0004547505811059484 2.0679809101619774e-07
+Fifth-order contribution to this: -0.0002878385737144399
+total cost: -1.8934080777391535
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893862828293
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640544697248
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635405714107 0.0007909270835156029
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546354294419224 1.56391413797973e-07
+Fifth-order contribution to this: -0.00025030675207497396
+total cost: -1.8934640544795571
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00039546353247362165 0.0007909270673200259
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635348464043 1.5639140739321322e-07
+Fifth-order contribution to this: -0.00025030674698063555
+total cost: -1.8934640544697323
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00039546353247362246 0.0007909270673200257
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640326 1.563914073932124e-07
+Fifth-order contribution to this: -0.00025030674698063533
+total cost: -1.893464054469738
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635405039956 0.0007909270833807729
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546354287677726 1.5639141374465263e-07
+Fifth-order contribution to this: -0.0002503067520639791
+total cost: -1.8934640544482704
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736153 0.0007909270673200129
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635348463976 1.5639140739320795e-07
+Fifth-order contribution to this: -0.0002503067469806309
+total cost: -1.8934640544697234
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.893464054446013
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00039546353250191624 0.0007909270673766145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635348746982 1.5639140741559167e-07
+Fifth-order contribution to this: -0.00025030674699818667
+total cost: -1.8934640544485184
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00039546353247362236 0.0007909270673200264
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000395463534846404 1.56391407393213e-07
+Fifth-order contribution to this: -0.0002503067469806356
+total cost: -1.8934640544697243
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736176 0.000790927067320016
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635348463984 1.5639140739320853e-07
+Fifth-order contribution to this: -0.0002503067469806324
+total cost: -1.8934640544697243
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00039546353250191635 0.0007909270673766146
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635348746982 1.5639140741559167e-07
+Fifth-order contribution to this: -0.00025030674699818656
+total cost: -1.8934640544476125
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640544446943
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736226 0.000790927067320026
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635348464034 1.5639140739321253e-07
+Fifth-order contribution to this: -0.00025030674698063533
+total cost: -1.8934640544697232
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635518280819 0.0007909271060289453
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546355420086335 1.5639142270117918e-07
+Fifth-order contribution to this: -0.0002503067592307281
+total cost: -1.893464054460522
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736148 0.0007909270673200121
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484639724 1.5639140739320763e-07
+Fifth-order contribution to this: -0.0002503067469806307
+total cost: -1.8934640544697319
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00039546353247361666 0.0007909270673200151
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484639843 1.5639140739320858e-07
+Fifth-order contribution to this: -0.0002503067469806319
+total cost: -1.8934640544697328
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635404048468 0.0007909270831824754
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635427776286 1.563914136662333e-07
+Fifth-order contribution to this: -0.0002503067520334048
+total cost: -1.893464054448833
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000395463518787982 0.000790927039948745
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000395463521160763 1.5639139656886925e-07
+Fifth-order contribution to this: -0.00025030673831691287
+total cost: -1.8934640544797827
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635187879678 0.0007909270399487176
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0003954635211607498 1.563913965688588e-07
+Fifth-order contribution to this: -0.00025030673831690414
+total cost: -1.893464054479813
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640544529748
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.893464054453263
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.89346405446973
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640544697299
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640544697294
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640544697305
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640545005947
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0003954635324736249 0.0007909270673200316
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00039546353484640667 1.563914073932151e-07
+Fifth-order contribution to this: -0.00025030674698063723
+total cost: -1.8934640545004067
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893859518005
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132643087365
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055651886863 0.0005744111321006059
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055669119196 8.248703766519713e-08
+Fifth-order contribution to this: -0.00018177251405616766
+total cost: -1.8935132643183465
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825488764 0.0005744111182330088
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055599781212 8.248703368234616e-08
+Fifth-order contribution to this: -0.00018177250970142573
+total cost: -1.8935132643087025
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825488894 0.0005744111182330114
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055599781225 8.24870336823469e-08
+Fifth-order contribution to this: -0.0001817725097014263
+total cost: -1.8935132643087036
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055650977259 0.0005744111319186853
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028720556682095943 8.24870376129486e-08
+Fifth-order contribution to this: -0.0001817725140330381
+total cost: -1.8935132642761603
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055582548798 0.000574411118232993
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055599781132 8.248703368234158e-08
+Fifth-order contribution to this: -0.0001817725097014201
+total cost: -1.8935132643087689
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132642787134
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055582793784 0.0005744111182819908
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055600026124 8.248703369641419e-08
+Fifth-order contribution to this: -0.00018177250971653758
+total cost: -1.8935132642801866
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825488786 0.0005744111182330093
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055599781214 8.248703368234628e-08
+Fifth-order contribution to this: -0.00018177250970142608
+total cost: -1.8935132643087629
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055582548872 0.0005744111182330083
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028720555997812107 8.24870336823461e-08
+Fifth-order contribution to this: -0.0001817725097014255
+total cost: -1.89351326430876
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000287205558279379 0.000574411118281991
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205560002612 8.248703369641396e-08
+Fifth-order contribution to this: -0.00018177250971653782
+total cost: -1.893513264279427
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132642763508
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825488894 0.0005744111182330114
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055599781225 8.24870336823469e-08
+Fifth-order contribution to this: -0.00018177250970142638
+total cost: -1.893513264308766
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720557474885345 0.0005744111512209403
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055764720869 8.248704315666375e-08
+Fifth-order contribution to this: -0.00018177252014063805
+total cost: -1.8935132642862305
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055582548793 0.0005744111182329919
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055599781126 8.248703368234124e-08
+Fifth-order contribution to this: -0.00018177250970141966
+total cost: -1.89351326430871
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055582548871 0.0005744111182330077
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028720555997812063 8.248703368234584e-08
+Fifth-order contribution to this: -0.00018177250970142535
+total cost: -1.8935132643087134
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055649791862 0.0005744111316816058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028720556670241954 8.248703754485796e-08
+Fifth-order contribution to this: -0.00018177251399300386
+total cost: -1.8935132642792
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720554659361614 0.0005744110949104656
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028720554831684946 8.248702698398215e-08
+Fifth-order contribution to this: -0.00018177250231911956
+total cost: -1.8935132643050616
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002872055465936323 0.0005744110949104976
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002872055483168653 8.248702698399124e-08
+Fifth-order contribution to this: -0.00018177250231912954
+total cost: -1.8935132643049846
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132642913883
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132642916737
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132643087125
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132643087107
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132643087111
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132643087116
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.8935132643344441
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028720555825489046 0.0005744111182330145
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000287205559978124 8.248703368234778e-08
+Fifth-order contribution to this: -0.00018177250970142746
+total cost: -1.893513264334267
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893800469869
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593415156
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378482762925 0.0005886756983186124
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433785004231994 8.663476996753522e-08
+Fifth-order contribution to this: -0.00018628768209735718
+total cost: -1.8935296593531437
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378412595115 0.0005886756842850508
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378430255393 8.6634765836927e-08
+Fifth-order contribution to this: -0.00018628767768992305
+total cost: -1.8935296593415594
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378412595121 0.0005886756842850513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378430255392 8.663476583692697e-08
+Fifth-order contribution to this: -0.00018628767768992294
+total cost: -1.8935296593415645
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784818685434 0.0005886756981397359
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784995288155 8.663476991488501e-08
+Fifth-order contribution to this: -0.0001862876820750282
+total cost: -1.8935296593337199
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125950334 0.0005886756842850339
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302553055 8.663476583692186e-08
+Fifth-order contribution to this: -0.00018628767768991722
+total cost: -1.8935296593414863
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593268462
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378412842759 0.000588675684334579
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378430503031 8.663476585150486e-08
+Fifth-order contribution to this: -0.0001862876777052099
+total cost: -1.8935296593357591
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951234 0.0005886756842850513
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000294337843025539 8.663476583692684e-08
+Fifth-order contribution to this: -0.00018628767768992332
+total cost: -1.893529659341495
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378412595069 0.0005886756842850413
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302553435 8.66347658369241e-08
+Fifth-order contribution to this: -0.00018628767768992
+total cost: -1.8935296593414945
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784128427606 0.0005886756843345792
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784305030316 8.66347658515049e-08
+Fifth-order contribution to this: -0.00018628767770520997
+total cost: -1.8935296593352484
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593255504
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378412595121 0.0005886756842850517
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302553955 8.663476583692716e-08
+Fifth-order contribution to this: -0.00018628767768992324
+total cost: -1.8935296593414928
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000294337857957035 0.0005886757176800973
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378597230623 8.66347756663531e-08
+Fifth-order contribution to this: -0.00018628768825799892
+total cost: -1.8935296593423887
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378412595025 0.0005886756842850324
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378430255299 8.663476583692148e-08
+Fifth-order contribution to this: -0.0001862876776899168
+total cost: -1.8935296593415532
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378412595065 0.0005886756842850402
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378430255337 8.663476583692372e-08
+Fifth-order contribution to this: -0.00018628767768991963
+total cost: -1.8935296593415514
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378480695385 0.0005886756979051039
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378498355654 8.663476984582385e-08
+Fifth-order contribution to this: -0.00018628768203560308
+total cost: -1.8935296593260846
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378294541923 0.0005886756606744118
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433783122021943 8.663475888742238e-08
+Fifth-order contribution to this: -0.00018628767021643494
+total cost: -1.8935296593393534
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002943378294542057 0.0005886756606744381
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002943378312202324 8.663475888743e-08
+Fifth-order contribution to this: -0.00018628767021644312
+total cost: -1.893529659339282
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593266258
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593268798
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593415352
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593415345
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593415358
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593415365
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.8935296593612885
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00029433784125951543 0.000588675684285058
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00029433784302554253 8.663476583692892e-08
+Fifth-order contribution to this: -0.00018628767768992527
+total cost: -1.893529659361209
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893823997185
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388847242
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645463449594835 0.0005729092707106242
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645463621467584 8.205625860888228e-08
+Fifth-order contribution to this: -0.00018129523845277802
+total cost: -1.8935390388908429
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667237 0.0005729092568521746
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645462928545096 8.205625463906514e-08
+Fifth-order contribution to this: -0.00018129523410191124
+total cost: -1.8935390388846336
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645462756672586 0.0005729092568521791
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645462928545323 8.205625463906644e-08
+Fifth-order contribution to this: -0.00018129523410191238
+total cost: -1.8935390388846325
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645463440049964 0.000572909270519727
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645463611922734 8.205625855419894e-08
+Fifth-order contribution to this: -0.00018129523842778686
+total cost: -1.8935390388882989
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645462756672526 0.0005729092568521783
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645462928545307 8.205625463906635e-08
+Fifth-order contribution to this: -0.00018129523410191205
+total cost: -1.8935390388847908
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388830167
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645462759122953 0.0005729092569011867
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546293099571 8.205625465310495e-08
+Fifth-order contribution to this: -0.00018129523411702158
+total cost: -1.8935390388876419
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667236 0.0005729092568521745
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645462928545096 8.205625463906514e-08
+Fifth-order contribution to this: -0.00018129523410191124
+total cost: -1.8935390388847744
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667357 0.0005729092568521989
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854632 8.205625463907216e-08
+Fifth-order contribution to this: -0.00018129523410191943
+total cost: -1.893539038884775
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275912295 0.0005729092569011867
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546293099572 8.205625465310498e-08
+Fifth-order contribution to this: -0.00018129523411702188
+total cost: -1.893539038887495
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388819757
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645462756672553 0.0005729092568521786
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.000286454629285453 8.205625463906632e-08
+Fifth-order contribution to this: -0.00018129523410191233
+total cost: -1.8935390388847786
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546440390798 0.0005729092897968882
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645464575780845 8.205626407623153e-08
+Fifth-order contribution to this: -0.00018129524452739512
+total cost: -1.8935390388898343
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667255 0.000572909256852179
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854535 8.20562546390666e-08
+Fifth-order contribution to this: -0.00018129523410191235
+total cost: -1.8935390388846516
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645462756673643 0.0005729092568522003
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854639 8.205625463907255e-08
+Fifth-order contribution to this: -0.00018129523410191975
+total cost: -1.8935390388846547
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546342774338 0.0005729092702735956
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645463599616183 8.205625848369357e-08
+Fifth-order contribution to this: -0.00018129523838588275
+total cost: -1.8935390388832498
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645461592096457 0.0005729092335606573
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546176396927 8.205624796710254e-08
+Fifth-order contribution to this: -0.00018129522672940992
+total cost: -1.8935390388842952
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028645461592096376 0.0005729092335606551
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028645461763969135 8.205624796710177e-08
+Fifth-order contribution to this: -0.00018129522672940916
+total cost: -1.8935390388842785
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388804632
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388805662
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388846962
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.893539038884696
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388846944
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.893539038884693
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388908908
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002864546275667214 0.0005729092568521705
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002864546292854491 8.205625463906408e-08
+Fifth-order contribution to this: -0.00018129523410190989
+total cost: -1.8935390388908742
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893825493514
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382042422
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002824038096785465 0.0005648076210515166
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038113729701 7.975191267798007e-08
+Fifth-order contribution to this: -0.00017872985061301067
+total cost: -1.8935399382056888
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279486566 0.0005648076072841545
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892888 7.975190879002445e-08
+Fifth-order contribution to this: -0.00017872984629154593
+total cost: -1.8935399382044493
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279486474 0.0005648076072841523
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240380448928755 7.975190879002375e-08
+Fifth-order contribution to this: -0.00017872984629154517
+total cost: -1.8935399382044582
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002824038095800722 0.0005648076208545677
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240381127449547 7.975191262236086e-08
+Fifth-order contribution to this: -0.00017872985058667605
+total cost: -1.8935399382048237
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002824038027948532 0.0005648076072841295
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240380448927633 7.975190879001741e-08
+Fifth-order contribution to this: -0.0001787298462915378
+total cost: -1.8935399382040838
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382043587
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002824038028192482 0.0005648076073329196
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038045136714 7.975190880379595e-08
+Fifth-order contribution to this: -0.00017872984630657186
+total cost: -1.8935399382052776
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279486593 0.0005648076072841551
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892892 7.975190879002466e-08
+Fifth-order contribution to this: -0.0001787298462915463
+total cost: -1.8935399382041245
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279485146 0.000564807607284126
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892746 7.975190879001643e-08
+Fifth-order contribution to this: -0.00017872984629153693
+total cost: -1.8935399382041205
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380281924806 0.0005648076073329196
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240380451367153 7.9751908803796e-08
+Fifth-order contribution to this: -0.0001787298463065718
+total cost: -1.8935399382052482
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382042464
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000282403802794865 0.000564807607284153
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240380448928804 7.975190879002403e-08
+Fifth-order contribution to this: -0.0001787298462915454
+total cost: -1.893539938204113
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240381915031895 0.0005648076399950616
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240382084474263 7.975191802770948e-08
+Fifth-order contribution to this: -0.00017872985664299957
+total cost: -1.8935399382049032
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002824038027948518 0.0005648076072841271
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240380448927535 7.975190879001685e-08
+Fifth-order contribution to this: -0.0001787298462915372
+total cost: -1.8935399382044138
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279484994 0.0005648076072841232
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892733 7.97519087900157e-08
+Fifth-order contribution to this: -0.00017872984629153593
+total cost: -1.8935399382044058
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380945411753 0.0005648076206026583
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038111485408 7.975191255122069e-08
+Fifth-order contribution to this: -0.00017872985054352467
+total cost: -1.8935399382051883
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.0002824037912319615 0.0005648075841583462
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240379292638473 7.975190225920839e-08
+Fifth-order contribution to this: -0.00017872983897148446
+total cost: -1.893539938204446
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.000282403791231958 0.000564807584158339
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.00028240379292638094 7.975190225920624e-08
+Fifth-order contribution to this: -0.00017872983897148216
+total cost: -1.89353993820445
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382039289
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382039129
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382042983
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382042997
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382043048
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382043063
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382047335
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+length: 8 18
+2*[T] vs T3fnT3: -0.00028240380279487227 0.0005648076072841678
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0002824038044892955 7.975190879002825e-08
+Fifth-order contribution to this: -0.00017872984629155032
+total cost: -1.8935399382046874
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+callback: energy=-1.893822342009
+Optimization terminated successfully.
+         Current function value: -1.893540
+         Iterations: 15
+         Function evaluations: 432
+         Gradient evaluations: 16
+Optimization finished in 12.26 s
+Success: True
+Final energy: -1.8935399382042422
+(4, 5, 0, 1) | 0.2794853316140783
+(4, 5, 0, 3) | -0.0000053315707695
+(4, 5, 2, 1) | -0.0000060160207848
+(4, 5, 2, 3) | 0.4378042281724750
+(4, 7, 0, 1) | 0.0000040657914757
+(4, 7, 0, 3) | 0.3225972743026274
+(4, 7, 2, 1) | 0.3005133369632916
+(4, 7, 2, 3) | 0.0000034835341455
+(6, 5, 0, 1) | 0.0000034421521821
+(6, 5, 0, 3) | 0.3005162939543341
+(6, 5, 2, 1) | 0.3226291863117283
+(6, 5, 2, 3) | 0.0000030494199643
+(6, 7, 0, 1) | 0.3628840669826812
+(6, 7, 0, 3) | -0.0000048648160913
+(6, 7, 2, 1) | -0.0000041305763854
+(6, 7, 2, 3) | 0.2762055310496165
+(4, 6, 0, 2) | 0.1845251269314563
+(5, 7, 1, 3) | 0.1845244453303030
+(4, 0)         | 0.1005118445033869
+(5, 1)         | 0.1006500366364275
+(6, 0)         | -0.0000021120466489
+(7, 1)         | -0.0000013933464570
+(4, 2)         | -0.0000023353297250
+(5, 3)         | -0.0000015102580363
+(6, 2)         | -0.0980361137022403
+(7, 3)         | -0.0978947599973388
+None
+singles alt: [(4, 0), (5, 1), (6, 0), (7, 1), (4, 2), (5, 3), (6, 2), (7, 3)]
+Final evaluation of (unbiased) <H>: -1.8938223420087315

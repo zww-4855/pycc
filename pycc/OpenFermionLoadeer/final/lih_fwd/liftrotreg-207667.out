@@ -1,0 +1,121 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"openblas/0.3.23-omp"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "openblas/0.3.23-omp"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Lmod has detected the following error: The following module(s) are unknown:
+"python"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "python"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+/var/spool/slurm/job207667/slurm_script: line 15: activate: No such file or directory
+
+CondaError: Run 'conda init' before 'conda activate'
+
+converged SCF energy = -7.76736213574856
+[[ 0.04003959  0.5461471  -0.13924768  0.         -0.          1.4724109 ]
+ [ 0.9853072  -0.25570637 -0.1918667   0.         -0.         -0.12962715]
+ [ 0.0184864   0.38797506  0.8356816   0.         -0.         -0.9277768 ]
+ [-0.         -0.         -0.          0.          1.         -0.        ]
+ [-0.         -0.         -0.          1.         -0.         -0.        ]
+ [ 0.01662528 -0.37913547  0.5879016   0.         -0.          1.12079023]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:   0.27849071
+h1!!! [[ 7.22854815e-01 -5.25480058e-02 -6.54284215e-02  0.00000000e+00
+   0.00000000e+00 -1.56579337e-03]
+ [-5.25480058e-02  2.11116909e+00 -8.05212764e-02  0.00000000e+00
+   0.00000000e+00  3.05681850e-01]
+ [-6.54284215e-02 -8.05212764e-02  1.92372024e+00  0.00000000e+00
+   0.00000000e+00  1.92419121e-02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  2.06518172e+00
+   0.00000000e+00  0.00000000e+00]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
+   2.06518172e+00  0.00000000e+00]
+ [-1.56579337e-03  3.05681850e-01  1.92419121e-02  0.00000000e+00
+   0.00000000e+00  2.57357566e+00]]
+SCF energy pycc: -7.767362135748562 -7.767362135748562
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=6, n_spin_orbitals=12, n_electrons=4
+[-2.37089933 -2.37089933 -0.31665704 -0.31665704  0.07684843  0.07684843
+  0.15793876  0.15793876  0.15793876  0.15793876  0.61299931  0.61299931]
+geo: [['H', [0, 0, 0]], ['Li', [0, 0, 1]]]
+Original Hamiltonian shape: (4096, 4096)
+Restricted Hamiltonian shape: (225, 225)
+hf_index: 3840
+restrict sz: (225,)
+e cmp: -7.784460280031222
+<1100|H|1100> = (-7.767362135748563+0j)
+
+nelectrons: 4
+Energy at theta=0 (should be HF energy): -7.767362135749  PySCF RHF energy: -7.767362135749,-7.767362135749
+Starting optimization... (this may take some time for larger ansatz sizes)
+callback: energy=-7.781524962280
+callback: energy=-7.783586500702
+callback: energy=-7.783966696185
+callback: energy=-7.784110986583
+callback: energy=-7.784209351669
+callback: energy=-7.784252048022
+callback: energy=-7.784313098062
+callback: energy=-7.784379897393
+callback: energy=-7.784398247449
+callback: energy=-7.784405493780
+callback: energy=-7.784410016667
+callback: energy=-7.784413813828
+callback: energy=-7.784414241280
+callback: energy=-7.784414321850
+callback: energy=-7.784414350991
+callback: energy=-7.784414365793
+callback: energy=-7.784414378097
+callback: energy=-7.784414378560
+callback: energy=-7.784414378754
+callback: energy=-7.784414378855
+callback: energy=-7.784414378901
+Optimization terminated successfully.
+         Current function value: -7.784414
+         Iterations: 21
+         Function evaluations: 2754
+         Gradient evaluations: 34
+Optimization finished in 902.38 s
+Success: True
+Final energy: -7.784414378900721
+Final parameters (first 10): [ 3.90000692e-04 -6.32233125e-08 -2.35605495e-08 -5.45324434e-04
+  3.90055546e-04 -4.41984708e-08  6.90929500e-08 -5.45488286e-04
+  3.02503027e-02 -7.70145485e-08]
+length: 16 64
+Final T1: [ 3.90000692e-04 -6.32233125e-08 -2.35605495e-08 -5.45324434e-04
+  3.90055546e-04 -4.41984708e-08  6.90929500e-08 -5.45488286e-04
+  3.02503027e-02 -7.70145485e-08 -3.82839743e-08 -2.03586347e-04
+  3.02490831e-02 -3.81228959e-08 -3.24247720e-08 -2.03467740e-04]
+Final T2: [ 3.38570059e-03  1.31464308e-07 -1.93043670e-07  1.59453297e-03
+ -3.13275955e-07  1.73131379e-03 -1.12199892e-07  2.99976732e-07
+ -2.55392242e-07 -1.16993471e-07  1.72955231e-03 -3.74520952e-07
+  1.59664721e-03  3.65568642e-07  5.45734858e-09  7.80853219e-04
+  5.70041052e-04 -2.75102916e-08  1.33508724e-08 -4.34525509e-03
+  4.37773800e-08  2.97340882e-03 -1.37595447e-08 -5.89264722e-09
+  6.93558878e-08  4.00736432e-08  2.97338554e-03  1.74961754e-08
+ -1.44449312e-03 -2.19782267e-08  1.19803156e-08  2.91099298e-03
+  5.70163842e-04  5.56407589e-08  8.40352365e-08 -1.44445190e-03
+  2.57829019e-08  2.97332293e-03 -1.37595447e-08  2.06995055e-08
+  2.44557599e-08 -3.29793219e-08  2.97347070e-03  2.02446091e-08
+ -4.34515409e-03  1.70884395e-08 -1.57040115e-08  2.91157182e-03
+  2.23394604e-02 -1.09437425e-07 -2.20761032e-09 -4.33282017e-02
+ -5.36082712e-08  3.63984603e-02  1.35022934e-08 -5.73333003e-08
+  6.83982578e-09 -6.74517452e-09  3.64225876e-02 -7.65423935e-09
+ -4.34257782e-02  2.15300932e-08 -1.59464175e-08  9.70545685e-02]
+/var/spool/slurm/job207667/slurm_script: line 24: deactivate: No such file or directory

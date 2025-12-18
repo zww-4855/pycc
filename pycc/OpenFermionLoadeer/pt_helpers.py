@@ -11,7 +11,8 @@ def build_penalty_op(F,W,T2,o,v,D2,D3):
     # verify I get [T] 
     T2eff = D2T2eff*D2
     #penalty_op_T2eff = pycc.pcc_base.get_WnT2_energy(T2eff,T2eff.transpose(2,3,0,1))  
-    print('shape of t2eff',T2eff.shape,F[o,o].shape,T3SO.shape)
+    #print('shape of t2eff',T2eff.shape,F[o,o].shape,T3SO.shape)
+    
     return T2eff
 
 

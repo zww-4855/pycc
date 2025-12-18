@@ -1,0 +1,33 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"openblas/0.3.23-omp"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "openblas/0.3.23-omp"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Lmod has detected the following error: The following module(s) are unknown:
+"python"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "python"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Traceback (most recent call last):
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/OpenFermionLoadeer/final/BH/new.py", line 51, in <module>
+    obj2.drive_vqe()
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/OpenFermionLoadeer/pycc_classes.py", line 643, in drive_vqe
+    self.print_final_amps(res,len_T1,len_T2)
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/OpenFermionLoadeer/pycc_classes.py", line 651, in print_final_amps
+    print(f"{op:<12} | {t2amp:.16f}")
+TypeError: unsupported format string passed to tuple.__format__
+/var/spool/slurm/job210228/slurm_script: line 24: deactivate: No such file or directory

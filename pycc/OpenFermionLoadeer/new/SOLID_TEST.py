@@ -16,7 +16,7 @@ from scipy.optimize import minimize
 def run_pyscf2():
     geometry = [
         ['H', [0,0,0]],
-        ['Li', [0,0,1]]
+        ['H', [0,0,1]]
     ]
     basis = 'sto-3g'
     multiplicity = 1
@@ -50,139 +50,6 @@ HF_energy = molecule.hf_energy
 H=build_H_way1(molecule)
 H1=build_H_way2(molecule)
 
-
-print("H:", H)
-#print("H1:",H1)
-from openfermionpyscf import generate_molecular_hamiltonian
-def test():
-    geometry = [
-        ['H', [0,0,0]],
-        ['Li', [0,0,1]]
-    ]
-    basis = 'sto-3g'
-    multiplicity = 1
-    charge = 0
-    hdef = generate_molecular_hamiltonian(geometry,basis,multiplicity, charge)
-    return hdef
-
-Hdef = test()
-print('Hdef:',get_sparse_operator(Hdef))
-########################################################################################
-########################################################################################
-########################################################################################
-
-import pycc.OpenFermionLoadeer.pycc_classes as pycc
-def run_pyscf():
-    mol = gto.Mole()
-    mol.atom = [
-        ["H", (0.0, 0.0, 0.0)],
-        ["H", (0.0, 0.0, 1)],
-    ]
-    mol.basis = "sto-3g"
-    mol.spin = 0
-    mol.charge = 0
-    mol.build()
-
-    mf = scf.RHF(mol)
-    mf.kernel()
-    print(dir(mol))
-    # electron / orbital counts
-    print(mol.nelec)
-    return mol, mf
-
-pyscf_mol, pyscf_mf = run_pyscf()
-cc_info = {"dropcore":0}
-
-spats = pycc.SpatialOrbInfo(pyscf_mol,pyscf_mf,cc_info)
-obj2 = pycc.MeanFieldToJWspin(pyscf_mol,pyscf_mf,cc_info,spats)
-obj2.collect_data(pyscf_mol,pyscf_mf,cc_info)
-HHH = obj2.export_FermionOperator()
-obj = obj2
-
-
-print("HHH",get_sparse_operator(jordan_wigner(HHH)))
-print("HHH new", HHH)
-
-
-
-
-
-
-
-
-
-
-
-
-from scipy.sparse import linalg
-## Compute ground energy
-eigs, _ = linalg.eigsh(H, k=1, which="SA")
-ground_energy = eigs[0]
-
-eigs, _ = linalg.eigsh(H1, k=1, which="SA")
-groundE = eigs[0]
-
-eigs, _ = linalg.eigsh(HHH, k=1, which="SA")
-tmpE = eigs[0]
-
-print("e cmp:",ground_energy,groundE,tmpE)
-
-
-
-sys.exit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#obj = generate_mf_data()
-
-print(type(obj.g),np.shape(obj.g),np.shape(obj.hcore),obj.E_nuc)
-interaction = InteractionOperator(constant=obj.E_nuc, one_body_tensor=obj.int_H, two_body_tensor=0.5*obj.int_V)
-
-# FermionOperator and ensure Hermitian
-fermion_ham = get_fermion_operator(interaction)
-#fermion_ham = 0.5 * (fermion_ham + hermitian_conjugated(fermion_ham))
-
-# Map to qubit operator (Jordan-Wigner)
-#qubit_ham = jordan_wigner(fermion_ham)
-
-# Convert to sparse matrix (scipy.sparse) and then to dense for small system
-H_sparse = get_sparse_operator(jordan_wigner(fermion_ham))   # sparse (2^n x 2^n)
-##H = H_sparse.toarray()                                # dense matrix (only OK for small n_qubits)
-
-#print("original H:", np.shape(0.5*obj.int_V),obj.int_H)
-#print("now H:",np.shape(HHH),HHH)
-
-
-
-
-# Convert to sparse matrix
-#sparse_op = get_sparse_operator(obj.int_Vspin_fermiop, obj.n_spin_orbitals)
-
-# Convert sparse to dense NumPy array
-#matrix = sparse_op.toarray()
-#print("final spin orb g tensor:",matrix)
-print("compare against g",obj.g)
-print("sparseop:",obj.int_Vspin_fermiop)
-
-sys.exit()
-
-########################################################################################
-########################################################################################
-
 from scipy.sparse import linalg
 ## Compute ground energy
 eigs, _ = linalg.eigsh(H, k=1, which="SA")
@@ -203,26 +70,23 @@ n_qubits = 4
 
 #Now, compute energy manually with formula E_psi = <psi|H|psi>
 
-#v1100 = build_hf_state(obj) #np.zeros(2**n_qubits)
-
-
-v1100 = obj.build_hf_state()
-#v1100[int('1100', 2)] = 1
-print('v1100:', v1100)
-#sys.exit()
+#compute energy with |1100>. This is a 2**n_qubits sized vector with 1 in the int('1100', 2) index
+v1100 = np.zeros(2**n_qubits)
+v1100[int('1100', 2)] = 1
 E1100 = v1100 @ H @ v1100
 
 #compute energy with |0011>. This is a 2**n_qubits sized vector with 1 in the int('0011', 2) index
-#v0011 = np.zeros(2**n_qubits)
-#v0011[int('0011', 2)] = 1
-#E0011 = v0011 @ H @ v0011
+v0011 = np.zeros(2**n_qubits)
+v0011[int('0011', 2)] = 1
+E0011 = v0011 @ H @ v0011
 
 #print results
 print("Hartree Fock Energy: {}\n".format(HF_energy))
 print("<1100|H|1100> = {}\n".format(E1100))
-#print("<0011|H|0011> = {}\n".format(E0011))
+print("<0011|H|0011> = {}\n".format(E0011))
 
-sys.exit()
+
+
 
 # build uccsd generator
 n_occ_spin = molecule.n_electrons
@@ -317,13 +181,6 @@ def trotterized_u_of_theta(theta, reps=1):
 H_dense = H
 psi0= v1100
 
-def transform_theta(theta):
-    theta0 = InteractionOperator(0.0, 0.0, theta )
-    theta0_fop = get_fermion_operator(theta0)
-    theta0_mat = get_sparse_operator(jordan_wigner(theta0_fop))
-    print("transformed theta:",np.shape(theta0_mat),theta0_mat,theta)
-    return theta0_mat
-
 def energy_from_theta(theta, reps=1):
     """
     Compute energy expectation <psi(theta)| H |psi(theta)> where
@@ -331,12 +188,8 @@ def energy_from_theta(theta, reps=1):
     """
     U = trotterized_u_of_theta(theta, reps=reps)
     psi = U.dot(psi0)
-
-    #[T] correction
-#    thetaT = transform_theta(theta)
-    ## compute [T] fourth order diagrams-> sqrBrakT_scale
     # expectation value
-    E = np.vdot(psi, H_dense.dot(psi)).real # + sqrBrakT_scale
+    E = np.vdot(psi, H_dense.dot(psi)).real
     return E
 
 # Quick test: zero parameters should give HF energy (within numerical error)

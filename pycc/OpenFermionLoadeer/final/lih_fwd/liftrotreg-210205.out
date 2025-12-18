@@ -1,0 +1,186 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"openblas/0.3.23-omp"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "openblas/0.3.23-omp"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Lmod has detected the following error: The following module(s) are unknown:
+"python"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "python"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+/var/spool/slurm/job210205/slurm_script: line 15: activate: No such file or directory
+
+CondaError: Run 'conda init' before 'conda activate'
+
+converged SCF energy = -7.76736213574856
+[[ 4.00395861e-02  5.46147101e-01 -1.39247677e-01  4.38452654e-17
+   0.00000000e+00  1.47241090e+00]
+ [ 9.85307204e-01 -2.55706373e-01 -1.91866701e-01  9.03714535e-17
+   0.00000000e+00 -1.29627147e-01]
+ [ 1.84864012e-02  3.87975058e-01  8.35681602e-01 -3.67301668e-16
+   0.00000000e+00 -9.27776802e-01]
+ [-0.00000000e+00  0.00000000e+00  2.22044605e-16  1.00000000e+00
+   0.00000000e+00  0.00000000e+00]
+ [-0.00000000e+00  0.00000000e+00 -0.00000000e+00 -0.00000000e+00
+   1.00000000e+00  0.00000000e+00]
+ [ 1.66252758e-02 -3.79135465e-01  5.87901598e-01 -2.66960195e-16
+   0.00000000e+00  1.12079023e+00]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:   0.27849071
+h1!!! [[ 7.22854815e-01 -5.25480058e-02 -6.54284215e-02  2.20763948e-17
+   0.00000000e+00 -1.56579337e-03]
+ [-5.25480058e-02  2.11116909e+00 -8.05212764e-02  1.79054765e-18
+   0.00000000e+00  3.05681850e-01]
+ [-6.54284215e-02 -8.05212764e-02  1.92372024e+00 -3.61315268e-16
+   0.00000000e+00  1.92419121e-02]
+ [ 2.20763948e-17  1.79054765e-18 -3.61315268e-16  2.06518172e+00
+   0.00000000e+00 -2.29310157e-17]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
+   2.06518172e+00  0.00000000e+00]
+ [-1.56579337e-03  3.05681850e-01  1.92419121e-02 -2.29310157e-17
+   0.00000000e+00  2.57357566e+00]]
+SCF energy pycc: -7.767362135748564 -7.767362135748564
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=6, n_spin_orbitals=12, n_electrons=4
+[-2.37089933 -2.37089933 -0.31665704 -0.31665704  0.07684843  0.07684843
+  0.15793876  0.15793876  0.15793876  0.15793876  0.61299931  0.61299931]
+geo: [['H', [0, 0, 0]], ['Li', [0, 0, 1]]]
+Original Hamiltonian shape: (4096, 4096)
+Restricted Hamiltonian shape: (225, 225)
+hf_index: 3840
+restrict sz: (225,)
+e cmp: -7.784460280031223
+<1100|H|1100> = (-7.767362135748565+0j)
+
+nelectrons: 4
+Energy at theta=0 (should be HF energy): -7.767362135749  PySCF RHF energy: -7.767362135749,-7.767362135749
+Starting optimization... (this may take some time for larger ansatz sizes)
+length: 16 76
+Final T1: [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+Final T2: [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0.]
+size of no nv: 4 8
+a,b,i,j 0 1 0 1
+a,b,i,j 0 3 0 1
+a,b,i,j 0 5 0 1
+a,b,i,j 0 7 0 1
+a,b,i,j 2 1 0 1
+a,b,i,j 2 3 0 1
+a,b,i,j 2 5 0 1
+a,b,i,j 2 7 0 1
+a,b,i,j 4 1 0 1
+a,b,i,j 4 3 0 1
+a,b,i,j 4 5 0 1
+a,b,i,j 4 7 0 1
+a,b,i,j 6 1 0 1
+a,b,i,j 6 3 0 1
+a,b,i,j 6 5 0 1
+a,b,i,j 6 7 0 1
+a,b,i,j 0 1 0 3
+a,b,i,j 0 3 0 3
+a,b,i,j 0 5 0 3
+a,b,i,j 0 7 0 3
+a,b,i,j 2 1 0 3
+a,b,i,j 2 3 0 3
+a,b,i,j 2 5 0 3
+a,b,i,j 2 7 0 3
+a,b,i,j 4 1 0 3
+a,b,i,j 4 3 0 3
+a,b,i,j 4 5 0 3
+a,b,i,j 4 7 0 3
+a,b,i,j 6 1 0 3
+a,b,i,j 6 3 0 3
+a,b,i,j 6 5 0 3
+a,b,i,j 6 7 0 3
+a,b,i,j 0 1 2 1
+a,b,i,j 0 3 2 1
+a,b,i,j 0 5 2 1
+a,b,i,j 0 7 2 1
+a,b,i,j 2 1 2 1
+a,b,i,j 2 3 2 1
+a,b,i,j 2 5 2 1
+a,b,i,j 2 7 2 1
+a,b,i,j 4 1 2 1
+a,b,i,j 4 3 2 1
+a,b,i,j 4 5 2 1
+a,b,i,j 4 7 2 1
+a,b,i,j 6 1 2 1
+a,b,i,j 6 3 2 1
+a,b,i,j 6 5 2 1
+a,b,i,j 6 7 2 1
+a,b,i,j 0 1 2 3
+a,b,i,j 0 3 2 3
+a,b,i,j 0 5 2 3
+a,b,i,j 0 7 2 3
+a,b,i,j 2 1 2 3
+a,b,i,j 2 3 2 3
+a,b,i,j 2 5 2 3
+a,b,i,j 2 7 2 3
+a,b,i,j 4 1 2 3
+a,b,i,j 4 3 2 3
+a,b,i,j 4 5 2 3
+a,b,i,j 4 7 2 3
+a,b,i,j 6 1 2 3
+a,b,i,j 6 3 2 3
+a,b,i,j 6 5 2 3
+a,b,i,j 6 7 2 3
+a,b,i,j 0 2 0 2
+a,b,i,j 1 3 1 3
+a,b,i,j 0 4 0 2
+a,b,i,j 1 5 1 3
+a,b,i,j 0 6 0 2
+a,b,i,j 1 7 1 3
+a,b,i,j 2 4 0 2
+a,b,i,j 3 5 1 3
+a,b,i,j 2 6 0 2
+a,b,i,j 3 7 1 3
+a,b,i,j 4 6 0 2
+a,b,i,j 5 7 1 3
+o slice: slice(None, 4, None)
+Traceback (most recent call last):
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/OpenFermionLoadeer/final/lih_fwd/new.py", line 51, in <module>
+    obj2.drive_vqe()
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/OpenFermionLoadeer/pycc_classes.py", line 659, in drive_vqe
+    res = minimize(self.cost_function, x0=theta0, method="BFGS", options=opts, callback=self.callback)
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/scipy/optimize/_minimize.py", line 733, in minimize
+    res = _minimize_bfgs(fun, x0, args, jac, callback, **options)
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/scipy/optimize/_optimize.py", line 1393, in _minimize_bfgs
+    sf = _prepare_scalar_function(fun, x0, jac, args=args, epsilon=eps,
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/scipy/optimize/_optimize.py", line 291, in _prepare_scalar_function
+    sf = ScalarFunction(fun, x0, args, grad, hess,
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py", line 223, in __init__
+    self._update_fun()
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py", line 295, in _update_fun
+    fx = self._wrapped_fun(self.x)
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py", line 21, in wrapped
+    fx = fun(np.copy(x), *args)
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/OpenFermionLoadeer/pycc_classes.py", line 635, in cost_function
+    t3_penalty = pycc.OpenFermionLoadeer.pt_helpers.uccsd_FO_triples_corrections(F,W,T2,o,v,D3)
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/OpenFermionLoadeer/pt_helpers.py", line 6, in uccsd_FO_triples_corrections
+    D3T3 = pycc.build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,T2)
+  File "/autofs/nccsopen-svm1_home/zwu/develop/pycc/pycc/build_sqrbrak_corrections.py", line 19, in build_T3_secondO_spin
+    rooovvv = -0.250000000 * np.einsum("ilab,jklc->ijkabc",t2,g[o,o,o,v],optimize="optimal")
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/numpy/_core/einsumfunc.py", line 1435, in einsum
+    operands, contraction_list = einsum_path(*operands, optimize=optimize,
+  File "/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/numpy/_core/einsumfunc.py", line 915, in einsum_path
+    raise ValueError("Size of label '%s' for operand %d (%d) "
+ValueError: Size of label 'l' for operand 1 (8) does not match previous terms (4).
+/var/spool/slurm/job210205/slurm_script: line 24: deactivate: No such file or directory

@@ -1,0 +1,332 @@
+converged SCF energy = -24.611975751172
+[[ 9.92825081e-01 -2.84085512e-01  9.34951201e-02  1.32893795e-17
+   1.02699370e-16 -6.65323326e-02]
+ [ 2.56286195e-02  9.59173800e-01 -3.52661489e-01 -5.04889551e-17
+  -3.88385867e-16  2.55144130e-01]
+ [ 3.45516992e-19 -3.78142139e-17 -1.15441508e-16  3.55058899e-02
+   9.99369467e-01  1.55787950e-15]
+ [-4.80886049e-19  9.93998815e-18  2.78813410e-17  9.99369467e-01
+  -3.55058899e-02  7.20435648e-17]
+ [ 2.08646774e-03  2.55609642e-02  5.72926882e-01  2.47308393e-17
+  -1.16631864e-15  8.47392124e-01]
+ [-2.43844111e-03  2.54600814e-01  6.85278259e-01  1.49085710e-16
+   9.58329275e-16 -7.36397389e-01]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore: -17.34120052
+h1!!! [[-3.31146820e+00 -1.29048411e-01  5.43058966e-02  2.45128178e-18
+   2.85513033e-17 -1.52142008e-02]
+ [-1.29048411e-01  2.16950528e+00 -1.83807845e-01  9.68956491e-18
+  -5.03733130e-16  2.26927788e-01]
+ [ 5.43058966e-02 -1.83807845e-01  2.01361933e+00  2.55499737e-16
+  -9.49823554e-16  4.52724144e-01]
+ [ 2.45128178e-18  9.68956491e-18  2.55499737e-16  2.67422618e+00
+  -7.50808229e-17  2.06882086e-16]
+ [ 2.85513033e-17 -5.03733130e-16 -9.49823554e-16 -6.48038842e-17
+   2.67422618e+00  7.24315627e-16]
+ [-1.52142008e-02  2.26927788e-01  4.52724144e-01  2.06882086e-16
+   7.24315627e-16  2.47422177e+00]]
+SCF energy pycc: -24.611975751171972 -24.611975751171972
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=6, n_spin_orbitals=12, n_electrons=6
+[-7.39758616 -7.39758616 -0.45630733 -0.45630733 -0.21023763 -0.21023763
+  0.23632657  0.23632657  0.23632657  0.23632657  0.29839104  0.29839104]
+geo: [['B', [0, 0, 0]], ['H', [0, 0, 2.0]]]
+Original Hamiltonian shape: (4096, 4096)
+Restricted Hamiltonian shape: (400, 400)
+hf_index: 4032
+restrict sz: (400,)
+e cmp: -24.7190470342793
+<1100|H|1100> = (-24.61197575117197+0j)
+
+nelectrons: 6
+Energy at theta=0 (should be HF energy): -24.611975751172  PySCF RHF energy: -24.611975751172,-24.611975751172
+Starting optimization... (this may take some time for larger ansatz sizes)
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 0.0 0.0
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.0255530250924047e-19 9.153971107645802e-38
+total cost: -24.61197575181483
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4376945957338099e-19 2.066965750602203e-38
+total cost: -24.61197575194745
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.850316224571567e-19 3.4236701309127776e-38
+total cost: -24.611975750921896
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4376945957338099e-19 2.066965750602203e-38
+total cost: -24.61197575194745
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.1105922308454812e-18 1.2334151032143426e-36
+total cost: -24.611975754148787
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.396354500463977e-18 1.9498058909660027e-36
+total cost: -24.611975750274226
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.850316224571567e-19 3.4236701309127776e-38
+total cost: -24.611975750921896
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.396354500463977e-18 1.9498058909660027e-36
+total cost: -24.611975750274226
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.8795279528609724e-19 3.5326253255857577e-38
+total cost: -24.611975751837623
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.0642137467802113e-19 9.389405885956821e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.478118959730591e-19 2.1848356591150444e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.9164619557286502e-19 3.6728264277552827e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.478118959730591e-19 2.1848356591150444e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.1157672422513892e-18 1.2449365388812702e-36
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4134420813938335e-18 1.9978185174549325e-36
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.9164619557286502e-19 3.6728264277552827e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4134420813938335e-18 1.9978185174549325e-36
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.2040163779896045e-19 4.857688194446415e-38
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.709871043448937e-19 1.3763143159020903e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.6493048427395373e-19 2.72020646428409e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.022575714664853e-19 1.0456610922223349e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.434888780269316e-19 1.179846093282003e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -4.072491488119183e-19 1.6585186920803198e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.8037081870047316e-19 7.860779597877359e-38
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -8.687168947924168e-20 7.54669043297779e-39
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.8165547979741894e-22 1.4566090525939805e-43
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -7.745205909472325e-20 5.998821458012502e-39
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.0642137467802113e-19 9.389405885956821e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.478118959730591e-19 2.1848356591150444e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.9164619557286502e-19 3.6728264277552827e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4781189597305915e-19 2.184835659115046e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.1157672422513892e-18 1.2449365388812702e-36
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4134420813938333e-18 1.9978185174549318e-36
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.9164619557286507e-19 3.672826427755285e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4134420813938337e-18 1.9978185174549328e-36
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.2040163779896045e-19 4.857688194446415e-38
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.025553025092404e-19 9.153971107645799e-38
+total cost: -24.61197575181483
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4376945957338094e-19 2.0669657506022015e-38
+total cost: -24.61197575194745
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.8503162245715665e-19 3.423670130912776e-38
+total cost: -24.611975750921896
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.4376945957338094e-19 2.0669657506022015e-38
+total cost: -24.61197575194745
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.110592230845481e-18 1.233415103214342e-36
+total cost: -24.611975754148787
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.3963545004639766e-18 1.9498058909660014e-36
+total cost: -24.611975750274226
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.8503162245715668e-19 3.4236701309127765e-38
+total cost: -24.611975750921896
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.3963545004639766e-18 1.9498058909660014e-36
+total cost: -24.611975750274226
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.8795279528609705e-19 3.5326253255857503e-38
+total cost: -24.611975751837623
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.7098710434489353e-19 1.3763143159020892e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.649304842739537e-19 2.720206464284089e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.0225757146648528e-19 1.0456610922223344e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.434888780269316e-19 1.179846093282003e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -4.072491488119182e-19 1.6585186920803192e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.8037081870047307e-19 7.860779597877354e-38
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -8.687168947924167e-20 7.546690432977788e-39
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.816554797974189e-22 1.4566090525939803e-43
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -7.74520590947232e-20 5.998821458012496e-39
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.709871043448937e-19 1.3763143159020903e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.434888780269315e-19 1.1798460932820021e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -8.687168947924168e-20 7.54669043297779e-39
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.6493048427395373e-19 2.72020646428409e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -4.0724914881191827e-19 1.6585186920803194e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.8165547979741894e-22 1.4566090525939805e-43
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.0225757146648529e-19 1.0456610922223346e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.8037081870047316e-19 7.860779597877359e-38
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -7.745205909472324e-20 5.998821458012501e-39
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.7098710434489353e-19 1.3763143159020892e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.434888780269315e-19 1.1798460932820021e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -8.687168947924166e-20 7.546690432977785e-39
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.649304842739537e-19 2.720206464284089e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -4.0724914881191817e-19 1.6585186920803188e-37
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.816554797974189e-22 1.4566090525939803e-43
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.0225757146648528e-19 1.0456610922223344e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.8037081870047307e-19 7.860779597877354e-38
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -7.74520590947232e-20 5.998821458012496e-39
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -7.732144337561429e-21 5.978605605688327e-41
+total cost: -24.611975751705085
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -8.084872799356323e-21 6.536516818177175e-41
+total cost: -24.611975751626314
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.3229146231416734e-20 1.7501031001220758e-40
+total cost: -24.61197575097788
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -8.084872799356323e-21 6.536516818177175e-41
+total cost: -24.611975751626314
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.0350022811816138e-20 1.0712297220511442e-40
+total cost: -24.611975753494452
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.417516185971365e-20 1.1679416881376265e-39
+total cost: -24.61197575248471
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.3229146231416732e-20 1.7501031001220754e-40
+total cost: -24.61197575097788
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -3.417516185971365e-20 1.1679416881376265e-39
+total cost: -24.61197575248471
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -6.489768502572663e-20 4.211709521698423e-39
+total cost: -24.61197575638094
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.34444303537873e-19 1.8075270753783727e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.34444303537873e-19 1.8075270753783727e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.2114920912929836e-19 4.890697269851414e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.211492091292983e-19 4.890697269851412e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.2114920912929826e-19 4.89069726985141e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -2.211492091292982e-19 4.890697269851408e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.2610178730850461e-19 1.5901660762399335e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.261017873085046e-19 1.590166076239933e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.2780090704650523e-19 1.633307184190947e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.2780090704650523e-19 1.633307184190947e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.2780090704650518e-19 1.633307184190946e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.278009070465052e-19 1.6333071841909464e-38
+total cost: -24.611975751171965
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: -1.688298806144866e-18 2.85035285883018e-36
+total cost: -24.61197575117197
+length: 18 99
+Estimated difference between T3^fnT3 - (T2^WT3 + h.c.) is: 

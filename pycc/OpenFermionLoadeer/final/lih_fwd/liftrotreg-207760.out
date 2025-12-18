@@ -1,0 +1,202 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"openblas/0.3.23-omp"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "openblas/0.3.23-omp"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Lmod has detected the following error: The following module(s) are unknown:
+"python"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "python"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+/var/spool/slurm/job207760/slurm_script: line 15: activate: No such file or directory
+
+CondaError: Run 'conda init' before 'conda activate'
+
+converged SCF energy = -7.76736213574857
+[[ 0.04003959  0.5461471  -0.13924768  0.         -0.          1.4724109 ]
+ [ 0.9853072  -0.25570637 -0.1918667   0.         -0.         -0.12962715]
+ [ 0.0184864   0.38797506  0.8356816   0.         -0.         -0.9277768 ]
+ [-0.         -0.         -0.          0.          1.         -0.        ]
+ [-0.         -0.         -0.          1.         -0.         -0.        ]
+ [ 0.01662528 -0.37913547  0.5879016   0.         -0.          1.12079023]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:   0.27849071
+h1!!! [[ 7.22854815e-01 -5.25480058e-02 -6.54284215e-02  0.00000000e+00
+   0.00000000e+00 -1.56579337e-03]
+ [-5.25480058e-02  2.11116909e+00 -8.05212764e-02  0.00000000e+00
+   0.00000000e+00  3.05681850e-01]
+ [-6.54284215e-02 -8.05212764e-02  1.92372024e+00  0.00000000e+00
+   0.00000000e+00  1.92419121e-02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  2.06518172e+00
+   0.00000000e+00  0.00000000e+00]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
+   2.06518172e+00  0.00000000e+00]
+ [-1.56579337e-03  3.05681850e-01  1.92419121e-02  0.00000000e+00
+   0.00000000e+00  2.57357566e+00]]
+SCF energy pycc: -7.767362135748567 -7.767362135748567
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=6, n_spin_orbitals=12, n_electrons=4
+[-2.37089933 -2.37089933 -0.31665704 -0.31665704  0.07684843  0.07684843
+  0.15793876  0.15793876  0.15793876  0.15793876  0.61299931  0.61299931]
+geo: [['H', [0, 0, 0]], ['Li', [0, 0, 1]]]
+Original Hamiltonian shape: (4096, 4096)
+Restricted Hamiltonian shape: (225, 225)
+hf_index: 3840
+restrict sz: (225,)
+e cmp: -7.784460280031217
+<1100|H|1100> = (-7.76736213574856+0j)
+
+nelectrons: 4
+Energy at theta=0 (should be HF energy): -7.767362135749  PySCF RHF energy: -7.767362135749,-7.767362135749
+Starting optimization... (this may take some time for larger ansatz sizes)
+callback: energy=-7.781481096399
+callback: energy=-7.783600991799
+callback: energy=-7.784001073471
+callback: energy=-7.784146576775
+callback: energy=-7.784252945053
+callback: energy=-7.784294360719
+callback: energy=-7.784354587528
+callback: energy=-7.784420907912
+callback: energy=-7.784439129979
+callback: energy=-7.784445167828
+callback: energy=-7.784451055182
+callback: energy=-7.784452949172
+callback: energy=-7.784454143764
+callback: energy=-7.784454852512
+callback: energy=-7.784454992403
+callback: energy=-7.784455034700
+callback: energy=-7.784455084659
+callback: energy=-7.784455086320
+callback: energy=-7.784455086959
+callback: energy=-7.784455087619
+callback: energy=-7.784455087641
+callback: energy=-7.784455087645
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+callback: energy=-7.784455087646
+/ccsopen/home/zwu/miniconda3/envs/pyCCdev/lib/python3.10/site-packages/scipy/optimize/_minimize.py:733: OptimizeWarning: Desired error not necessarily achieved due to precision loss.
+  res = _minimize_bfgs(fun, x0, args, jac, callback, **options)
+         Current function value: -7.784455
+         Iterations: 33
+         Function evaluations: 4836
+         Gradient evaluations: 52
+Optimization finished in 1790.71 s
+Success: False
+Final energy: -7.784455087646121
+Final parameters (first 10): [ 4.57468662e-04 -1.88309039e-08 -9.54261088e-10 -4.63954801e-04
+  4.57504894e-04  3.47340219e-09 -9.50745854e-09 -4.63936699e-04
+  3.02575546e-02 -8.00786266e-08]
+length: 16 76
+Final T1: [ 4.57468662e-04 -1.88309039e-08 -9.54261088e-10 -4.63954801e-04
+  4.57504894e-04  3.47340219e-09 -9.50745854e-09 -4.63936699e-04
+  3.02575546e-02 -8.00786266e-08 -2.37125820e-07 -2.09073695e-04
+  3.02567383e-02 -8.80911206e-08 -1.40243216e-08 -2.08897397e-04]
+Final T2: [ 3.37298869e-03  7.86229388e-09 -1.10345412e-08  1.60155855e-03
+ -1.04042626e-08  1.73219716e-03  3.68233267e-09 -2.85723913e-08
+ -1.64068763e-08 -1.61400143e-08  1.72989471e-03 -1.03349785e-08
+  1.60404457e-03 -4.58417004e-08 -1.84592494e-08  7.86827086e-04
+  5.18509174e-04 -1.06894806e-08 -6.84476716e-10 -4.20692734e-03
+ -1.19358289e-08  2.97530588e-03 -7.05187490e-09 -8.42128766e-09
+  4.06246413e-11 -5.29388925e-09  2.97528820e-03 -1.56350794e-08
+ -1.46524081e-03 -7.25329932e-09  1.26435032e-09  2.94607589e-03
+  5.18533590e-04  7.84692750e-10 -8.94843104e-09 -1.46519009e-03
+  1.61826658e-08  2.97521332e-03  2.07572728e-08 -2.70117084e-08
+ -1.62571547e-08  7.51809025e-09  2.97527573e-03 -1.76851565e-08
+ -4.20696541e-03  3.42588119e-09 -1.21690574e-10  2.94617685e-03
+  2.23913298e-02 -3.25936041e-08 -1.85239310e-08 -4.33546991e-02
+ -6.68455872e-08  3.63948784e-02  5.59669884e-08  4.00502746e-08
+  2.03845530e-08  4.13651844e-08  3.64189347e-02  8.01553977e-08
+ -4.34527802e-02 -3.61219605e-10  6.36331745e-08  9.69932194e-02
+  2.22500491e-08  2.01611268e-08 -2.24990184e-08 -1.83811958e-08
+ -2.76556303e-03 -2.76554143e-03 -3.28660457e-09 -8.65201020e-10
+  2.25355326e-08 -1.11459881e-08 -1.40596912e-08 -2.40297034e-08]
+nocc, nvirt: 2 4
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 4 9 0 1
+a^b^ji: 4 11 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+a^b^ji: 6 9 0 1
+a^b^ji: 6 11 0 1
+a^b^ji: 8 5 0 1
+a^b^ji: 8 7 0 1
+a^b^ji: 8 9 0 1
+a^b^ji: 8 11 0 1
+a^b^ji: 10 5 0 1
+a^b^ji: 10 7 0 1
+a^b^ji: 10 9 0 1
+a^b^ji: 10 11 0 1
+a^b^ji: 4 5 0 3
+a^b^ji: 4 7 0 3
+a^b^ji: 4 9 0 3
+a^b^ji: 4 11 0 3
+a^b^ji: 6 5 0 3
+a^b^ji: 6 7 0 3
+a^b^ji: 6 9 0 3
+a^b^ji: 6 11 0 3
+a^b^ji: 8 5 0 3
+a^b^ji: 8 7 0 3
+a^b^ji: 8 9 0 3
+a^b^ji: 8 11 0 3
+a^b^ji: 10 5 0 3
+a^b^ji: 10 7 0 3
+a^b^ji: 10 9 0 3
+a^b^ji: 10 11 0 3
+a^b^ji: 4 5 2 1
+a^b^ji: 4 7 2 1
+a^b^ji: 4 9 2 1
+a^b^ji: 4 11 2 1
+a^b^ji: 6 5 2 1
+a^b^ji: 6 7 2 1
+a^b^ji: 6 9 2 1
+a^b^ji: 6 11 2 1
+a^b^ji: 8 5 2 1
+a^b^ji: 8 7 2 1
+a^b^ji: 8 9 2 1
+a^b^ji: 8 11 2 1
+a^b^ji: 10 5 2 1
+a^b^ji: 10 7 2 1
+a^b^ji: 10 9 2 1
+a^b^ji: 10 11 2 1
+a^b^ji: 4 5 2 3
+a^b^ji: 4 7 2 3
+a^b^ji: 4 9 2 3
+a^b^ji: 4 11 2 3
+a^b^ji: 6 5 2 3
+a^b^ji: 6 7 2 3
+a^b^ji: 6 9 2 3
+a^b^ji: 6 11 2 3
+a^b^ji: 8 5 2 3
+a^b^ji: 8 7 2 3
+a^b^ji: 8 9 2 3
+a^b^ji: 8 11 2 3
+a^b^ji: 10 5 2 3
+a^b^ji: 10 7 2 3
+a^b^ji: 10 9 2 3
+a^b^ji: 10 11 2 3
+/var/spool/slurm/job207760/slurm_script: line 24: deactivate: No such file or directory

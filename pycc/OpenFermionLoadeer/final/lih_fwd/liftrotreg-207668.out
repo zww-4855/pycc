@@ -1,0 +1,184 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"openblas/0.3.23-omp"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "openblas/0.3.23-omp"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Lmod has detected the following error: The following module(s) are unknown:
+"python"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "python"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+/var/spool/slurm/job207668/slurm_script: line 15: activate: No such file or directory
+
+CondaError: Run 'conda init' before 'conda activate'
+
+converged SCF energy = -7.76736213574856
+[[ 0.04003959  0.5461471  -0.13924768  0.         -0.          1.4724109 ]
+ [ 0.9853072  -0.25570637 -0.1918667   0.         -0.         -0.12962715]
+ [ 0.0184864   0.38797506  0.8356816   0.         -0.         -0.9277768 ]
+ [-0.         -0.         -0.          0.          1.         -0.        ]
+ [-0.         -0.         -0.          1.         -0.         -0.        ]
+ [ 0.01662528 -0.37913547  0.5879016   0.         -0.          1.12079023]]
+<class 'pyscf.gto.mole.Mole'> <class 'pyscf.scf.hf.RHF'>
+ ecore:   0.27849071
+h1!!! [[ 7.22854815e-01 -5.25480058e-02 -6.54284215e-02  0.00000000e+00
+   0.00000000e+00 -1.56579337e-03]
+ [-5.25480058e-02  2.11116909e+00 -8.05212764e-02  0.00000000e+00
+   0.00000000e+00  3.05681850e-01]
+ [-6.54284215e-02 -8.05212764e-02  1.92372024e+00  0.00000000e+00
+   0.00000000e+00  1.92419121e-02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  2.06518172e+00
+   0.00000000e+00  0.00000000e+00]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00
+   2.06518172e+00  0.00000000e+00]
+ [-1.56579337e-03  3.05681850e-01  1.92419121e-02  0.00000000e+00
+   0.00000000e+00  2.57357566e+00]]
+SCF energy pycc: -7.767362135748562 -7.767362135748562
+dropcore: 0
+calctype: None
+dropcore: 0
+n_mo=6, n_spin_orbitals=12, n_electrons=4
+[-2.37089933 -2.37089933 -0.31665704 -0.31665704  0.07684843  0.07684843
+  0.15793876  0.15793876  0.15793876  0.15793876  0.61299931  0.61299931]
+geo: [['H', [0, 0, 0]], ['Li', [0, 0, 1]]]
+Original Hamiltonian shape: (4096, 4096)
+Restricted Hamiltonian shape: (225, 225)
+hf_index: 3840
+restrict sz: (225,)
+e cmp: -7.784460280031217
+<1100|H|1100> = (-7.767362135748566+0j)
+
+nelectrons: 4
+Energy at theta=0 (should be HF energy): -7.767362135749  PySCF RHF energy: -7.767362135749,-7.767362135749
+Starting optimization... (this may take some time for larger ansatz sizes)
+callback: energy=-7.781524962278
+callback: energy=-7.783586501449
+callback: energy=-7.783966700296
+callback: energy=-7.784110991768
+callback: energy=-7.784209346163
+callback: energy=-7.784252045890
+callback: energy=-7.784313100038
+callback: energy=-7.784379897948
+callback: energy=-7.784398259903
+callback: energy=-7.784405455460
+callback: energy=-7.784410052138
+callback: energy=-7.784413783866
+callback: energy=-7.784414224623
+callback: energy=-7.784414321998
+callback: energy=-7.784414352717
+callback: energy=-7.784414365470
+callback: energy=-7.784414378450
+callback: energy=-7.784414378860
+callback: energy=-7.784414378915
+Optimization terminated successfully.
+         Current function value: -7.784414
+         Iterations: 19
+         Function evaluations: 2511
+         Gradient evaluations: 31
+Optimization finished in 807.61 s
+Success: True
+Final energy: -7.784414378915455
+Final parameters (first 10): [ 3.89876077e-04 -1.62462444e-08  1.45905078e-08 -5.45076696e-04
+  3.89974855e-04 -9.54460214e-09 -2.10620012e-08 -5.45042655e-04
+  3.02536862e-02 -4.62323045e-08]
+length: 16 64
+Final T1: [ 3.89876077e-04 -1.62462444e-08  1.45905078e-08 -5.45076696e-04
+  3.89974855e-04 -9.54460214e-09 -2.10620012e-08 -5.45042655e-04
+  3.02536862e-02 -4.62323045e-08  9.22771035e-08 -2.00009251e-04
+  3.02521554e-02 -6.82620852e-08 -8.22548229e-09 -1.99707602e-04]
+Final T2: [ 3.38602221e-03 -3.87019825e-08  6.10358089e-08  1.59377024e-03
+  6.34006481e-08  1.73155572e-03 -2.95882930e-08  1.83032806e-08
+  6.26846941e-08 -1.93530823e-09  1.72916045e-03  9.60646154e-08
+  1.59669461e-03 -1.79431905e-08 -7.31758826e-08  7.81169213e-04
+  5.69754150e-04 -7.60162909e-09  2.46779703e-09 -4.34494410e-03
+  1.80347601e-09  2.97371422e-03  3.73892849e-09 -8.60940227e-09
+ -3.91198295e-09 -5.22259941e-10  2.97373229e-03 -2.87604285e-08
+ -1.44465588e-03 -2.19760118e-08 -1.76427130e-08  2.91123885e-03
+  5.69859531e-04  1.06247566e-08 -3.01228404e-08 -1.44461069e-03
+ -1.56813947e-08  2.97364749e-03 -1.42253397e-08 -4.37373478e-09
+ -2.12339165e-08 -3.51106668e-09  2.97371310e-03 -1.92860793e-08
+ -4.34494901e-03 -1.96031827e-09 -2.64957163e-09  2.91119258e-03
+  2.23414116e-02 -1.29149457e-08  1.79011618e-08 -4.33278633e-02
+ -3.15229331e-08  3.63998557e-02 -2.86475391e-08  2.46895806e-08
+  9.64703371e-09  3.82263056e-09  3.64240698e-02 -1.05588401e-07
+ -4.34260682e-02 -1.77647029e-09 -3.01109626e-08  9.70541078e-02]
+nocc, nvirt: 2 4
+a^b^ji: 4 5 0 1
+a^b^ji: 4 7 0 1
+a^b^ji: 4 9 0 1
+a^b^ji: 4 11 0 1
+a^b^ji: 6 5 0 1
+a^b^ji: 6 7 0 1
+a^b^ji: 6 9 0 1
+a^b^ji: 6 11 0 1
+a^b^ji: 8 5 0 1
+a^b^ji: 8 7 0 1
+a^b^ji: 8 9 0 1
+a^b^ji: 8 11 0 1
+a^b^ji: 10 5 0 1
+a^b^ji: 10 7 0 1
+a^b^ji: 10 9 0 1
+a^b^ji: 10 11 0 1
+a^b^ji: 4 5 0 3
+a^b^ji: 4 7 0 3
+a^b^ji: 4 9 0 3
+a^b^ji: 4 11 0 3
+a^b^ji: 6 5 0 3
+a^b^ji: 6 7 0 3
+a^b^ji: 6 9 0 3
+a^b^ji: 6 11 0 3
+a^b^ji: 8 5 0 3
+a^b^ji: 8 7 0 3
+a^b^ji: 8 9 0 3
+a^b^ji: 8 11 0 3
+a^b^ji: 10 5 0 3
+a^b^ji: 10 7 0 3
+a^b^ji: 10 9 0 3
+a^b^ji: 10 11 0 3
+a^b^ji: 4 5 2 1
+a^b^ji: 4 7 2 1
+a^b^ji: 4 9 2 1
+a^b^ji: 4 11 2 1
+a^b^ji: 6 5 2 1
+a^b^ji: 6 7 2 1
+a^b^ji: 6 9 2 1
+a^b^ji: 6 11 2 1
+a^b^ji: 8 5 2 1
+a^b^ji: 8 7 2 1
+a^b^ji: 8 9 2 1
+a^b^ji: 8 11 2 1
+a^b^ji: 10 5 2 1
+a^b^ji: 10 7 2 1
+a^b^ji: 10 9 2 1
+a^b^ji: 10 11 2 1
+a^b^ji: 4 5 2 3
+a^b^ji: 4 7 2 3
+a^b^ji: 4 9 2 3
+a^b^ji: 4 11 2 3
+a^b^ji: 6 5 2 3
+a^b^ji: 6 7 2 3
+a^b^ji: 6 9 2 3
+a^b^ji: 6 11 2 3
+a^b^ji: 8 5 2 3
+a^b^ji: 8 7 2 3
+a^b^ji: 8 9 2 3
+a^b^ji: 8 11 2 3
+a^b^ji: 10 5 2 3
+a^b^ji: 10 7 2 3
+a^b^ji: 10 9 2 3
+a^b^ji: 10 11 2 3
+/var/spool/slurm/job207668/slurm_script: line 24: deactivate: No such file or directory

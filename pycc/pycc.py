@@ -14,6 +14,9 @@ import pycc.ucc_eqns as ucc_eqns
 from copy import deepcopy
 import pickle
 
+
+
+        
 class SetupCC():
     """ SetupCC() is a class that holds all data necessary for a CC calculation. Similar in design to C-struct
     :param pyscf_mf: Mean-field object from PySCF
@@ -65,6 +68,7 @@ class SetupCC():
             self.get_denomsFast(pyscf_mf,cc_info["fastSIcalc"])
 
         ## TO DO:: ADD OPTION FOR (SPIN-INTEGRATED ? ) CC EQNS USING INTERMEDIATES, AND INTERFACE TO XACC
+
 
 
     def get_denomsFast(self,pyscf_mf,cc_calc):
@@ -489,7 +493,7 @@ class RunXacc(SetupCC):
             Reads background information printed by xacc (number of occupied/virtual orbitals and MO energies).
     """
     
-    def __init__(self,CCbase='pUCCD',bkgrd_infile=None,tamp_infile=None,tei_infile=None,ref='spin-orbital',pyscf_mf=None,pyscf_mol=None,cc_runtype=None):
+    def __init__(self,CCbase='pUCCD',bkgrd_infile=None,tamp_infile=None,tei_infile=None,ref='spin-orbital',eom_infile=None,pyscf_mf=None,pyscf_mol=None,cc_runtype=None):
         """
         Initializes the `run_xacc` object by reading background information from the `bkgrd_infile`, 
         CC amplitudes from the `tamp_infile`, and two-electron integrals from the `tei_infile`. 
@@ -514,7 +518,8 @@ class RunXacc(SetupCC):
         self.nocc=None
         self.nvirt=None
         self.mo_energies=None
-        self.oei=None 
+        self.oei=None
+        print("Ref is::", ref,bkgrd_infile)
         self.read_bkgrd(bkgrd_infile,ref)
 
         self.o=slice(None,self.nocc)
@@ -524,8 +529,12 @@ class RunXacc(SetupCC):
         self.t1amps=np.zeros((self.nvirt,self.nocc))
         self.t3amps=np.zeros((self.nvirt,self.nvirt,self.nvirt,self.nocc,self.nocc,self.nocc))
 
-        self.read_tamps(tamp_infile,ref)
+
+
+
+
         if ref == 'spin-orbital':
+            self.read_tamps(tamp_infile,ref)
             self.denomInfo={}
             self.set_denoms(ref,self.o,self.v)
     
@@ -534,6 +543,24 @@ class RunXacc(SetupCC):
             self.read_tei(tei_infile)
             #self.mp2_energy()
             #sys.exit()
+
+        elif ref == "spin-orbitalEOM":
+            import pycc.eom_handler as eom_handler
+            self.denomInfo={}
+            self.set_denoms('spin-orbital',self.o,self.v)
+
+            nbas=self.nocc+self.nvirt
+            self.tei=np.zeros((nbas,nbas,nbas,nbas))
+            self.c1amps = np.zeros((self.nvirt, self.nocc))
+            self.c2amps = np.zeros((self.nvirt, self.nocc, self.nvirt, self.nocc)) # will need to rearrange these new data structs
+
+            # call function that automatically populates and fills out (if needed) 
+            # the relevant tensors
+            eom_handler.read_tensor_info(self, tei_infile, tamp_infile, eom_infile)
+            
+            
+
+
         elif ref == "spatial":
             # call constructor to inherit class' methods; useful in the case of
             # spatial orbital methods
@@ -544,8 +571,40 @@ class RunXacc(SetupCC):
             print('mo energies:',self.eps["eps_aa"])
             build_pCC_corrections.drive_pcc_energyCorrections(self)
 
-        #self.ccd_energyTest()
-        #self.mp2_energy()
+        elif ref == "spin-orbitalDUCC":
+            self.read_tamps(tamp_infile,ref)
+            self.denomInfo={}
+            self.set_denoms(ref,self.o,self.v)
+            o=self.o
+            v=self.v
+            e_abij = self.denomInfo["D2aa"] 
+            t2=e_abij*self.tei[v,v,o,o]
+
+            mp2E=0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v], t2)
+            print("pyCC internal check on MP2:",mp2E)
+            mp2E_uccT2amps = self._compute_DUCC_mp2_UCC()
+            print("pyCC internal check on MP2, using UCC T2 amps for the base:", mp2E_uccT2amps)
+            #sys.exit()
+
+#        o=self.o
+#        v=self.v
+#        A=self.tei[v,v,o,o]
+#        B=self.t2amps
+#        threshold = 1.0E-8
+#        #mask_A = A < threshold
+#        #mask_B = B < threshold
+#        mask_A = A-B > threshold
+#        a_idx, b_idx, i_idx, j_idx = np.where(mask_A)
+#        for a, b, i, j in zip(a_idx, b_idx, i_idx, j_idx):
+#            print(f"A[{a},{b},{i},{j}] = {A[a,b,i,j]-B[a,b,i,j]:.8f}")
+        
+        #a_idx, b_idx, i_idx, j_idx = np.where(mask_B)
+        #for a, b, i, j in zip(a_idx, b_idx, i_idx, j_idx):
+        #    print(f"B[{a},{b},{i},{j}] = {B[a,b,i,j]:.4f}")
+        
+                #self.ccd_energyTest()
+                #self.mp2_energy()
+
 
     def set_denoms(self,ref,o,v):
         eps_a = np.asarray(self.mo_energies)
@@ -555,6 +614,13 @@ class RunXacc(SetupCC):
         if ref == 'spatial':
             self.D1_aa,self.D1_bb=set_denoms.D1denomFast(eps_a,eps_b,o,o,v,v,n)
             self.D2_aa,self.D2_bb,self.D2_ab=set_denoms.D2denomFast(eps_a,eps_b,o,o,v,v,n)
+        elif ref == "spin-orbitalDUCC":
+            # need to undo the transposition compared to generic XACC, as we store as o,o,v,v and the F matrix
+            # is symmetric to exchange of i,j and a,b indices
+            eps = self.mo_energies
+            self.denomInfo.update({'D1aa':set_denoms.D1denomSlow(eps,o,v,n).transpose(1,0)})
+            self.denomInfo.update({'D2aa':set_denoms.D2denomSlow(eps,o,v,n).transpose(2,3,0,1)})
+            self.denomInfo.update({'D3aa':set_denoms.D3denomSlow(eps,o,v,n).transpose(3,4,5,0,1,2)})
         else:
             eps = np.append(eps_a, eps_b)
             eps=np.sort(eps)
@@ -671,6 +737,10 @@ class RunXacc(SetupCC):
         """
         t2amp={}
         t1amp={}
+        if ref == "spin-orbitalDUCC" and tamp_infile==None:
+            print("Caution:::: DUCC Hbar is being used, but a file storing T amps is not specified")
+            return
+
         read_amps=False
         print('reading tamp file:',tamp_infile)
         with open(tamp_infile,'r') as f:
@@ -799,25 +869,128 @@ class RunXacc(SetupCC):
                     'spin-orbital' (s)
         :return: None
         """
-        with open(bkgrd_infile,'r') as f:
-            lines=f.readlines()
-        self.nocc=2*int(lines[1].strip().split()[-1])
-        self.nvirt=2*int(lines[2].strip().split()[-1])
-        print('FXN read_bkgrd info:',self.nocc,self.nvirt)
-        tmp_energies=lines[3].strip().split()[-1]
-        mo_energies=[]
-        for element in tmp_energies.split(','):
-            mo_energies.append(float(element.strip('[').strip(']')))
-     
-        # Add mo energy info to class variable storing oei 
-        self.mo_energies=mo_energies
-        eps = np.append(mo_energies,mo_energies)
-        eps = np.sort(eps)
-        self.oei=np.diag(eps)
-        print('eps and mo_energies:',self.mo_energies,self.nocc,self.nvirt)
-#        if ref == "spatial": # defines nocc/nvirt w.r.t. # spatial orbs
-#            self.nocc = self.nocc - int(lines[1].strip().split()[-1])
-#            self.nvirt = self.nvirt - int(lines[2].strip().split()[-1])
+        if ref == 'spin-orbital': # if we are reading the generic XACC input fileset
+            with open(bkgrd_infile,'r') as f:
+                lines=f.readlines()
+            self.nocc=2*int(lines[1].strip().split()[-1])
+            self.nvirt=2*int(lines[2].strip().split()[-1])
+            print('FXN read_bkgrd info:',self.nocc,self.nvirt)
+            tmp_energies=lines[3].strip().split()[-1]
+            mo_energies=[]
+            for element in tmp_energies.split(','):
+                mo_energies.append(float(element.strip('[').strip(']')))
+         
+            # Add mo energy info to class variable storing oei 
+            self.mo_energies=mo_energies
+            eps = np.append(mo_energies,mo_energies)
+            eps = np.sort(eps)
+            self.oei=np.diag(eps)
+            print('eps and mo_energies:',self.mo_energies,self.nocc,self.nvirt)
+
+        elif ref == "spin-orbitalEOM":
+            with open(bkgrd_infile,'r') as f:
+                lines=f.readlines()
+            self.nocc=2*int(lines[1].strip().split()[-1])
+            self.nvirt=2*int(lines[2].strip().split()[-1])
+            print('FXN read_bkgrd info:',self.nocc,self.nvirt)
+            tmp_energies=lines[3].strip().split()[-1]
+            
+            
+            energy_line = lines[3]
+            energy_str = energy_line.split(':', 1)[1].strip()
+            energy_str = energy_str.strip('[]')
+
+
+            mo_energies=[]
+            mo_energies = [float(x) for x in energy_str.split()]
+
+            # Add mo energy info to class variable storing oei
+            self.mo_energies=mo_energies
+            eps = np.append(mo_energies,mo_energies)
+            eps = np.sort(eps)
+            self.oei=np.diag(eps)
+            print('eps and mo_energies:',self.mo_energies,self.nocc,self.nvirt)
+
+        elif ref == "spin-orbitalDUCC": # if we are reading DUCC hamiltonian info, but XACC tamps
+            from pycc.DUCCloader.hamiltonian_data import HamiltonianData
+            from pycc.DUCCloader.grab_data import _extract_output_data,_extract_integral_data
+            output_file = bkgrd_infile["output_file"]
+            integral_path = bkgrd_infile["integral_path"]
+            data = HamiltonianData()
+
+            # Extract data from output file, as well as integrals
+            _extract_output_data(output_file, data)
+            _extract_integral_data(integral_path, data)
+
+            # spin orbital fock build:
+            data.compute_fock_matrix()
+
+
+            # Now, map this (PNNL DUCC-based) info to pyCC attributes:
+            self.nocc = data.n_occ_alpha + data.n_occ_beta
+            self.nvirt = data.n_virt_alpha + data.n_virt_beta
+            num_spin_orbs = 2 * data.n_orbitals
+            print("nocc, nvirt, num_spin_orbs:",self.nocc,self.nvirt,num_spin_orbs)
+
+            # Build spin-orbital integrals, then antisymmetrize them
+            soei, stei = data._build_spin_orbital_integrals(num_spin_orbs)
+            atei = data._build_antisymmetrized_integrals(stei, num_spin_orbs)
+            
+            # Fill out the DUCC-transformed Fock matrix
+            #
+            #                     * * * * NOTE::: TO-DO * * * * * 
+            # 1) Current code simply ignores p neq q components to build denom -- this is an issue 
+            #    that needs to be fixed for production
+            #
+            # 2) Need to make testing automatic via external method calls
+            #
+            self.oei = data.fockso
+            self.mo_energies = np.diag(self.oei)
+            self.tei = atei
+            print("shapes of ints:", np.shape(self.oei),np.shape(self.mo_energies),np.shape(self.tei))
+            mp2E = self._compute_DUCC_mp2()
+            print("DUCC MP2 energy is: ",mp2E)
+            #sys.exit()
+
+    def _compute_DUCC_mp2(self):
+        n=np.newaxis
+        o=slice(None,self.nocc)
+        v=slice(self.nocc,None)
+        print(self.mo_energies,type(self.mo_energies[0]),self.nocc,o,v)
+        eps_a = np.asarray(self.mo_energies)
+        eps_b = np.asarray(self.mo_energies)
+        eps = eps_a #np.append(eps_a, eps_b)
+        eps=np.sort(eps)
+        e_abij = 1 / (-eps[v, n, n, n] - eps[n, v, n, n] + eps[n, n, o, n] + eps[n, n, n, o])
+
+        t2=e_abij*self.tei[v,v,o,o]
+        print("shape of t2:::::", np.shape(t2))
+        #t2 = t2.transpose(2,3,0,1)
+        print("shape of t2:::::", np.shape(t2),np.shape(self.tei[o, o, v, v]))
+        mp2E=0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v], t2)
+
+
+        return mp2E
+
+    def _compute_DUCC_mp2_UCC(self):
+        n=np.newaxis
+        o=slice(None,self.nocc)
+        v=slice(self.nocc,None)
+        print(self.mo_energies,type(self.mo_energies[0]),self.nocc,o,v)
+        eps_a = np.asarray(self.mo_energies)
+        eps_b = np.asarray(self.mo_energies)
+        eps = eps_a #np.append(eps_a, eps_b)
+        eps=np.sort(eps)
+        e_abij = 1 / (-eps[v, n, n, n] - eps[n, v, n, n] + eps[n, n, o, n] + eps[n, n, n, o])
+
+        t2=self.t2amps #e_abij*self.tei[v,v,o,o]
+        print("shape of t2:::::", np.shape(t2))
+        t2=t2.transpose(2,3,0,1)
+        mp2E=0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v], t2)
+
+
+        return mp2E
+
 
 
 class XaccCorrection(RunXacc):
@@ -874,17 +1047,59 @@ class XaccCorrection(RunXacc):
             print('Quadruples correction to UCC:', totalT4_E6)
             print('\n\n')
 
+        elif "EOMT" in args:
+            import pycc.eom_trips as eom_trips
+            import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
+
+            W = self.tei
+            C1 = self.c1amps
+            C2 = self.c2amps
+
+            # build individual terms in the residual eqn, w/o dividing by D3
+            D3C3_wnt1c2, D3C3_wnc2 = eom_trips.build_eom_sqrbrakT_resid(W,T1,T2,C2,o,v)
+
+            # build term A first 
+            C3_wnt1c2 = D3 * D3C3_wnt1c2
+            termA = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnt1c2,C3_wnt1c2)
+
+
+            # build mixed B & C terms next
+            termB_C = 2.0*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,C3_wnt1c2)
+
+
+            # finally build the [T]-like correction
+            C3_wnc2 = D3 * D3C3_wnc2
+            termD = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,C3_wnc2)
+
+            print('\n\n\n\n ***********************************************')
+            print('******** Final perturbative correction for EOM[T]: *********')
+            print('\n\n\n\n ***********************************************')
+            print()
+
+            print(" Term A, h.c. * wnt1c2: ", termA)
+            print(" Term B and C, mixed: ", termB_C)
+            print(" Term D, h.c. * wnc2: ", termD)
+            print("Total, cumulative EOM[T] PT correction: ", termA+termB_C+termD)
+
+
+
 
         elif 'T-5' in args:
+            print('inside T-5')
             # Calculate [T], [T-5], and [T-6] corrections using T1,T2 amplitudes
 
             # Calculate 4th order [T] first
             triples_E4,t3_SO = self.get_FO_triples(W,T2,o,v,D3,self.pccE_correction)
+            print("new shape of t2?::::", np.shape(T2))
 
+            mp2E=0.250000000000000 * np.einsum('jiab,abji',W[o, o, v, v], T2.transpose(2,3,0,1))
+            print("inside [arent class, MP2, using UCC T2 amps:",mp2E)
+            #sys.exit()
 
             # Now get 5th and 6th order triples corrections, [T-5] and [T-6]
             import pycc.cc_energy as cc_energy
-            totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
+            print(np.shape(t3_SO))
+            totalT3_E5,T3_TO,wnT2sqr_to_T3 = cc_energy.get_uccsd_FIFTHO_triples(W,T1,T2,t3_SO,D3,D2,o,v,self.t2amps_all)
 #            totalT3_E6 = cc_energy.get_uccsd_SIXTHO_triples(W,T1,T2,t3_SO,T3_TO,D3,D2,o,v,self.t2amps_all,wnT2sqr_to_T3,self)
 
             finalE = {"E(4) [T] correction: ":triples_E4,
@@ -946,6 +1161,7 @@ class XaccCorrection(RunXacc):
 
         fullMP2_E = pcc_base.get_WnT2_energy(fullMP2_base,self.tei[v,v,o,o])
         odMP2_E   = pcc_base.get_WnT2_energy(odMP2_base,self.tei[v,v,o,o])
+        print('OD MP2 E:' , odMP2_E)
         pccE_correction.update({"mp2_full":fullMP2_E,"mp2_od":odMP2_E,"Total E(2) from doubles:":odMP2_E})
 
         return 
@@ -1146,11 +1362,30 @@ class XaccCorrection(RunXacc):
 
 
     def get_FO_triples(self,W,T2,o,v,D3,pccE_correction):
+        import sys
         D3T3 = build_sqrbrak_corrections.build_T3_secondO_spin(W,o,v,T2)
+        #mask_A = abs(D3T3) > 10E-6
+        print("printing inside FO triples")
+        A = W[o,o,o,v]
+        mask_A = abs(A) > 10E-6 
+        
+        a_idx, b_idx, i_idx, j_idx = np.where(mask_A)
+        #for a, b, i, j in zip(a_idx, b_idx, i_idx, j_idx):
+        #    print(f"A[{a},{b},{i},{j}] = {A[a,b,i,j]:.4f}")
+
+        #sys.exit()
+
+        #a_idx, b_idx, c_idx, i_idx, j_idx, k_idx = np.where(mask_A)
+        #for a, b, c, i, j, k in zip(a_idx, b_idx, c_idx, i_idx, j_idx, k_idx):#(a_idx, b_idx, i_idx, j_idx):
+        #    print(f"D3T3[{a},{b},{i},{j}] = {D3T3[a,b,c,i,j,k]:.4f}")
+        #sys.exit()
+
+
         D3T3 = tamps.antisym_T3(D3T3,None,None)
-        T3 = D3T3*D3
+        
+        T3 = D3T3*D3.transpose(3,4,5,0,1,2)
         sqrBrak_T =0.25* build_sqrbrak_corrections.sqr_brakT_spin(D3T3,T3.transpose(3,4,5,0,1,2))
-        print('[T] correction to pUCCD:',sqrBrak_T)
+        print('[T] correction to UCC:',sqrBrak_T)
         pccE_correction.update({"Triples' [T]":sqrBrak_T})
         return sqrBrak_T, T3
 

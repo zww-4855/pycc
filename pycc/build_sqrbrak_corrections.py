@@ -1,6 +1,12 @@
 import numpy as np
 import pycc.tamps as tamps
 
+def build_T3dag_fn_T3(T3,F,o,v):
+    T3dag=T3.transpose(3,4,5,0,1,2)
+    r = -0.166666667 * np.einsum("ji,iklabc,abcjkl->",F[o,o],T3,T3dag,optimize="optimal")
+    r += 0.166666667 * np.einsum("ba,ijkbcd,acdijk->",F[v,v],T3,T3dag,optimize="optimal")
+    return r
+
 def build_T1_fromT2_SOspin(g,o,v,t2):
     rov = -0.500000000 * np.einsum("jkab,ibjk->ia",t2,g[o,v,o,o],optimize="optimal")
     rov += -0.500000000 * np.einsum("ijbc,bcja->ia",t2,g[v,v,o,v],optimize="optimal")

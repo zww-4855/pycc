@@ -172,7 +172,7 @@ def perturbE_driver(CCobj,cc_type):
 #        sixthOrderQf_wnT2cubed(W,T2,o,v,D2)
         return {"help":2}
 
-def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
+def get_uccsd_FIFTHO_triples(W,T1,T2,T3SO,D3,D2,o,v,t2amps_all):
     """
     Computes the fifth-order correction terms (E(5)) for [T-5] using UCCSD/CCSD 
     amplitudes.
@@ -215,7 +215,7 @@ def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
     D3T3 = tamps.antisym_T3(D3T3,None,None)
     E5_t3SOdag_wnT3SO = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
     print('E(5) T3SO^ Q3(WnT3SO) :',E5_t3SOdag_wnT3SO)
-    T3_TO = D3T3*D3 # store wnT3SO -> T3 object
+    T3_TO = D3T3*D3.transpose(3,4,5,0,1,2) # store wnT3SO -> T3 object
     #T3_wnT3SO = T3_TO
 
     D3T3=0.0
@@ -224,10 +224,17 @@ def get_uccsd_FIFTHO_triples(W,T2,T3SO,D3,D2,o,v,t2amps_all):
     D3T3 = tamps.antisym_T3(np.copy(D3T3),None,None)
     E5_wnT3SOdag_wnt2sqr = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,D3T3.transpose(3,4,5,0,1,2))
     print('E(5) T3SO^ Q3(wnT2^2):',E5_wnT3SOdag_wnt2sqr)
-    T3_TO += D3T3*D3 # now I have both Q3 wnT2^2 + WT3SO
+    T3_TO += D3T3*D3.transpose(3,4,5,0,1,2) # now I have both Q3 wnT2^2 + WT3SO
     t2amps_all.update({"T3_TO":T3_TO})
     total_E5= E5_t3SOdag_wnT3SO+2.0*E5_wnT3SOdag_wnt2sqr
     print('Total E(5) aka [T-5] correction to tUCCSD:',total_E5)
+
+    # Build Q3 0.5 * WT1T2
+#    wnt1t2_T3 = build_sqrbrak_corrections.buildFO_wnT1T2_to_T3(W,o,v,T1,T2)
+#    wnt1t2_T3 = tamps.antisym_T3(wnt1t2_T3,None,None)
+#    E5_wnT1T2  = 0.25* build_sqrbrak_corrections.sqr_brakT_spin(T3SO,wnt1t2_T3.transpose(3,4,5,0,1,2))
+#    total_E5 += 2.0*E5_wnT1T2
+#    print('E(5) from WnT1T2 term:', E5_wnT1T2)
     return total_E5, T3_TO, D3T3
 
 
