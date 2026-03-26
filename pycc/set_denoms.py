@@ -1,3 +1,4 @@
+import numpy as np
 
 def D1denomFast(epsaa,epsbb,occ_aa,occ_bb,virt_aa,virt_bb,n):
     D1_aa = 1.0/ (-epsaa[virt_aa,n] + epsaa[n,occ_aa])
@@ -103,6 +104,8 @@ def D3denomSlow(epsaa,occ_aa,virt_aa,n):
             +epsaa[n,n,n,n,occ_aa,n]
             +epsaa[n,n,n,n,n,occ_aa] )
     D3=D3.transpose(3,4,5,0,1,2)
+    print("shapes:",np.shape(D3),occ_aa,virt_aa,n,epsaa,np.shape(epsaa))
+    #sys.exit()
     return D3
 
 

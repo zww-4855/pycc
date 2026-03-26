@@ -546,18 +546,23 @@ class RunXacc(SetupCC):
 
         elif ref == "spin-orbitalEOM":
             import pycc.eom_handler as eom_handler
+            import copy
             self.denomInfo={}
+            print("o & v",self.o,self.v)
             self.set_denoms('spin-orbital',self.o,self.v)
 
             nbas=self.nocc+self.nvirt
             self.tei=np.zeros((nbas,nbas,nbas,nbas))
             self.c1amps = np.zeros((self.nvirt, self.nocc))
-            self.c2amps = np.zeros((self.nvirt, self.nocc, self.nvirt, self.nocc)) # will need to rearrange these new data structs
+            self.c2amps = np.zeros((self.nvirt, self.nvirt, self.nocc, self.nocc)) # will need to rearrange these new data structs
+            self.read_tei(tei_infile)
+            self.tei = self.tei * 0.25 # Have to divide by 1/4 since they print full integral
+            eom_handler.read_r1_r2(self,eom_infile)
 
-            # call function that automatically populates and fills out (if needed) 
-            # the relevant tensors
-            eom_handler.read_tensor_info(self, tei_infile, tamp_infile, eom_infile)
-            
+
+            self.read_tamps(tamp_infile,ref)
+            self.t2amps = self.t2amps *-1.0 # have to mult. by -1 as they print other way
+            print('shape of t2:',self.t2amps.shape)
             
 
 
@@ -621,12 +626,19 @@ class RunXacc(SetupCC):
             self.denomInfo.update({'D1aa':set_denoms.D1denomSlow(eps,o,v,n).transpose(1,0)})
             self.denomInfo.update({'D2aa':set_denoms.D2denomSlow(eps,o,v,n).transpose(2,3,0,1)})
             self.denomInfo.update({'D3aa':set_denoms.D3denomSlow(eps,o,v,n).transpose(3,4,5,0,1,2)})
+
+            print("shape of denoms:",np.shape(self.D3aa))
+            sys.exit()
         else:
             eps = np.append(eps_a, eps_b)
             eps=np.sort(eps)
+            print("eps:",eps)
             self.denomInfo.update({'D1aa':  set_denoms.D1denomSlow(eps,o,v,n)})
             self.denomInfo.update({'D2aa':set_denoms.D2denomSlow(eps,o,v,n)})        
             self.denomInfo.update({'D3aa':set_denoms.D3denomSlow(eps,o,v,n)})
+
+            print("shape of denoms:",np.shape(self.denomInfo["D3aa"]))
+            #sys.exit()
 
     def ccd_energyTest(self):
         """
@@ -648,12 +660,14 @@ class RunXacc(SetupCC):
         print(self.mo_energies,type(self.mo_energies[0]),self.nocc,o,v)
         eps_a = np.asarray(self.mo_energies)
         eps_b = np.asarray(self.mo_energies)
+        print("eps a and b:",eps_a,eps_b,o,v)
         eps = np.append(eps_a, eps_b)
         eps=np.sort(eps)
         e_abij = 1 / (-eps[v, n, n, n] - eps[n, v, n, n] + eps[n, n, o, n] + eps[n, n, n, o])
-    
+        print("e-abij:",e_abij)    
         t2=e_abij*self.tei[v,v,o,o]
-    
+        print("test t2:",t2)
+        #sys.exit()
         mp2E=0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v], t2)
 
         ccd_test=0.250000000000000 * np.einsum('jiab,abji',self.tei[o, o, v, v],self.t2amps)
@@ -824,6 +838,7 @@ class RunXacc(SetupCC):
 
                         #sys.exit()
                     else: # dealing with t1amp
+                        print('nocc:',self.nocc)
                         print('operator list t1:',operator_list)
                         print('t1shape:',np.shape(self.t1amps))
                         a=operator_list[0]-self.nocc
@@ -1050,7 +1065,7 @@ class XaccCorrection(RunXacc):
         elif "EOMT" in args:
             import pycc.eom_trips as eom_trips
             import pycc.build_sqrbrak_corrections as build_sqrbrak_corrections
-
+            import copy
             W = self.tei
             C1 = self.c1amps
             C2 = self.c2amps
@@ -1060,16 +1075,18 @@ class XaccCorrection(RunXacc):
 
             # build term A first 
             C3_wnt1c2 = D3 * D3C3_wnt1c2
-            termA = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnt1c2,C3_wnt1c2)
+            tmp = copy.deepcopy(C3_wnt1c2)
+            tmp = tmp.transpose(3,4,5,0,1,2)
+            termA = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnt1c2,tmp)
 
 
             # build mixed B & C terms next
-            termB_C = 2.0*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,C3_wnt1c2)
+            termB_C = 2.0*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,tmp)
 
 
             # finally build the [T]-like correction
             C3_wnc2 = D3 * D3C3_wnc2
-            termD = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,C3_wnc2)
+            termD = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,C3_wnc2.transpose(3,4,5,0,1,2))
 
             print('\n\n\n\n ***********************************************')
             print('******** Final perturbative correction for EOM[T]: *********')

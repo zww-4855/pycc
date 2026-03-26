@@ -1,32 +1,83 @@
 import numpy as np
 import re
 
+def read_r1_r2(eom_obj,tamp_infile):
+    t2amp={}
+    t1amp={}
+
+    read_amps=False
+    print('reading tamp file:',tamp_infile)
+    with open(tamp_infile,'r') as f:
+        for line in f:
+            if read_amps:#have to uncomment 109,13 for nospace
+                #amp_key=float(line.split()[-1])#.strip('|'))
+                amp_key=float(line.split()[-1].strip('|'))
+                #index_list=line.split()
+                index_list=line.split()[:-1]
+                index_list.append('|')
+                index_list.append(amp_key)
+                operator_list=[]
+                for operator in range(6): # max T2, min T1
+                    if index_list[operator] == '|':
+                        break
+                    operator_list.append(int(index_list[operator].strip('^')))
+                print('op list:',operator_list,'amp key:',amp_key)
+                if len(operator_list)==4: #dealing with t2amp
+                    t2amp.update({amp_key:operator_list})
+                    a=operator_list[0]-eom_obj.nocc
+                    b=operator_list[2]-eom_obj.nocc
+                    i=operator_list[1]
+                    j=operator_list[3]
+                    print('op list:',operator_list[0],operator_list[1],operator_list[2],operator_list[3])
+                    print('t2 dim:',np.shape(eom_obj.c2amps))
+                    eom_obj.c2amps[a,i,b,j]=amp_key
+                    eom_obj.c2amps[b,i,a,j]= -1.0* amp_key
+                    eom_obj.c2amps[a,i,j,b]= -1.0*amp_key
+                    eom_obj.c2amps[b,j,a,i]=amp_key
+
+                    #sys.exit()
+                else: # dealing with t1amp
+                    print('nocc:',eom_obj.nocc)
+                    print('operator list t1:',operator_list)
+                    print('t1shape:',np.shape(eom_obj.t1amps))
+                    a=operator_list[0]-eom_obj.nocc
+                    i=operator_list[1]
+                    eom_obj.t1amps[a,i]=amp_key
+
+            if line[:5]=="+++++":#parse the file until this str is read
+                read_amps=True
+
+
+    eom_obj.c2amps=-1.0*eom_obj.c2amps.transpose(1,3,0,2)  #eom_obj.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
+    eom_obj.c1amps=eom_obj.c1amps.transpose(1,0)
 
 def read_tensor_info(eom_obj, tei_infile, tamp_infile, eom_infile):
     # different 2e- integral, Tamp, and Ramp storage
     nocc = eom_obj.nocc
-    eom_obj.tei = return_filled_tensor(tei_infile, 0, "p^ q^ r s",eom_obj)
+    tei = 4.0*return_filled_tensor(tei_infile, 0, "p^ q^ r s",eom_obj)
+    eom_obj.tei = tei.transpose(0,1,3,2)
 
-
-    #print("2e- integral:",eom_obj.tei)
-    #sys.exit()
-    #eom_obj.t1amps = return_filled_tensor(tamp_infile, "p^ q", eom_obj.nocc,eom_obj)
-    #eom_obj.t2amps = return_filled_tensor(tamp_infile, "p^ q r^ s", eom_obj.nocc,eom_obj)
-
+    print("shape of c2amps:",np.shape(eom_obj.c2amps))
+   # eom_obj.mp2_energy()
+   # print("2e- integral:",eom_obj.tei)
+   # sys.exit()
+    eom_obj.t1amps = return_filled_tensor(tamp_infile, eom_obj.nocc, "p^ q", eom_obj)
+    eom_obj.c2amps = return_filled_tensor(tamp_infile, eom_obj.nocc, "p^ q^ r s", eom_obj)
+    sys.exit()
     eom_obj.c1amps = return_filled_tensor(eom_infile, eom_obj.nocc, "p^ q", eom_obj)
     eom_obj.c2amps = return_filled_tensor(eom_infile, eom_obj.nocc, "p^ q r^ s", eom_obj)
 
-    print(eom_obj.c1amps.shape,eom_obj.c2amps.shape)
+    print(eom_obj.c1amps.shape,eom_obj.c2amps.shape, eom_obj.c2amps.shape,eom_obj.t1amps.shape)
     #sys.exit()
     # first transpose T2 and C2 from the current ordering a^ i b^ j to -1.0* a^ b^ i j
-    #eom_obj.t2amps.transpose(0,2,1,3)
-    #eom_obj.c2amps.transpose(0,2,1,3)
+    eom_obj.c2amps.transpose(0,2,1,3)
+    eom_obj.c2amps.transpose(0,2,1,3)
 
-    #eom_obj.t2amps = -1.0*eom_obj.t2amps
+    eom_obj.c2amps = -1.0*eom_obj.c2amps
     eom_obj.c2amps = -1.0*eom_obj.c2amps 
 
     # now expand the tensor 
-    #eom_obj.t2amps = expanded_tensor(eom_obj,eom_obj.t2amps)
+    eom_obj.c2amps = expanded_tensor(eom_obj,eom_obj.c2amps)
     eom_obj.c2amps = expanded_tensor(eom_obj,eom_obj.c2amps)
 
 
@@ -73,18 +124,21 @@ def return_filled_tensor(filename, offset, index_pattern=None,eom_obj=None):
             """,
             re.VERBOSE
         )
+        print("here is am")
     else:
         if len(index_pattern) == 9:
             pattern = re.compile(
                 r"""
-                ^\s*
-                (?P<indices>(?:\d+\^\s+\d+\s*)+)
-                \|\s*
-                (?P<value>[-+]?\d+(?:\.\d*)?(?:[eE][-+]?\d+)?)
+    ^\s*
+    (?P<indices>(?:\d+\^?\s+)+)   # index tokens like "4^ 5^ 0 1 "
+    \|\s*                         # literal pipe separator
+                (?P<value>[-+]?\d+(?:\.\d*)?(?:[eE][-+]?\d+)?)  # float / scientific notation
                 \s*$
                 """,
                 re.VERBOSE
             )
+
+            print("here i am now")
         else:
             pattern = re.compile(
                 r"""
@@ -111,7 +165,7 @@ def return_filled_tensor(filename, offset, index_pattern=None,eom_obj=None):
                 continue
     
             index_tokens = match.group("indices").split()
-            print(index_tokens) 
+            print("index tokens:", index_tokens) 
             indices = []
             for tok in index_tokens:
                 idx = int(tok[:-1]) - offset if tok.endswith("^") else int(tok)
@@ -123,7 +177,7 @@ def return_filled_tensor(filename, offset, index_pattern=None,eom_obj=None):
             values.append(value)
 
             op_strings.append(tuple(indices))
-            #print(indices,value)
+            print(indices,value)
             #entries.append((tuple(indices), value))
 
     if offset == 0:
@@ -144,7 +198,7 @@ def return_filled_tensor(filename, offset, index_pattern=None,eom_obj=None):
         tensor = np.zeros(shape)
  
     print("tensor shape is:",tensor.shape,offset)
-    print(op_strings[2])
+    #print(op_strings[2])
     # populate tensor
     for inds, val in zip(op_strings,values):
         tensor[inds] = val
