@@ -553,8 +553,8 @@ class RunXacc(SetupCC):
 
             nbas=self.nocc+self.nvirt
             self.tei=np.zeros((nbas,nbas,nbas,nbas))
-            self.c1amps = np.zeros((self.nvirt, self.nocc))
-            self.c2amps = np.zeros((self.nvirt, self.nvirt, self.nocc, self.nocc)) # will need to rearrange these new data structs
+            self.c1amps = np.zeros(( self.nocc,self.nvirt))
+            self.c2amps = np.zeros((self.nocc, self.nocc, self.nvirt, self.nvirt)) # will need to rearrange these new data structs
             self.read_tei(tei_infile)
             self.tei = self.tei * 0.25 # Have to divide by 1/4 since they print full integral
             eom_handler.read_r1_r2(self,eom_infile)
@@ -1071,13 +1071,13 @@ class XaccCorrection(RunXacc):
             C2 = self.c2amps
 
             # build individual terms in the residual eqn, w/o dividing by D3
-            D3C3_wnt1c2, D3C3_wnc2 = eom_trips.build_eom_sqrbrakT_resid(W,T1,T2,C2,o,v)
+            D3C3_wnC1T2, D3C3_wnc2 = eom_trips.build_eom_sqrbrakT_resid(W,T2,C1,C2,o,v)
 
             # build term A first 
-            C3_wnt1c2 = D3 * D3C3_wnt1c2
-            tmp = copy.deepcopy(C3_wnt1c2)
+            C3_wnC1T2 = D3 * copy.deepcopy(D3C3_wnC1T2)
+            tmp = copy.deepcopy(C3_wnC1T2)
             tmp = tmp.transpose(3,4,5,0,1,2)
-            termA = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnt1c2,tmp)
+            termA = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnC1T2,tmp)
 
 
             # build mixed B & C terms next
@@ -1085,8 +1085,8 @@ class XaccCorrection(RunXacc):
 
 
             # finally build the [T]-like correction
-            C3_wnc2 = D3 * D3C3_wnc2
-            termD = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,C3_wnc2.transpose(3,4,5,0,1,2))
+            C3_wnc2 = D3 * copy.deepcopy(D3C3_wnc2)
+            termD = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,copy.deepcopy(C3_wnc2.transpose(3,4,5,0,1,2)))
 
             print('\n\n\n\n ***********************************************')
             print('******** Final perturbative correction for EOM[T]: *********')

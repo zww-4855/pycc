@@ -6,6 +6,10 @@ def read_r1_r2(eom_obj,tamp_infile):
     t1amp={}
 
     read_amps=False
+    nv = np.shape(eom_obj.c1amps)[0]
+    no = np.shape(eom_obj.c1amps)[1]
+    c1 = np.zeros((nv,no))
+    c2 = np.zeros((nv,no,nv,no))
     print('reading tamp file:',tamp_infile)
     with open(tamp_infile,'r') as f:
         for line in f:
@@ -30,10 +34,10 @@ def read_r1_r2(eom_obj,tamp_infile):
                     j=operator_list[3]
                     print('op list:',operator_list[0],operator_list[1],operator_list[2],operator_list[3])
                     print('t2 dim:',np.shape(eom_obj.c2amps))
-                    eom_obj.c2amps[a,i,b,j]=amp_key
-                    eom_obj.c2amps[b,i,a,j]= -1.0* amp_key
-                    eom_obj.c2amps[a,i,j,b]= -1.0*amp_key
-                    eom_obj.c2amps[b,j,a,i]=amp_key
+                    c2[a,i,b,j]=amp_key
+                    c2[b,i,a,j]= -1.0* amp_key
+                    c2[a,j,b,i]= -1.0*amp_key
+                    c2[b,j,a,i]=amp_key
 
                     #sys.exit()
                 else: # dealing with t1amp
@@ -42,14 +46,14 @@ def read_r1_r2(eom_obj,tamp_infile):
                     print('t1shape:',np.shape(eom_obj.t1amps))
                     a=operator_list[0]-eom_obj.nocc
                     i=operator_list[1]
-                    eom_obj.t1amps[a,i]=amp_key
+                    c1[a,i]=amp_key
 
             if line[:5]=="+++++":#parse the file until this str is read
                 read_amps=True
 
 
-    eom_obj.c2amps=-1.0*eom_obj.c2amps.transpose(1,3,0,2)  #eom_obj.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
-    eom_obj.c1amps=eom_obj.c1amps.transpose(1,0)
+    eom_obj.c2amps=-1.0*c2.transpose(1,3,0,2)  #eom_obj.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
+    eom_obj.c1amps=c1.transpose(1,0)
 
 def read_tensor_info(eom_obj, tei_infile, tamp_infile, eom_infile):
     # different 2e- integral, Tamp, and Ramp storage
