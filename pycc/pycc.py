@@ -559,12 +559,12 @@ class RunXacc(SetupCC):
             self.tei = self.tei * 0.25 # Have to divide by 1/4 since they print full integral
             eom_handler.read_r1_r2(self,eom_infile)
 
-
             self.read_tamps(tamp_infile,ref)
             self.t2amps = self.t2amps *-1.0 # have to mult. by -1 as they print other way
             print('shape of t2:',self.t2amps.shape)
             
-
+            #self.mp2_energy()
+            #sys.exit()
 
         elif ref == "spatial":
             # call constructor to inherit class' methods; useful in the case of
@@ -1077,16 +1077,16 @@ class XaccCorrection(RunXacc):
             C3_wnC1T2 = D3 * copy.deepcopy(D3C3_wnC1T2)
             tmp = copy.deepcopy(C3_wnC1T2)
             tmp = tmp.transpose(3,4,5,0,1,2)
-            termA = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnC1T2,tmp)
+            termA = 0.25*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnC1T2,tmp)
 
 
             # build mixed B & C terms next
-            termB_C = 2.0*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,tmp)
+            termB_C = 0.5*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,tmp)
 
 
             # finally build the [T]-like correction
             C3_wnc2 = D3 * copy.deepcopy(D3C3_wnc2)
-            termD = build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,copy.deepcopy(C3_wnc2.transpose(3,4,5,0,1,2)))
+            termD = 0.25*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,copy.deepcopy(C3_wnc2.transpose(3,4,5,0,1,2)))
 
             print('\n\n\n\n ***********************************************')
             print('******** Final perturbative correction for EOM[T]: *********')

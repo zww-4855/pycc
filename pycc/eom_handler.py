@@ -52,7 +52,7 @@ def read_r1_r2(eom_obj,tamp_infile):
                 read_amps=True
 
 
-    eom_obj.c2amps=-1.0*c2.transpose(1,3,0,2)  #eom_obj.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
+    eom_obj.c2amps=1.0*c2.transpose(1,3,0,2)  #eom_obj.t2amps.transpose(2,3,1,0)# ijab -> ijba convention ZWW 1/16/25
     eom_obj.c1amps=c1.transpose(1,0)
 
 def read_tensor_info(eom_obj, tei_infile, tamp_infile, eom_infile):
