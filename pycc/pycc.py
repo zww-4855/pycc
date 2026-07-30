@@ -493,7 +493,7 @@ class RunXacc(SetupCC):
             Reads background information printed by xacc (number of occupied/virtual orbitals and MO energies).
     """
     
-    def __init__(self,CCbase='pUCCD',bkgrd_infile=None,tamp_infile=None,tei_infile=None,ref='spin-orbital',eom_infile=None,pyscf_mf=None,pyscf_mol=None,cc_runtype=None):
+    def __init__(self,CCbase='pUCCD',bkgrd_infile=None,tamp_infile=None,tei_infile=None,ref='spin-orbital',eom_infile=None,eom_omega_infile=None,eom_root_num=None,gs_uccsd_e=None,pyscf_mf=None,pyscf_mol=None,cc_runtype=None):
         """
         Initializes the `run_xacc` object by reading background information from the `bkgrd_infile`, 
         CC amplitudes from the `tamp_infile`, and two-electron integrals from the `tei_infile`. 
@@ -541,15 +541,22 @@ class RunXacc(SetupCC):
             nbas=self.nocc+self.nvirt
             self.tei=np.zeros((nbas,nbas,nbas,nbas))
             self.read_tei(tei_infile)
+
             #self.mp2_energy()
             #sys.exit()
 
         elif ref == "spin-orbitalEOM":
             import pycc.eom_handler as eom_handler
             import copy
+            print('eom omega infile:',eom_omega_infile)
+            if eom_omega_infile is not None:
+                self.eom_uccsd_e = self.read_root_eigenvalue(eom_omega_infile, eom_root_num,gs_uccsd_e)
+                print("EOM-UCCSD eigenvalue for root",eom_root_num,":",self.eom_uccsd_e)
+                #sys.exit()
+
             self.denomInfo={}
             print("o & v",self.o,self.v)
-            self.set_denoms('spin-orbital',self.o,self.v)
+            self.set_denoms('spin-orbital',self.o,self.v,self.eom_uccsd_e)
 
             nbas=self.nocc+self.nvirt
             self.tei=np.zeros((nbas,nbas,nbas,nbas))
@@ -611,7 +618,91 @@ class RunXacc(SetupCC):
                 #self.mp2_energy()
 
 
-    def set_denoms(self,ref,o,v):
+
+
+    def read_root_eigenvalue(self,input_file, root_num,gs_uccsd_e=None):
+        """
+        Read an eigenvalue table and return the eigenvalue_hartree associated
+        with root_num.
+
+        Expected file format:
+
+            soln_idx    eigenvalue_hartree    dominant_irrep
+            0           -37.824790668607      B2
+            1           -37.824790662254      B1
+            ...
+
+        Parameters
+        ----------
+        input_file : str or Path
+            Path to the text file.
+
+        root_num : int
+            Root index to read. Counting starts at 0.
+
+        Returns
+        -------
+        eigenvalue : float
+            The eigenvalue_hartree corresponding to root_num.
+        """
+        from pathlib import Path
+
+        input_file = Path(input_file)
+
+        if not input_file.exists():
+            raise FileNotFoundError(f"Could not find file: {input_file}")
+
+        if not isinstance(root_num, int):
+            raise TypeError("root_num must be an integer.")
+
+        if root_num < 0:
+            raise ValueError("root_num must be nonnegative.")
+
+        with open(input_file, "r") as f:
+            lines = f.readlines()
+
+        data_lines = []
+
+        for line in lines:
+            line = line.strip()
+
+            # Skip blank lines
+            if not line:
+                continue
+
+            # Skip header line
+            if line.lower().startswith("soln_idx"):
+                continue
+
+            data_lines.append(line)
+
+        if root_num >= len(data_lines):
+            raise IndexError(
+                f"root_num={root_num} is out of range. "
+                f"File only contains {len(data_lines)} roots."
+            )
+
+        fields = data_lines[root_num].split()
+
+        if len(fields) < 2:
+            raise ValueError(f"Could not parse line: {data_lines[root_num]}")
+
+        soln_idx = int(fields[0])
+        eigenvalue = float(fields[1])
+
+        if soln_idx != root_num:
+            raise ValueError(
+                f"Expected soln_idx {root_num}, but found soln_idx {soln_idx}. "
+                "The file may not be sorted from top down."
+            )
+        self.qeom_uccsd_energy_eV = (eigenvalue - gs_uccsd_e)*27.2114
+        print("Baseline EOM-UCCSD EE (eV):",self.qeom_uccsd_energy_eV)
+        print("energy diff b/t electronic states: ",eigenvalue-gs_uccsd_e)
+        #sys.exit()
+        return eigenvalue-gs_uccsd_e
+
+
+    def set_denoms(self,ref,o,v, ref_e=None):
         eps_a = np.asarray(self.mo_energies)
         eps_b = np.asarray(self.mo_energies)
         n=np.newaxis
@@ -635,7 +726,7 @@ class RunXacc(SetupCC):
             print("eps:",eps)
             self.denomInfo.update({'D1aa':  set_denoms.D1denomSlow(eps,o,v,n)})
             self.denomInfo.update({'D2aa':set_denoms.D2denomSlow(eps,o,v,n)})        
-            self.denomInfo.update({'D3aa':set_denoms.D3denomSlow(eps,o,v,n)})
+            self.denomInfo.update({'D3aa':set_denoms.D3denomSlow(eps,o,v,n,self.eom_uccsd_e)})
 
             print("shape of denoms:",np.shape(self.denomInfo["D3aa"]))
             #sys.exit()
@@ -1087,7 +1178,11 @@ class XaccCorrection(RunXacc):
             # finally build the [T]-like correction
             C3_wnc2 = D3 * copy.deepcopy(D3C3_wnc2)
             termD = 0.25*build_sqrbrak_corrections.sqr_brakT_spin(D3C3_wnc2,copy.deepcopy(C3_wnc2.transpose(3,4,5,0,1,2)))
-
+            
+            C_total = C3_wnc2 #C3_wnC1T2+C3_wnc2
+            Cdagger = C_total.transpose(3,4,5,0,1,2)
+            overlap = 0.25*build_sqrbrak_corrections.sqr_brakT_spin(C_total,Cdagger)
+            print('Overlap of C3_wnC1T2 + C3_wnc2 with itself: ',overlap)
             print('\n\n\n\n ***********************************************')
             print('******** Final perturbative correction for EOM[T]: *********')
             print('\n\n\n\n ***********************************************')
@@ -1097,6 +1192,11 @@ class XaccCorrection(RunXacc):
             print(" Term B and C, mixed: ", termB_C)
             print(" Term D, h.c. * wnc2: ", termD)
             print("Total, cumulative EOM[T] PT correction: ", termA+termB_C+termD)
+            print("q-sc-EOM-UCCSD EE (eV):",self.qeom_uccsd_energy_eV)
+            print("Renormalized [T]:",termD/(1+overlap))
+            print("qscEOM-UCCSD [T-6] energy (eV): ",(self.qeom_uccsd_energy_eV + (termA+termB_C+termD)*27.2114))
+            print("Raw [T] correction: ",(self.qeom_uccsd_energy_eV +termD*27.2114))
+            print("Normalized raw [T] correction: ",(self.qeom_uccsd_energy_eV +((termD)/(1.0+overlap))*27.2114))
 
 
 

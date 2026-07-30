@@ -95,17 +95,69 @@ def D2denomSlow(epsaa,occ_aa,virt_aa,n):
     D2=D2.transpose(2,3,0,1)
     return D2
 
-def D3denomSlow(epsaa,occ_aa,virt_aa,n):
-    D3 = 1.0/(
-            -epsaa[virt_aa,n,n,n,n,n]
-            -epsaa[n,virt_aa,n,n,n,n]
-            -epsaa[n,n,virt_aa,n,n,n]
-            +epsaa[n,n,n,occ_aa,n,n]
-            +epsaa[n,n,n,n,occ_aa,n]
-            +epsaa[n,n,n,n,n,occ_aa] )
-    D3=D3.transpose(3,4,5,0,1,2)
-    print("shapes:",np.shape(D3),occ_aa,virt_aa,n,epsaa,np.shape(epsaa))
-    #sys.exit()
+import numpy as np
+
+
+def D3denomSlow(epsaa, occ_aa, virt_aa, n, omega=0.0, level_shift=0.0):
+    """
+    Build the inverse triples denominator
+
+        D3^{-1}_{ijkabc}
+        =
+        1 / (eps_i + eps_j + eps_k - eps_a - eps_b - eps_c + omega)
+
+    where omega is the EOM-UCCSD excitation energy.
+
+    Parameters
+    ----------
+    epsaa : ndarray
+        Broadcastable orbital-energy tensor.
+
+    occ_aa : ndarray or list
+        Occupied spin-orbital indices.
+
+    virt_aa : ndarray or list
+        Virtual spin-orbital indices.
+
+    n : int or slice
+        Broadcast helper index used in your current epsaa construction.
+
+    omega : float, optional
+        EOM-UCCSD excitation energy used to offset the triples denominator.
+        Default is 0.0, which recovers the original denominator.
+
+    level_shift : float, optional
+        Optional additional denominator shift for numerical stability.
+
+    Returns
+    -------
+    D3 : ndarray
+        Inverse triples denominator with shape ordered as (i, j, k, a, b, c).
+    """
+
+    omega = float(omega)
+    level_shift = float(level_shift)
+
+    denom = (
+        - epsaa[virt_aa, n,       n,       n,      n,      n]
+        - epsaa[n,       virt_aa, n,       n,      n,      n]
+        - epsaa[n,       n,       virt_aa, n,      n,      n]
+        + epsaa[n,       n,       n,       occ_aa, n,      n]
+        + epsaa[n,       n,       n,       n,      occ_aa, n]
+        + epsaa[n,       n,       n,       n,      n,      occ_aa]
+    )
+
+    # EOM-style shift:
+    # denominator = eps_i + eps_j + eps_k - eps_a - eps_b - eps_c + omega
+    denom = denom + omega + level_shift
+
+    D3 = 1.0 / denom
+
+    # Original ordering transformation
+    D3 = D3.transpose(3, 4, 5, 0, 1, 2)
+
+    print("shapes:", np.shape(D3), occ_aa, virt_aa, n, np.shape(epsaa))
+
     return D3
 
 
